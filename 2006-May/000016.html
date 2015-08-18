@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r20 - branches/trunks/www/libs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r20%20-%20branches/trunks/www/libs&In-Reply-To=%3C200605270109.k4R19mEn005835%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000015.html">
+   <LINK REL="Next"  HREF="000017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r20 - branches/trunks/www/libs</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r20%20-%20branches/trunks/www/libs&In-Reply-To=%3C200605270109.k4R19mEn005835%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r20 - branches/trunks/www/libs">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 03:09:48 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000015.html">[Meneamenet-svn] r19 - branches/trunks/www
+</A></li>
+        <LI>Next message: <A HREF="000017.html">[Meneamenet-svn] r21 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 03:09:36 +0200 (Sat, 27 May 2006)
+New Revision: 20
+
+Modified:
+   branches/trunks/www/libs/link.php
+Log:
+adding hide commments feature
+
+Modified: branches/trunks/www/libs/link.php
+===================================================================
+--- branches/trunks/www/libs/link.php	2006-05-27 01:08:49 UTC (rev 19)
++++ branches/trunks/www/libs/link.php	2006-05-27 01:09:36 UTC (rev 20)
+@@ -243,19 +243,21 @@
+ 			echo '&lt;/div&gt;';
+ 		}
+ 
+-		echo '&lt;div class=&quot;news-details&quot;&gt;';
+-		$ncomments = $this-&gt;comments();
+-		if($ncomments &gt; 0) {
+-			$comments_mess = $ncomments . ' ' . _('comentarios');
+-			$comment_class = &quot;comments&quot;;
+-		} else  {
+-			$comments_mess = _('sin comentarios');
+-			$comment_class = &quot;comments_no&quot;;
++		if ($globals['comments']) {
++			echo '&lt;div class=&quot;news-details&quot;&gt;';
++			$ncomments = $this-&gt;comments();
++			if($ncomments &gt; 0) {
++				$comments_mess = $ncomments . ' ' . _('comentarios');
++				$comment_class = &quot;comments&quot;;
++			} else  {
++				$comments_mess = _('sin comentarios');
++				$comment_class = &quot;comments_no&quot;;
++			}
++			if(empty($globals['link_id']))
++				echo '&lt;a href=&quot;story.php?id='.$this-&gt;id.'&quot; class=&quot;tool '.$comment_class.'&quot;&gt;'.$comments_mess. '&lt;/a&gt;';
++			else
++				echo '&lt;span class=&quot;tool comments&quot;&gt;'.$comments_mess. '&lt;/span&gt;';
+ 		}
+-		if(empty($globals['link_id']))
+-			echo '&lt;a href=&quot;story.php?id='.$this-&gt;id.'&quot; class=&quot;tool '.$comment_class.'&quot;&gt;'.$comments_mess. '&lt;/a&gt;';
+-		else 
+-			echo '&lt;span class=&quot;tool comments&quot;&gt;'.$comments_mess. '&lt;/span&gt;';
+ 
+ 		/*
+ 		if (!empty($this-&gt;tags)) {
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000015.html">[Meneamenet-svn] r19 - branches/trunks/www
+</A></li>
+	<LI>Next message: <A HREF="000017.html">[Meneamenet-svn] r21 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

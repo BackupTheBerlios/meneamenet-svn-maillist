@@ -1,0 +1,370 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r39 - branches/trunks/www/js
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-June/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r39%20-%20branches/trunks/www/js&In-Reply-To=%3C200606031226.k53CQT2A014835%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000034.html">
+   <LINK REL="Next"  HREF="000036.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r39 - branches/trunks/www/js</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r39%20-%20branches/trunks/www/js&In-Reply-To=%3C200606031226.k53CQT2A014835%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r39 - branches/trunks/www/js">trunks at berlios.de
+       </A><BR>
+    <I>Sat Jun  3 14:26:29 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000034.html">[Meneamenet-svn] r38 - branches/trunks/www/js
+</A></li>
+        <LI>Next message: <A HREF="000036.html">[Meneamenet-svn] r40 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#35">[ date ]</a>
+              <a href="thread.html#35">[ thread ]</a>
+              <a href="subject.html#35">[ subject ]</a>
+              <a href="author.html#35">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-06-03 14:26:27 +0200 (Sat, 03 Jun 2006)
+New Revision: 39
+
+Added:
+   branches/trunks/www/js/xmlhttp03.js.php
+Removed:
+   branches/trunks/www/js/xmlhttp03.js
+Log:
+moving xmlhttp03.js to xmlhttp03.js.php
+
+Deleted: branches/trunks/www/js/xmlhttp03.js
+===================================================================
+--- branches/trunks/www/js/xmlhttp03.js	2006-06-03 12:26:03 UTC (rev 38)
++++ branches/trunks/www/js/xmlhttp03.js	2006-06-03 12:26:27 UTC (rev 39)
+@@ -1,290 +0,0 @@
+-&lt;?php
+-includeonce('../config.php');
+-
+-?&gt;
+-function myXMLHttpRequest ()
+-{
+-	var xmlhttplocal;
+-	try {
+-		xmlhttplocal = new ActiveXObject (&quot;Msxml2.XMLHTTP&quot;)}
+-	catch (e) {
+-		try {
+-			xmlhttplocal = new ActiveXObject (&quot;Microsoft.XMLHTTP&quot;)
+-		}
+-		catch (E) {
+-			xmlhttplocal = false;
+-		}
+-  	}
+-	if (!xmlhttplocal &amp;&amp; typeof XMLHttpRequest != 'undefined') {
+-		try {
+-			var xmlhttplocal = new XMLHttpRequest ();
+-		}
+-		catch (e) {
+-	  		var xmlhttplocal = false;
+-			alert ('couldn\'t create xmlhttp object');
+-		}
+-	}
+-	return (xmlhttplocal);
+-}
+-
+-var mnmxmlhttp = Array ();
+-&lt;?php if ( $globals['interface'] == &quot;monouser&quot; ) { ?&gt;
+-var mnmxmlhttp2 = Array ();
+-var mnmxmlhttp3 = Array ();
+-&lt;?php } ?&gt;
+-var mnmString = Array ();
+-var mnmPrevColor = Array ();
+-var responsestring = Array ();
+-var myxmlhttp = Array ();
+-var responseString = new String;
+-var xmlhttp = new myXMLHttpRequest ();
+-var update_voters = false;
+-
+-
+-function menealo (user, id, htmlid, md5)
+-{
+-  	if (xmlhttp) {
+-		url = &quot;menealo.php&quot;;
+-		content = &quot;id=&quot; + id + &quot;&amp;user=&quot; + user + &quot;&amp;md5=&quot; + md5;
+-		mnmxmlhttp[htmlid] = new myXMLHttpRequest ();
+-		if (mnmxmlhttp[htmlid]) {
+-		/*
+-			mnmxmlhttp[htmlid].open (&quot;POST&quot;, url, true);
+-			mnmxmlhttp[htmlid].setRequestHeader ('Content-Type',
+-					   'application/x-www-form-urlencoded');
+-			mnmxmlhttp[htmlid].send (content);
+-		*/
+-			url = url + &quot;?&quot; + content;
+-			mnmxmlhttp[htmlid].open (&quot;GET&quot;, url, true);
+-			mnmxmlhttp[htmlid].send (null);
+-
+-
+-			warnmatch = new RegExp (&quot;^WARN:&quot;);
+-			errormatch = new RegExp (&quot;^ERROR:&quot;);
+-			target1 = document.getElementById ('mnms-' + htmlid);
+-			target2 = document.getElementById ('mnmlink-' + htmlid);
+-			mnmPrevColor[htmlid] = target2.style.backgroundColor;
+-			//target1.style.background = '#c00';
+-			target2.style.backgroundColor = '#FF9400';
+-			mnmxmlhttp[htmlid].onreadystatechange = function () {
+-				if (mnmxmlhttp[htmlid].readyState == 4) {
+-					mnmString[htmlid] = mnmxmlhttp[htmlid].responseText;
+-					if (mnmString[htmlid].match (errormatch)) {
+-						mnmString[htmlid] = mnmString[htmlid].substring (6, mnmString[htmlid].length);
+-						// myclearTimeout(row);
+-						// resetrowfull(row);
+-						alert (mnmString[htmlid]);
+-						changemnmvalues (htmlid, true);
+-						updateVoters(id);
+-					} else {
+-						// Just a warning, do nothing
+-						if (mnmString[htmlid].match (warnmatch)) {
+-							alert(mnmString[htmlid]);
+-						} else {
+-							changemnmvalues (htmlid, false);
+-							updateVoters(id);
+-						}
+-					}
+-					&lt;?php if ( $globals['interface'] == &quot;monouser&quot; ) { ?&gt;
+-					apila_noticias(htmlid, id);
+-					&lt;?php } ?&gt;
+-				}
+-			}
+-		} else {
+-			alert('Couldn\'t create XmlHttpRequest');
+-		}
+-	}
+-}
+-
+-&lt;?php if ( $globals['interface'] == &quot;monouser&quot; ) { ?&gt;
+-
+-function apila_noticias(htmlid, id) {
+-	mnmxmlhttp2[htmlid] = new myXMLHttpRequest ();
+-	if (mnmxmlhttp2[htmlid]) {
+-		promote = &quot;scripts/promote2.php&quot;;
+-		mnmxmlhttp2[htmlid].open (&quot;GET&quot;, promote, true);
+-		mnmxmlhttp2[htmlid].send (null);
+-		mnmxmlhttp2[htmlid].onreadystatechange = function () {
+-			if (mnmxmlhttp2[htmlid].readyState == 4) {
+-				count = 1;
+-				prev_id = id;
+-				while (parseInt(id) - count &gt;= parseInt(document.getElementById('end').innerHTML)) {
+-					while (!document.getElementById('news-' + (parseInt(id) - count))) {
+-						count++;
+-					}
+-					buffer = document.getElementById('news-' + (parseInt(id) - count)).innerHTML;
+-					document.getElementById('news-' + prev_id).innerHTML = buffer;
+-					document.getElementById('news-' + prev_id).id = 'news-' + (parseInt(id) - count);
+-					prev_id = parseInt(id) - count;
+-					count++;
+-				}
+-			}
+-		}
+-		ultima_noticia(htmlid);
+-	}
+-}
+-
+-function ultima_noticia(htmlid) {
+-	mnmxmlhttp3[htmlid] = new myXMLHttpRequest ();
+-	if (mnmxmlhttp3[htmlid]) {
+-		url = &quot;/libs/next.php?id=&quot; + document.getElementById('end').innerHTML;
+-		mnmxmlhttp3[htmlid].open (&quot;GET&quot;, url, true);
+-		mnmxmlhttp3[htmlid].send (null);
+-		mnmxmlhttp3[htmlid].onreadystatechange = function () {
+-			if (mnmxmlhttp3[htmlid].readyState == 4) {
+-				eval (mnmxmlhttp3[htmlid].responseText);
+-				window.alert(link_title);
+-				tags = link_tags.split(&quot;, &quot;);
+-				html = '&lt;div class=&quot;news-body&quot;&gt;&lt;ul class=&quot;news-shakeit&quot;&gt;&lt;li class=&quot;mnm-queued&quot; id=&quot;main' + link_id + '&quot;&gt;&lt;a id=&quot;mnms-' + link_id + '&quot; href=&quot;story.php?id=' + link_id + '&quot;&gt;0 meneos&lt;/a&gt;&lt;/li&gt;';
+-				html += '&lt;li class=&quot;menealo&quot; id=&quot;mnmlink-' + link_id + '&quot;&gt;&lt;a href=&quot;javascript:menealo(' + userid + ',' + link_id + ',' + link_id + ',\'' + randkey + '\')&quot; title=&quot;vota si te agrada&quot;&gt;men&#233;alo&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;';
+-				html += '&lt;h3 id=&quot;title' + link_id + '&quot;&gt;&lt;a href=&quot;<A HREF="http://bulma.net/body.phtml?nIdNoticia=2299">http://bulma.net/body.phtml?nIdNoticia=2299</A>&quot;&gt;' + link_title + '&lt;/a&gt;&lt;/h3&gt;&lt;div class=&quot;news-submitted&quot;&gt;&lt;strong&gt;' + link_url + '&lt;/strong&gt;&lt;br&gt;';
+-				html += 'enviado hace &lt;/div&gt;&lt;div class=&quot;news-body-text&quot;&gt;' + link_content + '&lt;/div&gt;&lt;div class=&quot;news-tags&quot;&gt;&lt;strong&gt;&lt;a href=&quot;cloud.php&quot; title=&quot;nube&quot;&gt;etiquetas&lt;/a&gt;&lt;/strong&gt;: ';
+-				for (i=0; i&lt;tags.length; i++) {
+-					if ( i != 0 )
+-						html += ', ';
+-					html += '&lt;a href=&quot;index.php?search=tag:' + tags[i] + '&quot;&gt;' + tags[i] + '&lt;/a&gt;';
+-				}
+-				html += '&lt;/div&gt;&lt;div class=&quot;news-details&quot;&gt;&lt;span class=&quot;tool&quot;&gt;categor&#237;a: &lt;a href=&quot;./index.php?category=' + category_id + '&quot; title=&quot;categor&#237;a&quot;&gt;' + link_category + '&lt;/a&gt;&lt;/span&gt; &lt;span class=&quot;tool&quot;&gt;&lt;a href=&quot;editlink.php?id=' + link_id + '&quot;&gt;editar&lt;/a&gt;&lt;/span&gt; ';
+-				html += '&lt;form class=&quot;tool&quot; action=&quot;&quot; id=&quot;problem-' + link_id + '&quot;&gt;&lt;a href=&quot;javascript:report_problem(document.getElementById(\'problem-' + link_id + '\'), ' + userid + ', ' + link_id + ', \'' + randkey + '\')&quot;&gt;Descartar noticia&lt;/a&gt;&lt;input name=&quot;ratings&quot; value=&quot;-1&quot; type=&quot;hidden&quot;&gt;&lt;/form&gt;';
+-				html += '&lt;/div&gt;&lt;/div&gt;';
+-				prev_id = document.getElementById('end').innerHTML;
+-				document.getElementById('news-' + prev_id).innerHTML = html;
+-				document.getElementById('news-' + prev_id).id = 'news-' + link_id;
+-				window.alert(document.getElementById('end').innerHTML);
+-				document.getElementById('end').innerHTML = link_id;
+-				window.alert(document.getElementById('end').innerHTML);
+-			}
+-		}
+-	}
+-}
+-
+-&lt;?php } ?&gt;
+-
+-function disable_problem_form(id) {
+-	target = document.getElementById ('problem-' + id);
+-	if (target) {
+-		target.ratings.disabled=true;
+-		target.innerHTML = &quot;&quot;;
+-	}
+-}
+-
+-function disable_vote_link(id, mess) {
+-	target = document.getElementById ('mnmlink-' + id);
+-	if (target) {
+-		target.style.backgroundColor = mnmPrevColor[id];
+-		target.innerHTML = &quot;&lt;span&gt;&quot;+mess+&quot;&lt;/span&gt;&quot;;
+-	}
+-}
+-
+-function changemnmvalues (id, error)
+-{
+-	split = new RegExp (&quot;~--~&quot;);
+-	b = mnmString[id].split (split);
+-	target1 = document.getElementById ('mnms-' + id);
+-	target2 = document.getElementById ('mnmlink-' + id);
+-	if (error) {
+-		disable_vote_link(id, &quot;grr...&quot;);
+-		disable_problem_form(id);
+-		//target2.innerHTML = &quot;&lt;span&gt;grrr...&lt;/span&gt;&quot;;
+-		return false;
+-	}
+-	if (b.length &lt;= 3) {
+-		target1.innerHTML = b[0];
+-		target2.style.backgroundColor = mnmPrevColor[id];
+-		//target2.innerHTML = &quot;&lt;span&gt;&#161;chachi!&lt;/span&gt;&quot;;
+-		disable_vote_link(id, &quot;&#161;chachi!&quot;);
+-		disable_problem_form(id);
+-	}
+-	return false;
+-}
+-
+-
+-function enablebutton (button, button2, target)
+-{
+-	var string = target.value;
+-	button2.disabled = false;
+-	if (string.length &gt; 0) {
+-		button.disabled = false;
+-	} else {
+-		button.disabled = true;
+-	}
+-}
+-
+-function checkfield (type, form, field)
+-{
+-	url = 'checkfield.php?type='+type+'&amp;name=' + field.value;
+-	checkitxmlhttp = new myXMLHttpRequest ();
+-	checkitxmlhttp.open (&quot;GET&quot;, url, true);
+-	checkitxmlhttp.onreadystatechange = function () {
+-		if (checkitxmlhttp.readyState == 4) {
+-		responsestring = checkitxmlhttp.responseText;
+-			if (responsestring == 'OK') {
+-				document.getElementById (type+'checkitvalue').innerHTML = '&lt;span style=&quot;color:black&quot;&gt;&quot;' + field.value + 
+-						'&quot;: ' + responsestring + '&lt;/span&gt;';
+-				form.submit.disabled = '';
+-			} else {
+-				document.getElementById (type+'checkitvalue').innerHTML = '&lt;span style=&quot;color:red&quot;&gt;&quot;' + field.value + '&quot;: ' +
+-				responsestring + '&lt;/span&gt;';
+-				form.submit.disabled = 'disabled';
+-			}
+-		}
+-	}
+-  //  xmlhttp.setRequestHeader('Accept','message/x-formresult');
+-  checkitxmlhttp.send (null);
+-  return false;
+-}
+-
+-function report_problem(frm, user, id, md5 /*id, code*/) {
+-	if (frm.ratings.value == 0)
+-		return;
+-	if (! confirm(&quot;&#191;Seguro que desea continuar?&quot;) ) {
+-		frm.ratings.selectedIndex=0;
+-		return false;
+-	}
+-	content = &quot;id=&quot; + id + &quot;&amp;user=&quot; + user + &quot;&amp;md5=&quot; + md5 + '&amp;value=' +frm.ratings.value;
+-	url=&quot;problem.php?&quot; + content;
+-	xmlhttp.open(&quot;GET&quot;,url,true);
+-	xmlhttp.onreadystatechange=function() {
+-		if (xmlhttp.readyState==4) {
+-			errormatch = new RegExp (&quot;^ERROR:&quot;);
+-			response = xmlhttp.responseText;
+-			if (response.match(errormatch)) {
+-				response = response.substring (6, response.length);
+-				alert (response);
+-			} else {
+-				disable_vote_link(id, &quot;:-(&quot;);
+-				disable_problem_form(id);
+-				//frm.ratings.disabled=true;
+-				/*alert(xmlhttp.responseText);*/
+-				updateVoters(id);
+-			}
+-		}
+-  	}
+-	xmlhttp.send(null);
+-	return false;
+-}
+-
+-function updateVoters(id) {
+-	if (update_voters) {
+-		get_votes(1, id);
+-	}
+-}
+-
+-// Get voters by Beldar &lt;beldar.cat at gmail dot com&gt;
+-function get_votes(page,id) {
+-	var url = 'libs/meneos.php?id='+id+'&amp;p='+page;
+-	xmlhttp.open('get', url, true);
+-	xmlhttp.onreadystatechange = votes_resp;
+-	xmlhttp.send(null);
+-}
+-
+-function votes_resp(){
+-	if(xmlhttp.readyState == 4){
+-		response = xmlhttp.responseText;
+-		if (response.length &gt; 10) 
+-			document.getElementById('voters-container').innerHTML = response;
+-	} /*else{
+-		document.getElementById('voters-container').innerHTML = 'Loading...';
+-	}*/
+-}
+-
+
+Copied: branches/trunks/www/js/xmlhttp03.js.php (from rev 38, branches/trunks/www/js/xmlhttp03.js)
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000034.html">[Meneamenet-svn] r38 - branches/trunks/www/js
+</A></li>
+	<LI>Next message: <A HREF="000036.html">[Meneamenet-svn] r40 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#35">[ date ]</a>
+              <a href="thread.html#35">[ thread ]</a>
+              <a href="subject.html#35">[ subject ]</a>
+              <a href="author.html#35">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

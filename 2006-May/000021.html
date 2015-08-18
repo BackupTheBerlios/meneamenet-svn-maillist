@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r25 - branches/trunks/www/libs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r25%20-%20branches/trunks/www/libs&In-Reply-To=%3C200605270114.k4R1EOuU007088%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000020.html">
+   <LINK REL="Next"  HREF="000022.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r25 - branches/trunks/www/libs</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r25%20-%20branches/trunks/www/libs&In-Reply-To=%3C200605270114.k4R1EOuU007088%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r25 - branches/trunks/www/libs">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 03:14:24 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000020.html">[Meneamenet-svn] r24 - branches/trunks/www
+</A></li>
+        <LI>Next message: <A HREF="000022.html">[Meneamenet-svn] r26 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 03:14:14 +0200 (Sat, 27 May 2006)
+New Revision: 25
+
+Modified:
+   branches/trunks/www/libs/db.php
+Log:
+configuring utf-8 for mysql only if supports it
+
+Modified: branches/trunks/www/libs/db.php
+===================================================================
+--- branches/trunks/www/libs/db.php	2006-05-27 01:12:30 UTC (rev 24)
++++ branches/trunks/www/libs/db.php	2006-05-27 01:14:14 UTC (rev 25)
+@@ -518,6 +518,9 @@
+ 	}
+ 
+ $db = new db(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST);
+-$db-&gt;query(&quot;SET NAMES 'utf8'&quot;);
+ 
++$characters = $db-&gt;get_col(&quot;show variables like 'character_sets'&quot;, 1);
++if ( in_array(&quot;utf8&quot;, split(&quot; &quot;, $characters[0])) )
++	$db-&gt;query(&quot;SET NAMES 'utf8'&quot;);
++
+ ?&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000020.html">[Meneamenet-svn] r24 - branches/trunks/www
+</A></li>
+	<LI>Next message: <A HREF="000022.html">[Meneamenet-svn] r26 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

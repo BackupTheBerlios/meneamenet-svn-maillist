@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r35 - in branches/trunks/www: . archives js
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r35%20-%20in%20branches/trunks/www%3A%20.%20archives%20js&In-Reply-To=%3C200605301147.k4UBlWaI009089%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000030.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r35 - in branches/trunks/www: . archives js</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r35%20-%20in%20branches/trunks/www%3A%20.%20archives%20js&In-Reply-To=%3C200605301147.k4UBlWaI009089%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r35 - in branches/trunks/www: . archives js">trunks at berlios.de
+       </A><BR>
+    <I>Tue May 30 13:47:32 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000030.html">[Meneamenet-svn] r34 - branches/trunks/scripts
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-30 13:47:27 +0200 (Tue, 30 May 2006)
+New Revision: 35
+
+Modified:
+   branches/trunks/www/archives/meneame.sql
+   branches/trunks/www/categories.php
+   branches/trunks/www/js/categories.js
+Log:
+fixing categories and adding autotagging support
+
+Modified: branches/trunks/www/archives/meneame.sql
+===================================================================
+--- branches/trunks/www/archives/meneame.sql	2006-05-30 08:44:04 UTC (rev 34)
++++ branches/trunks/www/archives/meneame.sql	2006-05-30 11:47:27 UTC (rev 35)
+@@ -79,7 +79,7 @@
+   description longtext NOT NULL,
+   image longtext NOT NULL,
+   etag varchar(255) NOT NULL default '',
+-  tags varchar(255) NOT NULL default ''
++  tags varchar(255) NOT NULL default '',
+   modified int(10) NOT NULL default '0',
+   PRIMARY KEY (id)
+ ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+Modified: branches/trunks/www/categories.php
+===================================================================
+--- branches/trunks/www/categories.php	2006-05-30 08:44:04 UTC (rev 34)
++++ branches/trunks/www/categories.php	2006-05-30 11:47:27 UTC (rev 35)
+@@ -94,7 +94,7 @@
+ function show_categories() {
+ 	global $db, $dblang;
+ 
+-	$categories = $db-&gt;get_results(&quot;SELECT category_id, category_parent, category_name, category_feed FROM categories WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC&quot;);
++	$categories = $db-&gt;get_results(&quot;SELECT category_id, category_parent, category_name, category_feed, tags FROM categories LEFT JOIN feed_data ON category_id = id WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC&quot;);
+ 
+ 	foreach ($categories as $category) {
+ 		if (isset($tree[$category-&gt;category_parent])) {
+@@ -105,6 +105,7 @@
+ 		$category_data[$category-&gt;category_id]-&gt;category_parent = $category-&gt;category_parent;
+ 		$category_data[$category-&gt;category_id]-&gt;category_name = $category-&gt;category_name;
+ 		$category_data[$category-&gt;category_id]-&gt;category_feed = $category-&gt;category_feed;
++		$category_data[$category-&gt;category_id]-&gt;tags = $category-&gt;tags;
+ 	}
+ 
+ 	$elems = split(&quot;,&quot;, $tree[0]);
+@@ -119,7 +120,7 @@
+ 			for ($i=$level; $i&gt;0; $i--)
+ 				echo '&lt;blockquote&gt;';
+ 
+-			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name, $data[$item]-&gt;category_feed);
++			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name, $data[$item]-&gt;category_feed, $data[$item]-&gt;tags);
+ 
+ 			for ($i=$level; $i&gt;0; $i--)
+ 				echo '&lt;/blockquote&gt;';
+@@ -128,7 +129,7 @@
+ 			for ($i=$level; $i&gt;0; $i--)
+ 				echo '&lt;blockquote&gt;';
+ 
+-			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name, $data[$item]-&gt;category_feed);
++			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name, $data[$item]-&gt;category_feed, $data[$item]-&gt;tags);
+ 
+ 			for ($i=$level; $i&gt;0; $i--)
+ 				echo '&lt;/blockquote&gt;';
+@@ -136,7 +137,7 @@
+ 	}
+ }
+ 
+-function print_category ($id, $parent, $name, $feed) {
++function print_category ($id, $parent, $name, $feed, $tags) {
+ 	echo '&lt;p class=&quot;l-top&quot; id=&quot;l-top-edit[' . $id . ']&quot;&gt;['. $id . 
+ 		'] &lt;label for=&quot;edit[' . $id . ']&quot; accesskey=&quot;' . $id . 
+ 		'&quot; id=&quot;label1-edit[' . $id .']&quot;&gt;' . _($name) .'&lt;/label&gt; ';
+@@ -151,6 +152,9 @@
+ 	echo '&lt;input type=&quot;hidden&quot;  name=&quot;feed-edit[' . $id . ']&quot; id=&quot;feed-edit[' 
+ 		. $id . ']&quot; value=&quot;' . $feed . '&quot; /&gt;';
+ 
++	echo '&lt;input type=&quot;hidden&quot;  name=&quot;tags-edit[' . $id . ']&quot; id=&quot;tags-edit[' 
++		. $id . ']&quot; value=&quot;' . $tags . '&quot; /&gt;';
++		
+ 	echo '&lt;input type=&quot;submit&quot; name=&quot;delete[' . $id . ']&quot; id=&quot;delete[' . $id .
+ 		 ']&quot; tabindex=&quot;1&quot; value=&quot;' . _('eliminar') . ' &quot; /&gt;' . &quot;\n&quot;;
+ }
+@@ -212,7 +216,7 @@
+ 	$ncat=0;
+ 	foreach ($category-&gt;id as $key) {
+ 		$db-&gt;query(&quot;update categories set category_name=\&quot;&quot; . $category-&gt;name[$ncat] . &quot;\&quot;, category_parent=\&quot;&quot; . $category-&gt;parent[$ncat] . &quot;\&quot;, category_feed=\&quot;&quot; . $category-&gt;feed[$ncat] . &quot;\&quot; where category_id=\&quot;$key\&quot; and category_lang=\&quot;$dblang\&quot;&quot;);
+-		$db-&gt;query(&quot;update feed_data set tags='&quot; . $category-&gt;tags[$ncat] . &quot;\&quot; where id=\&quot;$key\&quot;&quot;);
++		$db-&gt;query(&quot;update feed_data set tags=\&quot;&quot; . $category-&gt;tags[$ncat] . &quot;\&quot; where id=\&quot;$key\&quot;&quot;);
+ 		$ncat++;
+ 	}
+ }
+
+Modified: branches/trunks/www/js/categories.js
+===================================================================
+--- branches/trunks/www/js/categories.js	2006-05-30 08:44:04 UTC (rev 34)
++++ branches/trunks/www/js/categories.js	2006-05-30 11:47:27 UTC (rev 35)
+@@ -13,7 +13,8 @@
+ 	'Ejemplo: &lt;em&gt;web, programaci&#243;n, softwarelibre&lt;/em&gt;&lt;/span&gt;--&gt;&lt;br /&gt;' + 
+ 	'&lt;label for=&quot;new_tags-' + obj.id + '&quot;&gt;etiquetas por defecto:&lt;/label&gt;&lt;input ' + 
+ 	'type=&quot;text&quot; id=&quot;new_tags-' + obj.id + '&quot; name=&quot;new_tags-' + obj.id +
+-	'&quot; tabindex=&quot;1&quot; size=&quot;25&quot; /&gt;&lt;/p&gt;';
++	'&quot; tabindex=&quot;1&quot; size=&quot;25&quot; value=&quot;' + document.getElementById('tags-' + 
++	obj.id).value +'&quot; /&gt;&lt;/p&gt;';
+ 
+ 	// Para ocultar submit principal y sacar uno &#250;nico por cada campo.
+ 	// Habilitar esta opci&#243;n anularia la posibilidad de actualizaci&#243;n
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000030.html">[Meneamenet-svn] r34 - branches/trunks/scripts
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

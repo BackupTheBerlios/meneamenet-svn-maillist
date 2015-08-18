@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r54 - in branches/jdeveloper/www: . js libs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-July/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r54%20-%20in%20branches/jdeveloper/www%3A%20.%20js%20libs&In-Reply-To=%3C200607111002.k6BA2uD0007705%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000047.html">
+   <LINK REL="Next"  HREF="000050.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r54 - in branches/jdeveloper/www: . js libs</H1>
+    <B>jdeveloper at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r54%20-%20in%20branches/jdeveloper/www%3A%20.%20js%20libs&In-Reply-To=%3C200607111002.k6BA2uD0007705%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r54 - in branches/jdeveloper/www: . js libs">jdeveloper at berlios.de
+       </A><BR>
+    <I>Tue Jul 11 12:02:56 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000047.html">[Meneamenet-svn] r52 - branches/jdeveloper
+</A></li>
+        <LI>Next message: <A HREF="000050.html">[Meneamenet-svn] r55 - branches/jdeveloper/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#49">[ date ]</a>
+              <a href="thread.html#49">[ thread ]</a>
+              <a href="subject.html#49">[ subject ]</a>
+              <a href="author.html#49">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: jdeveloper
+Date: 2006-07-11 12:02:53 +0200 (Tue, 11 Jul 2006)
+New Revision: 54
+
+Modified:
+   branches/jdeveloper/www/js/sneak03.js.php
+   branches/jdeveloper/www/libs/sneak.php
+   branches/jdeveloper/www/sneak.php
+Log:
+incorporando mis cambios de la fisgona al codigo oficial
+
+Modified: branches/jdeveloper/www/js/sneak03.js.php
+===================================================================
+--- branches/jdeveloper/www/js/sneak03.js.php	2006-07-09 13:08:06 UTC (rev 53)
++++ branches/jdeveloper/www/js/sneak03.js.php	2006-07-11 10:02:53 UTC (rev 54)
+@@ -7,6 +7,9 @@
+ var items = Array();
+ var new_items = 0;
+ var max_items = &lt;? echo $max_items; ?&gt;;
++var initial_items_load=&lt;? echo $initial_items_load; ?&gt;;
++var num_items_showen=0;
++var num_rows_created=&lt;? echo $initial_items_load; ?&gt;;
+ var request_timer;
+ var min_update = 20000;
+ var next_update = 5000;
+@@ -36,7 +39,7 @@
+ 		check_control('published');
+ 		check_control('chat');
+ 	}
+-	for (i=0; i&lt;max_items; i++) {
++	for (i=0; i&lt;initial_items_load; i++) {
+ 		items[i] = document.getElementById('sneaker-'+i);
+ 	}
+ 	do_play();
+@@ -109,13 +112,36 @@
+ 		if(target) target.innerHTML = ccnt;
+ 		new_items= new_data.length;
+ 		if(new_items &gt; 0) {
++			//if we need more rows than we have created, than whe create them
++			//if num_items_showen is 0 then we just display as maximum inital_items_load items
++			if(new_items+num_items_showen&gt;num_rows_created &amp;&amp; (new_items+num_items_showen)&lt;=max_items &amp;&amp; num_items_showen&gt;0){
++				
++				num_new_rows=new_items+num_items_showen-num_rows_created;
++				str='';
++				for(i=num_rows_created;i&lt;(num_rows_created+num_new_rows);i++)
++					str=str+'&lt;div id=&quot;sneaker-' +i+ '&quot; class=&quot;sneaker-item&quot;&gt;&nbsp;';
++				
++				rows=document.getElementById('rows');
++				
++				rows.innerHTML=rows.innerHTML+str;
++				
++				for(i=0;i&lt;=num_rows_created;i++)
++					items[i] = document.getElementById('sneaker-'+i);
++				
++				num_rows_created=num_rows_created+num_new_rows;
++			}
++			
+ 			if (do_animation) clearInterval(animation_timer);
+ 			next_update = Math.round(0.5*next_update + 0.5*min_update/(new_items*2));
+ 			shift_items(new_items);
+-			for (i=0; i&lt;new_items &amp;&amp; i&lt;max_items; i++) {
++			for (i=0; i&lt;new_items &amp;&amp; i&lt;num_rows_created; i++) {
+ 				items[i].innerHTML = to_html(new_data[i]);
+ 				if (do_animation) set_initial_color(i);
+ 			}
++			
++			//update the num_items_showen counter
++			num_items_showen=num_items_showen+new_items;
++
+ 			if (do_animation) {
+ 				animation_timer = setInterval('animate_background()', 100);
+ 				animating = true;
+@@ -137,14 +163,14 @@
+ 
+ function shift_items(n) {
+ 	//for (i=n;i&lt;max_items;i++) {
+-	for (i=max_items-1;i&gt;=n;i--) {
++	for (i=num_rows_created-1;i&gt;=n;i--) {
+ 		items[i].innerHTML = items[i-n].innerHTML;
+ 		//items.shift();
+ 	}
+ }
+ 
+ function clear_items() {
+-	for (i=0;i&lt;max_items;i++) {
++	for (i=0;i&lt;num_rows_created;i++) {
+ 		items[i].innerHTML = '&nbsp;';
+ 	}
+ }
+
+Modified: branches/jdeveloper/www/libs/sneak.php
+===================================================================
+--- branches/jdeveloper/www/libs/sneak.php	2006-07-09 13:08:06 UTC (rev 53)
++++ branches/jdeveloper/www/libs/sneak.php	2006-07-11 10:02:53 UTC (rev 54)
+@@ -1,5 +1,6 @@
+ &lt;?
+ $sneak_version = 4.8;
+-$max_items = 25;
+-header('Connection: close');
++$max_items = 100;
++$initial_items_load=25;
++//header('Connection: close');
+ ?&gt;
+
+Modified: branches/jdeveloper/www/sneak.php
+===================================================================
+--- branches/jdeveloper/www/sneak.php	2006-07-09 13:08:06 UTC (rev 53)
++++ branches/jdeveloper/www/sneak.php	2006-07-11 10:02:53 UTC (rev 54)
+@@ -229,12 +229,14 @@
+ echo &quot;&lt;/div&gt;\n&quot;;
+ 
+ 
+-for ($i=0; $i&lt;$max_items;$i++) {
++echo '&lt;div id=&quot;rows&quot;&gt;';
++for ($i=0; $i&lt;$initial_items_load;$i++) {
+ 	echo '&lt;div id=&quot;sneaker-'.$i.'&quot; class=&quot;sneaker-item&quot;&gt;&nbsp;';
+ 	echo &quot;&lt;/div&gt;\n&quot;;
+ 
+ 
+ }
++echo '&lt;/div&gt;';
+ 
+ echo '&lt;/div&gt;';
+ //echo &quot;&lt;/div&gt;\n&quot;; // air-with-footer
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000047.html">[Meneamenet-svn] r52 - branches/jdeveloper
+</A></li>
+	<LI>Next message: <A HREF="000050.html">[Meneamenet-svn] r55 - branches/jdeveloper/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#49">[ date ]</a>
+              <a href="thread.html#49">[ thread ]</a>
+              <a href="subject.html#49">[ subject ]</a>
+              <a href="author.html#49">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

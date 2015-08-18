@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r19 - branches/trunks/www
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r19%20-%20branches/trunks/www&In-Reply-To=%3C200605270109.k4R19Hmj005648%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000014.html">
+   <LINK REL="Next"  HREF="000016.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r19 - branches/trunks/www</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r19%20-%20branches/trunks/www&In-Reply-To=%3C200605270109.k4R19Hmj005648%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r19 - branches/trunks/www">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 03:09:17 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000014.html">[Meneamenet-svn] r18 - branches/trunks/www
+</A></li>
+        <LI>Next message: <A HREF="000016.html">[Meneamenet-svn] r20 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 03:08:49 +0200 (Sat, 27 May 2006)
+New Revision: 19
+
+Modified:
+   branches/trunks/www/story.php
+Log:
+adding hide commments feature
+
+Modified: branches/trunks/www/story.php
+===================================================================
+--- branches/trunks/www/story.php	2006-05-27 01:08:12 UTC (rev 18)
++++ branches/trunks/www/story.php	2006-05-27 01:08:49 UTC (rev 19)
+@@ -39,46 +39,47 @@
+ 	// AdSense
+ 	do_banner_story();
+ 
+-	echo '&lt;div id=&quot;comments&quot;&gt;';
+-   	echo '&lt;h2&gt;'._('comentarios').'&lt;/h2&gt;';
+-
+-	$comments = $db-&gt;get_col(&quot;SELECT comment_id FROM comments WHERE comment_link_id=$link-&gt;id ORDER BY comment_date&quot;);
+-	if ($comments) {
+-		echo '&lt;ol id=&quot;comments-list&quot;&gt;';
+-		require_once(mnminclude.'comment.php');
+-		$comment = new Comment;
+-		foreach($comments as $comment_id) {
+-			$comment-&gt;id=$comment_id;
+-			$comment-&gt;read();
+-			$comment-&gt;print_summary($link);
++	if ( $globals['comments'] ) {
++		echo '&lt;div id=&quot;comments&quot;&gt;';
++		echo '&lt;h2&gt;'._('comentarios').'&lt;/h2&gt;';
++	
++		$comments = $db-&gt;get_col(&quot;SELECT comment_id FROM comments WHERE comment_link_id=$link-&gt;id ORDER BY comment_date&quot;);
++		if ($comments) {
++			echo '&lt;ol id=&quot;comments-list&quot;&gt;';
++			require_once(mnminclude.'comment.php');
++			$comment = new Comment;
++			foreach($comments as $comment_id) {
++				$comment-&gt;id=$comment_id;
++				$comment-&gt;read();
++				$comment-&gt;print_summary($link);
++			}
++			echo &quot;&lt;/ol&gt;\n&quot;;
+ 		}
+-		echo &quot;&lt;/ol&gt;\n&quot;;
+-	}
+-
+-
+ 	
+-	if($link-&gt;date &lt; time()-604800) { // older than 7 days
+-		//echo '&lt;br /&gt;'.&quot;\n&quot;;
+-		echo '&lt;div class=&quot;commentform&quot; align=&quot;center&quot; &gt;'.&quot;\n&quot;;
+-		echo _('comentarios cerrados').&quot;\n&quot;;
+-		echo '&lt;/div&gt;'.&quot;\n&quot;;
+-	} elseif ($current_user-&gt;authenticated &amp;&amp; ($current_user-&gt;user_karma &gt; $globals['min_karma_for_comments'] || $current_user-&gt;user_id == $link-&gt;author)) {
+-		print_comment_form();
+-	} else {
+-		echo '&lt;br/&gt;'.&quot;\n&quot;;
+-		echo '&lt;div class=&quot;commentform&quot; align=&quot;center&quot; &gt;'.&quot;\n&quot;;
+-		if ($current_user-&gt;authenticated &amp;&amp; $current_user-&gt;user_karma &lt;= $globals['min_karma_for_comments']) 
+-			echo _('No tienes el m&#237;nimo karma requerido').&quot; (&quot; . $globals['min_karma_for_comments'] . &quot;) &quot;. _('para comentar'). &quot;: &quot;.$current_user-&gt;user_karma .&quot;\n&quot;;
+-
+-		else
+-			echo '&lt;a href=&quot;/login.php?return='.$_SERVER['REQUEST_URI'].'&quot;&gt;'._('Autentif&#237;cate si deseas escribir').'&lt;/a&gt; '._('comentarios').'. '._('O reg&#237;strate'). ' &lt;a href=&quot;/register.php&quot;&gt;aqu&#237;&lt;/a&gt;.'.&quot;\n&quot;;
+-		echo '&lt;/div&gt;'.&quot;\n&quot;;
++	
++		
++		if($link-&gt;date &lt; time()-604800) { // older than 7 days
++			//echo '&lt;br /&gt;'.&quot;\n&quot;;
++			echo '&lt;div class=&quot;commentform&quot; align=&quot;center&quot; &gt;'.&quot;\n&quot;;
++			echo _('comentarios cerrados').&quot;\n&quot;;
++			echo '&lt;/div&gt;'.&quot;\n&quot;;
++		} elseif ($current_user-&gt;authenticated &amp;&amp; ($current_user-&gt;user_karma &gt; $globals['min_karma_for_comments'] || $current_user-&gt;user_id == $link-&gt;author)) {
++			print_comment_form();
++		} else {
++			echo '&lt;br/&gt;'.&quot;\n&quot;;
++			echo '&lt;div class=&quot;commentform&quot; align=&quot;center&quot; &gt;'.&quot;\n&quot;;
++			if ($current_user-&gt;authenticated &amp;&amp; $current_user-&gt;user_karma &lt;= $globals['min_karma_for_comments']) 
++				echo _('No tienes el m&#237;nimo karma requerido').&quot; (&quot; . $globals['min_karma_for_comments'] . &quot;) &quot;. _('para comentar'). &quot;: &quot;.$current_user-&gt;user_karma .&quot;\n&quot;;
++	
++			else
++				echo '&lt;a href=&quot;/login.php?return='.$_SERVER['REQUEST_URI'].'&quot;&gt;'._('Autentif&#237;cate si deseas escribir').'&lt;/a&gt; '._('comentarios').'. '._('O reg&#237;strate'). ' &lt;a href=&quot;/register.php&quot;&gt;aqu&#237;&lt;/a&gt;.'.&quot;\n&quot;;
++			echo '&lt;/div&gt;'.&quot;\n&quot;;
++		}
++	
++		echo '&lt;/div&gt;' . &quot;\n&quot;;
+ 	}
+-
+-	echo '&lt;/div&gt;' . &quot;\n&quot;;
++	echo '&lt;div class=&quot;air-with-footer&quot;&gt;'.&quot;\n&quot;;
+ 	
+-	echo '&lt;div class=&quot;air-with-footer&quot;&gt;'.&quot;\n&quot;;
+-
+ 	// Show voters
+ 	echo '&lt;div id=&quot;voters&quot;&gt;';
+ 	echo '&lt;h2&gt;'._('&#191;Qui&#233;n ha meneado esto?').'&lt;/h2&gt;';
+@@ -87,7 +88,7 @@
+ 	echo '&lt;/div&gt;&lt;br /&gt;';
+ 	echo '&lt;/div&gt;';
+ 	echo '&lt;script type=&quot;text/javascript&quot;&gt;var update_voters=true;&lt;/script&gt;';
+-
++	
+ 	echo '&lt;/div&gt;'.&quot;\n&quot;; // &lt;div class=&quot;air-with-footer&quot;&gt;
+ 		
+ 	echo '&lt;/div&gt;';
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000014.html">[Meneamenet-svn] r18 - branches/trunks/www
+</A></li>
+	<LI>Next message: <A HREF="000016.html">[Meneamenet-svn] r20 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

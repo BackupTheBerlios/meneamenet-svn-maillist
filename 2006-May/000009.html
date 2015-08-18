@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r13 - in branches/ashacz: . www/libs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r13%20-%20in%20branches/ashacz%3A%20.%20www/libs&In-Reply-To=%3C200605091513.k49FDIIi006604%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000008.html">
+   <LINK REL="Next"  HREF="000010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r13 - in branches/ashacz: . www/libs</H1>
+    <B>ashacz at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r13%20-%20in%20branches/ashacz%3A%20.%20www/libs&In-Reply-To=%3C200605091513.k49FDIIi006604%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r13 - in branches/ashacz: . www/libs">ashacz at berlios.de
+       </A><BR>
+    <I>Tue May  9 17:13:18 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000008.html">[Meneamenet-svn] r12 - branches
+</A></li>
+        <LI>Next message: <A HREF="000010.html">[Meneamenet-svn] r14 - branches
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: ashacz
+Date: 2006-05-09 17:13:09 +0200 (Tue, 09 May 2006)
+New Revision: 13
+
+Modified:
+   branches/ashacz/cambios.txt
+   branches/ashacz/www/libs/html1.php
+Log:
+A?\195?\177adida la etiqueta  &lt;meta http-equiv=&quot;Cache-Control&quot; content =&quot;no-cache&quot; /&gt;
+			para evitar que los navegadores almacenen en cache versiones antiguas de 
+			p?\195?\161ginas de meneame
+			
+			Cambiada la etiqueta &lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;@import &quot;css/es/mnm10.css&quot;;&lt;/style&gt;'
+			por &lt;link href=&quot;/css/es/mnm10.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot; type=&quot;text/css&quot; /&gt;
+			Vincular una hoja de estilos es un metodo mas estandar que importarla.
+			Solo los navegadores modernos entienden @import, los antiguos la ignoran.
+			
+			Modificado el fichero www/libs/html1.php
+
+Modified: branches/ashacz/cambios.txt
+===================================================================
+--- branches/ashacz/cambios.txt	2006-05-09 14:20:09 UTC (rev 12)
++++ branches/ashacz/cambios.txt	2006-05-09 15:13:09 UTC (rev 13)
+@@ -1,3 +1,14 @@
+ Cambios realizados en el codigo de meneame y su estado.
+ 
+-1&#186; A&#241;adido el archivo robots.txt Fecha: 7/5/2006
+\ No newline at end of file
++1&#186; 7/5/2006 A&#241;adido el archivo robots.txt 
++
++2&#186; 8/5/2006 A&#241;adida la etiqueta  &lt;meta http-equiv=&quot;Cache-Control&quot; content =&quot;no-cache&quot; /&gt;
++			para evitar que los navegadores almacenen en cache versiones antiguas de 
++			p&#225;ginas de meneame
++			
++			Cambiada la etiqueta &lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;@import &quot;css/es/mnm10.css&quot;;&lt;/style&gt;'
++			por &lt;link href=&quot;/css/es/mnm10.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot; type=&quot;text/css&quot; /&gt;
++			Vincular una hoja de estilos es un metodo mas estandar que importarla.
++			Solo los navegadores modernos entienden @import, los antiguos la ignoran.
++			
++			Modificado el fichero www/libs/html1.php
+\ No newline at end of file
+
+Modified: branches/ashacz/www/libs/html1.php
+===================================================================
+--- branches/ashacz/www/libs/html1.php	2006-05-09 14:20:09 UTC (rev 12)
++++ branches/ashacz/www/libs/html1.php	2006-05-09 15:13:09 UTC (rev 13)
+@@ -27,7 +27,9 @@
+ 	echo &quot;&lt;title&gt;&quot;._($title).&quot; // men&eacute;ame&lt;/title&gt;\n&quot;;
+ 	echo '&lt;meta name=&quot;generator&quot; content=&quot;meneame&quot; /&gt;' . &quot;\n&quot;;
+ 	echo '&lt;meta name=&quot;keywords&quot; content=&quot;'.$globals['tags'].'&quot; /&gt;' . &quot;\n&quot;;
+-	echo '&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;@import &quot;/css/es/mnm10.css&quot;;&lt;/style&gt;' . &quot;\n&quot;;
++	echo '&lt;meta http-equiv=&quot;Cache-Control&quot; content =&quot;no-cache&quot; /&gt;'. &quot;\n&quot;;
++	echo '&lt;link href=&quot;/css/es/mnm10.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot; type=&quot;text/css&quot; /&gt;' .&quot;\n&quot;;;
++	//echo '&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;@import &quot;css/es/mnm10.css&quot;;&lt;/style&gt;' . &quot;\n&quot;;
+ 	//echo '&lt;style type=&quot;text/css&quot; media=&quot;all&quot;&gt;@import &quot;./css/es/meneame.css&quot;;&lt;/style&gt;' . &quot;\n&quot;;
+ 	//echo '&lt;style type=&quot;text/css&quot; media=&quot;all&quot;&gt;@import &quot;./css/es/toolbar.css&quot;;&lt;/style&gt;' . &quot;\n&quot;;
+ 	echo '&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;'._('publicadas').'&quot; href=&quot;<A HREF="http://">http://</A>'.get_server_name().'/rss2.php&quot; /&gt;'.&quot;\n&quot;;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000008.html">[Meneamenet-svn] r12 - branches
+</A></li>
+	<LI>Next message: <A HREF="000010.html">[Meneamenet-svn] r14 - branches
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

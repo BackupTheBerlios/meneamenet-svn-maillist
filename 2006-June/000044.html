@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r48 - branches/trunks/www
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-June/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r48%20-%20branches/trunks/www&In-Reply-To=%3C200606031255.k53CtfTQ021686%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000043.html">
+   <LINK REL="Next"  HREF="000045.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r48 - branches/trunks/www</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r48%20-%20branches/trunks/www&In-Reply-To=%3C200606031255.k53CtfTQ021686%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r48 - branches/trunks/www">trunks at berlios.de
+       </A><BR>
+    <I>Sat Jun  3 14:55:41 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000043.html">[Meneamenet-svn] r47 - branches/trunks/www
+</A></li>
+        <LI>Next message: <A HREF="000045.html">[Meneamenet-svn] r49 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-06-03 14:55:36 +0200 (Sat, 03 Jun 2006)
+New Revision: 48
+
+Modified:
+   branches/trunks/www/shakeit.php
+Log:
+fixes to get ajax behaviour working in shakeit page
+
+Modified: branches/trunks/www/shakeit.php
+===================================================================
+--- branches/trunks/www/shakeit.php	2006-06-03 12:52:37 UTC (rev 47)
++++ branches/trunks/www/shakeit.php	2006-06-03 12:55:36 UTC (rev 48)
+@@ -29,7 +29,7 @@
+ 	do_navbar(_('noticias en la cola'));
+ 	echo '&lt;div id=&quot;contents&quot;&gt;'.&quot;\n&quot;;
+ 	echo '&lt;h2&gt;'._('noticias pendientes').'&lt;/h2&gt;'.&quot;\n&quot;;
+-	$order_by = &quot; ORDER BY link_date DESC &quot;;
++	$order_by = &quot; ORDER BY link_id DESC &quot;;
+ }
+ 
+ 
+@@ -91,11 +91,13 @@
+ $rows = $db-&gt;get_var(&quot;SELECT count(*) $from_where $order_by&quot;);
+ $links = $db-&gt;get_col(&quot;SELECT link_id $from_where $order_by LIMIT $offset,$page_size&quot;);
+ if ($links) {
++	echo '&lt;span class=&quot;hidden&quot; id=&quot;start&quot;&gt;' . $links[0] . '&lt;/span&gt;';
+ 	foreach($links as $link_id) {
+ 		$link-&gt;id=$link_id;
+ 		$link-&gt;read();
+ 		$link-&gt;print_summary();
+ 	}
++	echo '&lt;span class=&quot;hidden&quot; id=&quot;end&quot;&gt;' . $link_id . '&lt;/span&gt;';
+ }
+ do_pages($rows, $page_size);
+ echo '&lt;/div&gt;'.&quot;\n&quot;;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000043.html">[Meneamenet-svn] r47 - branches/trunks/www
+</A></li>
+	<LI>Next message: <A HREF="000045.html">[Meneamenet-svn] r49 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

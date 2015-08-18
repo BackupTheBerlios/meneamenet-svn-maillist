@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r16 - branches/trunks/www
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r16%20-%20branches/trunks/www&In-Reply-To=%3C200605270052.k4R0q39x002205%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000011.html">
+   <LINK REL="Next"  HREF="000013.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r16 - branches/trunks/www</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r16%20-%20branches/trunks/www&In-Reply-To=%3C200605270052.k4R0q39x002205%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r16 - branches/trunks/www">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 02:52:03 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000011.html">[Meneamenet-svn] r15 - branches/trunks/www
+</A></li>
+        <LI>Next message: <A HREF="000013.html">[Meneamenet-svn] r17 - branches/trunks/www/js
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12">[ date ]</a>
+              <a href="thread.html#12">[ thread ]</a>
+              <a href="subject.html#12">[ subject ]</a>
+              <a href="author.html#12">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 02:51:45 +0200 (Sat, 27 May 2006)
+New Revision: 16
+
+Added:
+   branches/trunks/www/crontab.in.example
+Log:
+crontab example file
+
+Added: branches/trunks/www/crontab.in.example
+===================================================================
+--- branches/trunks/www/crontab.in.example	2006-05-27 00:48:30 UTC (rev 15)
++++ branches/trunks/www/crontab.in.example	2006-05-27 00:51:45 UTC (rev 16)
+@@ -0,0 +1,9 @@
++# m h  dom mon dow   command
++*/5 * * * * wget -q -O - '<A HREF="http://meneame.example.org/scripts/promote2.php?period=100">http://meneame.example.org/scripts/promote2.php?period=100</A>' &gt; /var/log/meneame/promote.log
++
++*/37 * * * * wget -q -O - <A HREF="http://meneame.example.org/scripts/discard.php">http://meneame.example.org/scripts/discard.php</A> &gt; /var/log/meneame/discard.log
++
++3 0,8,13 * * * wget -q -O - <A HREF="http://meneame.example.org/scripts/karma3.php">http://meneame.example.org/scripts/karma3.php</A> &gt; /var/log/meneame/karmal.log
++
++17 5 * * * /var/www/meneame/www/scripts/affiliation.pl &gt; /var/log/meneame/affiliation.log
++
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000011.html">[Meneamenet-svn] r15 - branches/trunks/www
+</A></li>
+	<LI>Next message: <A HREF="000013.html">[Meneamenet-svn] r17 - branches/trunks/www/js
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12">[ date ]</a>
+              <a href="thread.html#12">[ thread ]</a>
+              <a href="subject.html#12">[ subject ]</a>
+              <a href="author.html#12">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

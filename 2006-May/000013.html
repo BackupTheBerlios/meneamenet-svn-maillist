@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r17 - branches/trunks/www/js
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r17%20-%20branches/trunks/www/js&In-Reply-To=%3C200605270107.k4R17hXZ005230%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000012.html">
+   <LINK REL="Next"  HREF="000014.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r17 - branches/trunks/www/js</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r17%20-%20branches/trunks/www/js&In-Reply-To=%3C200605270107.k4R17hXZ005230%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r17 - branches/trunks/www/js">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 03:07:43 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000012.html">[Meneamenet-svn] r16 - branches/trunks/www
+</A></li>
+        <LI>Next message: <A HREF="000014.html">[Meneamenet-svn] r18 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13">[ date ]</a>
+              <a href="thread.html#13">[ thread ]</a>
+              <a href="subject.html#13">[ subject ]</a>
+              <a href="author.html#13">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 03:07:36 +0200 (Sat, 27 May 2006)
+New Revision: 17
+
+Added:
+   branches/trunks/www/js/categories.js
+Log:
+adding categories support
+
+Added: branches/trunks/www/js/categories.js
+===================================================================
+--- branches/trunks/www/js/categories.js	2006-05-27 00:51:45 UTC (rev 16)
++++ branches/trunks/www/js/categories.js	2006-05-27 01:07:36 UTC (rev 17)
+@@ -0,0 +1,19 @@
++function edit_category(obj) {
++	document.getElementById('l-top-' + obj.id).innerHTML = 
++	'&lt;input type=&quot;text&quot; id=&quot;new_cat-' + obj.id + '&quot; name=&quot;new_cat-' + obj.id + 
++	'&quot; tabindex=&quot;1&quot; size=&quot;25&quot; value=&quot;' + document.getElementById('label1-' + 
++	obj.id).innerHTML + '&quot;/&gt;&lt;label for=&quot;new_parent-' + obj.id + '&quot;&gt;Hija de:&lt;/label&gt;' + 
++	'&lt;input type=&quot;text&quot; id=&quot;new_parent-' + obj.id + '&quot; name=&quot;new_parent-' + 
++	obj.id + '&quot; tabindex=&quot;1&quot; size=&quot;1&quot; value=&quot;' + document.getElementById('parent-' + 
++	obj.id).value +'&quot;/&gt;';
++
++	// Para ocultar submit principal y sacar uno &#250;nico por cada campo.
++	// Habilitar esta opci&#243;n anularia la posibilidad de actualizaci&#243;n
++	// m&#250;ltiple de categor&#237;as (s&#243;lo ser&#237;a actualizable la categor&#237;a
++	// asociada al bot&#243;n de env&#237;o).
++	// &lt;input type=&quot;submit&quot; name=&quot;new_category&quot; value=&quot;' + document.getElementsByName('new_category')[0].value + '&quot; class=&quot;genericsubmit&quot;&gt;';
++	// document.getElementById('submit-p').innerHTML = &quot;&quot;;
++
++	document.getElementById('insert-p').innerHTML = &quot;&quot;;
++	return;
++}
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000012.html">[Meneamenet-svn] r16 - branches/trunks/www
+</A></li>
+	<LI>Next message: <A HREF="000014.html">[Meneamenet-svn] r18 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13">[ date ]</a>
+              <a href="thread.html#13">[ thread ]</a>
+              <a href="subject.html#13">[ subject ]</a>
+              <a href="author.html#13">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

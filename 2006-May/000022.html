@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r26 - branches/trunks/www
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r26%20-%20branches/trunks/www&In-Reply-To=%3C200605270115.k4R1FCX5007216%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000021.html">
+   <LINK REL="Next"  HREF="000023.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r26 - branches/trunks/www</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r26%20-%20branches/trunks/www&In-Reply-To=%3C200605270115.k4R1FCX5007216%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r26 - branches/trunks/www">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 03:15:12 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000021.html">[Meneamenet-svn] r25 - branches/trunks/www/libs
+</A></li>
+        <LI>Next message: <A HREF="000023.html">[Meneamenet-svn] r27 - branches/trunks/scripts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 03:15:06 +0200 (Sat, 27 May 2006)
+New Revision: 26
+
+Modified:
+   branches/trunks/www/cloud.php
+Log:
+adding rss link on cloud view
+
+Modified: branches/trunks/www/cloud.php
+===================================================================
+--- branches/trunks/www/cloud.php	2006-05-27 01:14:14 UTC (rev 25)
++++ branches/trunks/www/cloud.php	2006-05-27 01:15:06 UTC (rev 26)
+@@ -52,7 +52,8 @@
+ 	ksort($words);
+ 	foreach ($words as $word =&gt; $count) {
+ 		$size = intval($min_pts + ($count-1)*$coef);
+-		echo '&lt;span style=&quot;font-size: '.$size.'pt&quot;&gt;&lt;a href=&quot;index.php?search=tag:'.urlencode($word).$time_query.'&quot;&gt;'.$word.'&lt;/a&gt;&lt;/span&gt;&nbsp;&nbsp; ';
++		echo '&lt;a href=&quot;/rss2.php?search='.urlencode($word).'&amp;tag=true&quot; rel=&quot;rss&quot;&gt;&lt;img src=&quot;/img/common/feed-icon-16x16.png&quot; alt=&quot;rss '.urlencode($word).'&quot; /&gt; &lt;/a&gt;&lt;span style=&quot;font-size: '.$size.'pt&quot;&gt;&lt;a href=&quot;index.php?search='.urlencode($word).$time_query.'&amp;tag=true&quot;&gt;'.$word.'&lt;/a&gt;&lt;/span&gt;&nbsp;&nbsp;
++';
+ 	}
+ 
+ }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000021.html">[Meneamenet-svn] r25 - branches/trunks/www/libs
+</A></li>
+	<LI>Next message: <A HREF="000023.html">[Meneamenet-svn] r27 - branches/trunks/scripts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

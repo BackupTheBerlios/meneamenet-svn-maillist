@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r31 - branches/trunks/www
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r31%20-%20branches/trunks/www&In-Reply-To=%3C200605270128.k4R1SqoI009840%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000026.html">
+   <LINK REL="Next"  HREF="000028.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r31 - branches/trunks/www</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r31%20-%20branches/trunks/www&In-Reply-To=%3C200605270128.k4R1SqoI009840%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r31 - branches/trunks/www">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 03:28:52 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000026.html">[Meneamenet-svn] r30 - branches/trunks/www
+</A></li>
+        <LI>Next message: <A HREF="000028.html">[Meneamenet-svn] r32 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 03:28:47 +0200 (Sat, 27 May 2006)
+New Revision: 31
+
+Modified:
+   branches/trunks/www/categories.php
+Log:
+adding aggregator support
+
+Modified: branches/trunks/www/categories.php
+===================================================================
+--- branches/trunks/www/categories.php	2006-05-27 01:27:58 UTC (rev 30)
++++ branches/trunks/www/categories.php	2006-05-27 01:28:47 UTC (rev 31)
+@@ -80,6 +80,13 @@
+ 	echo '&lt;input type=&quot;text&quot; id=&quot;new_cat&quot; name=&quot;new_cat&quot; tabindex=&quot;1&quot; size=&quot;25&quot; /&gt; ' . &quot;\n&quot;;
+ 	echo '&lt;label for=&quot;new_parent&quot;&gt;' . _(&quot;hija de&quot;) . ':&lt;/label&gt; ' . &quot;\n&quot;;
+ 	echo '&lt;input type=&quot;text&quot; id=&quot;new_parent&quot; name=&quot;new_parent&quot; tabindex=&quot;1&quot; size=&quot;1&quot; value=&quot;0&quot; /&gt;' . &quot;\n&quot;;
++	echo '&lt;label for=&quot;new_feed&quot;&gt;' . _(&quot;url feed&quot;) . ':&lt;/label&gt; ' . &quot;\n&quot;;
++	echo '&lt;input type=&quot;text&quot; id=&quot;new_feed&quot; name=&quot;new_feed&quot; tabindex=&quot;1&quot; size=&quot;25&quot; /&gt;&lt;br /&gt;' . &quot;\n&quot;;
++
++	echo '&lt;span class=&quot;genericformnote&quot;&gt;&lt;strong&gt;pocas palabras, gen&#233;ricas, cortas y separadas por &quot;,&quot; (coma)&lt;/strong&gt; Ejemplo: &lt;em&gt;web, programaci&#243;n, software libre&lt;/em&gt;&lt;/span&gt;&lt;br /&gt;';
++	echo '&lt;label for=&quot;new_tags&quot;&gt;' . _(&quot;etiquetas por defecto&quot;) . ':&lt;/label&gt; ' . &quot;\n&quot;;
++	echo '&lt;input type=&quot;text&quot; id=&quot;new_tags&quot; name=&quot;new_tags&quot; tabindex=&quot;1&quot; size=&quot;25&quot; /&gt;&lt;/p&gt;' . &quot;\n&quot;;
++
+ 	echo '&lt;p class=&quot;l-bottom&quot; id=&quot;submit-p&quot;&gt;&lt;input type=&quot;submit&quot; name=&quot;new&quot; value=&quot;'._('enviar').'&quot; class=&quot;genericsubmit&quot;&gt;&lt;/p&gt;';
+ 	echo &quot;&lt;/form&gt;&lt;/fieldset&gt;&lt;/div&gt;&lt;/div&gt;\n&quot;;
+ }
+@@ -87,7 +94,7 @@
+ function show_categories() {
+ 	global $db, $dblang;
+ 
+-	$categories = $db-&gt;get_results(&quot;SELECT category_id, category_parent, category_name FROM categories WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC&quot;);
++	$categories = $db-&gt;get_results(&quot;SELECT category_id, category_parent, category_name, category_feed FROM categories WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC&quot;);
+ 
+ 	foreach ($categories as $category) {
+ 		if (isset($tree[$category-&gt;category_parent])) {
+@@ -97,6 +104,7 @@
+ 		}
+ 		$category_data[$category-&gt;category_id]-&gt;category_parent = $category-&gt;category_parent;
+ 		$category_data[$category-&gt;category_id]-&gt;category_name = $category-&gt;category_name;
++		$category_data[$category-&gt;category_id]-&gt;category_feed = $category-&gt;category_feed;
+ 	}
+ 
+ 	$elems = split(&quot;,&quot;, $tree[0]);
+@@ -111,7 +119,7 @@
+ 			for ($i=$level; $i&gt;0; $i--)
+ 				echo '&lt;blockquote&gt;';
+ 
+-			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name);
++			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name, $data[$item]-&gt;category_feed);
+ 
+ 			for ($i=$level; $i&gt;0; $i--)
+ 				echo '&lt;/blockquote&gt;';
+@@ -120,7 +128,7 @@
+ 			for ($i=$level; $i&gt;0; $i--)
+ 				echo '&lt;blockquote&gt;';
+ 
+-			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name);
++			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name, $data[$item]-&gt;category_feed);
+ 
+ 			for ($i=$level; $i&gt;0; $i--)
+ 				echo '&lt;/blockquote&gt;';
+@@ -128,7 +136,7 @@
+ 	}
+ }
+ 
+-function print_category ($id, $parent, $name) {
++function print_category ($id, $parent, $name, $feed) {
+ 	echo '&lt;p class=&quot;l-top&quot; id=&quot;l-top-edit[' . $id . ']&quot;&gt;['. $id . 
+ 		'] &lt;label for=&quot;edit[' . $id . ']&quot; accesskey=&quot;' . $id . 
+ 		'&quot; id=&quot;label1-edit[' . $id .']&quot;&gt;' . _($name) .'&lt;/label&gt; ';
+@@ -140,6 +148,9 @@
+ 	echo '&lt;input type=&quot;hidden&quot;  name=&quot;parent-edit[' . $id . ']&quot; id=&quot;parent-edit[' 
+ 		. $id . ']&quot; value=&quot;' . $parent . '&quot; /&gt;';
+ 
++	echo '&lt;input type=&quot;hidden&quot;  name=&quot;feed-edit[' . $id . ']&quot; id=&quot;feed-edit[' 
++		. $id . ']&quot; value=&quot;' . $feed . '&quot; /&gt;';
++
+ 	echo '&lt;input type=&quot;submit&quot; name=&quot;delete[' . $id . ']&quot; id=&quot;delete[' . $id .
+ 		 ']&quot; tabindex=&quot;1&quot; value=&quot;' . _('eliminar') . ' &quot; /&gt;' . &quot;\n&quot;;
+ }
+@@ -154,7 +165,7 @@
+ 	if (isset($_POST['delete'])) {
+ 		delete_category(array_keys($_POST['delete']));
+ 	} elseif (isset($_POST['new_cat'])) {
+-		insert_category(trim($_POST['new_cat']), trim($_POST['new_parent']));
++		insert_category(trim($_POST['new_cat']), trim($_POST['new_parent']), trim($_POST['new_feed']), trim($_POST['new_tags']));
+ 	} else {
+ 		foreach (array_keys($_POST['new_cat-edit']) as $key) {
+ 			$category-&gt;id[$ncat]=trim($key);
+@@ -170,10 +181,24 @@
+ 			$category-&gt;parent[$ncat]=intval($catparent);
+ 			$ncat++;
+ 		}
++		$ncat=0;
++		foreach ($_POST['new_feed-edit'] as $catfeed) {
++			$category-&gt;feed[$ncat]=htmlspecialchars(trim($catfeed));
++			$ncat++;
++		}
++		$ncat=0;
++		foreach ($_POST['new_tags-edit'] as $cattags) {
++			$category-&gt;tags[$ncat]=trim($cattags);
++			$ncat++;
++		}
+ 		if ( !(empty($_POST['new_cat-edit']) || empty($_POST['new-cat'])) ) {
+ 			$errors = 1;
+ 			echo '&lt;p class=&quot;form-error&quot;&gt;'._('No ha introducido ninguna categor&#237;a nueva').'&lt;/p&gt;';
+ 		}
++		if ( empty($_POST['new_tags-edit']) ) {
++			$errors = 1;
++			echo '&lt;p class=&quot;form-error&quot;&gt;'._('No ha introducido ninguna etiqueta').'&lt;/p&gt;';
++		}
+ 		if (!$errors) {
+ 			save_categories($category);
+ 			echo '&lt;p class=&quot;form-act&quot;&gt;'._('Datos actualizados').'&lt;/p&gt;';
+@@ -186,7 +211,8 @@
+ 
+ 	$ncat=0;
+ 	foreach ($category-&gt;id as $key) {
+-		$db-&gt;query(&quot;update categories set category_name=\&quot;&quot; . $category-&gt;name[$ncat] . &quot;\&quot;, category_parent=\&quot;&quot; . $category-&gt;parent[$ncat] . &quot;\&quot; where category_id=\&quot;$key\&quot; and category_lang=\&quot;$dblang\&quot;&quot;);
++		$db-&gt;query(&quot;update categories set category_name=\&quot;&quot; . $category-&gt;name[$ncat] . &quot;\&quot;, category_parent=\&quot;&quot; . $category-&gt;parent[$ncat] . &quot;\&quot;, category_feed=\&quot;&quot; . $category-&gt;feed[$ncat] . &quot;\&quot; where category_id=\&quot;$key\&quot; and category_lang=\&quot;$dblang\&quot;&quot;);
++		$db-&gt;query(&quot;update feed_data set tags='&quot; . $category-&gt;tags[$ncat] . &quot;\&quot; where id=\&quot;$key\&quot;&quot;);
+ 		$ncat++;
+ 	}
+ }
+@@ -196,13 +222,21 @@
+ 
+ 	if (is_int($key[0]))
+ 		$db-&gt;query(&quot;delete from categories where category_id=\&quot;&quot; . $key[0] . &quot;\&quot; and category_lang=\&quot;$dblang\&quot;&quot;);
++		$db-&gt;query(&quot;delete from feed_data where id=\&quot;&quot; . $key[0] . &quot;\&quot;&quot;);
+ }
+ 
+-function insert_category($key, $parent) {
++function insert_category($key, $parent, $feed, $tags) {
+ 	global $db, $dblang;
+ 
+ 	$id=$db-&gt;get_results(&quot;select max(category_id) max from categories&quot;);
+-	$db-&gt;query(&quot;insert into categories (category_id, category_parent, category_name, category_lang) values (&quot; . (intval($id[0]-&gt;max) + 1) . &quot;, $parent, \&quot;$key\&quot;, \&quot;$dblang\&quot;)&quot;);
++	if ($feed != &quot;&quot;) {
++		$uri = parse_url($feed);
++		$link = $uri['scheme'] . &quot;://&quot; . $uri['host'];
++		$db-&gt;query(&quot;insert into feed_data (id, link, tags) values(&quot; . (intval($id[0]-&gt;max) + 1) .&quot;, '&quot;. $link  .&quot;', '&quot; . $tags . &quot;')&quot;);
++		$db-&gt;query(&quot;insert into categories (category_id, category_parent, category_name, category_feed, category_lang) values (&quot; . (intval($id[0]-&gt;max) + 1) . &quot;, $parent, \&quot;$key\&quot;, \&quot;$feed\&quot;, \&quot;$dblang\&quot;)&quot;);
++	} else {
++		$db-&gt;query(&quot;insert into categories (category_id, category_parent, category_name, category_lang) values (&quot; . (intval($id[0]-&gt;max) + 1) . &quot;, $parent, \&quot;$key\&quot;, \&quot;$dblang\&quot;)&quot;);
++	}
+ }
+ 
+ ?&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000026.html">[Meneamenet-svn] r30 - branches/trunks/www
+</A></li>
+	<LI>Next message: <A HREF="000028.html">[Meneamenet-svn] r32 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

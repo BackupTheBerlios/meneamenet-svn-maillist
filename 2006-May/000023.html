@@ -1,0 +1,686 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r27 - branches/trunks/scripts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r27%20-%20branches/trunks/scripts&In-Reply-To=%3C200605270124.k4R1O1m8008873%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000022.html">
+   <LINK REL="Next"  HREF="000024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r27 - branches/trunks/scripts</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r27%20-%20branches/trunks/scripts&In-Reply-To=%3C200605270124.k4R1O1m8008873%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r27 - branches/trunks/scripts">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 03:24:01 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000022.html">[Meneamenet-svn] r26 - branches/trunks/www
+</A></li>
+        <LI>Next message: <A HREF="000024.html">[Meneamenet-svn] r28 - branches/trunks/www/archives
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23">[ date ]</a>
+              <a href="thread.html#23">[ thread ]</a>
+              <a href="subject.html#23">[ subject ]</a>
+              <a href="author.html#23">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 03:23:38 +0200 (Sat, 27 May 2006)
+New Revision: 27
+
+Added:
+   branches/trunks/scripts/aggregator.php
+Log:
+adding aggregator script to get items automatically from rss sources
+
+Added: branches/trunks/scripts/aggregator.php
+===================================================================
+--- branches/trunks/scripts/aggregator.php	2006-05-27 01:15:06 UTC (rev 26)
++++ branches/trunks/scripts/aggregator.php	2006-05-27 01:23:38 UTC (rev 27)
+@@ -0,0 +1,610 @@
++&lt;?php
++/* $Id: aggregator.php,v 1.0 2006/03/28 01:22:31 trunks
++        Based on aggregator.module from drupal (<A HREF="http://drupal.org/">http://drupal.org/</A>) */
++
++/**
++ * @file
++ * Used to aggregate syndicated content (RSS and RDF).
++ */
++
++include('/var/www/meneame/www/config.php');
++
++aggregator_main();
++
++function aggregator_main() {
++  global $db, $dblang;
++
++  $result = $db-&gt;get_results('SELECT * FROM categories c JOIN feed_data f ON f.id = c.category_id WHERE c.category_lang=&quot;' . $dblang . '&quot;');
++
++  foreach ($result as $category) {
++    aggregator_refresh($category);
++  }
++}
++
++/**
++ * Checks a news feed for new items.
++ */
++function aggregator_refresh($feed) {
++  global $channel, $image, $db;
++
++  // Generate conditional GET headers.
++  $headers = array();
++  if ($feed-&gt;etag) {
++    $headers['If-None-Match'] = $feed-&gt;etag;
++  }
++  if ($feed-&gt;modified) {
++    $headers['If-Modified-Since'] = gmdate('D, d M Y H:i:s', $feed-&gt;modified) .' GMT';
++  }
++
++  // Request feed.
++  $result = http_request($feed-&gt;category_feed, $headers);
++
++  // Process HTTP response code.
++  switch ($result-&gt;code) {
++    case 304:
++      // No new syndicated content from site
++      $db-&gt;query('UPDATE feed_data SET checked = ' . time() . ' WHERE id = '. $feed-&gt;id);
++      break;
++    case 301:
++      // Updated URL for feed
++      $feed-&gt;category_feed = $result-&gt;redirect_url;
++      $db-&gt;query(&quot;UPDATE feed_data SET category_feed='&quot; . $feed-&gt;category_feed . &quot;' WHERE category_id=&quot; . $feed-&gt;id);
++      break;
++
++    case 200:
++    case 302:
++    case 307:
++      // Filter the input data:
++     if (aggregator_parse_feed($result-&gt;data, $feed)) {
++
++        if ($result-&gt;headers['Last-Modified']) {
++          $modified = strtotime($result-&gt;headers['Last-Modified']);
++        }
++
++        /*
++        ** Prepare the channel data:
++        */
++
++        foreach ($channel as $key =&gt; $value) {
++          $channel[$key] = trim(strip_tags($value));
++        }
++
++        /*
++        ** Prepare the image data (if any):
++        */
++
++        foreach ($image as $key =&gt; $value) {
++          $image[$key] = trim($value);
++        }
++
++        if ($image['LINK'] &amp;&amp; $image['URL'] &amp;&amp; $image['TITLE']) {
++          $image = '&lt;a href=&quot;'. $image['LINK'] .'&quot;&gt;&lt;img src=&quot;'. $image['URL'] .'&quot; alt=&quot;'. $image['TITLE'] .'&quot; /&gt;&lt;/a&gt;';
++        }
++        else {
++          $image = NULL;
++        }
++
++        /*
++        ** Update the feed data:
++        */
++
++        $db-&gt;query(&quot;UPDATE feed_data SET checked = &quot;. time() .&quot;, link = '&quot;. $channel['LINK'] .&quot;', description = '&quot;. $channel['DESCRIPTION'] .&quot;', image = '&quot;. $image .&quot;', etag = '&quot;. $result-&gt;headers['ETag'] .&quot;', modified = '&quot;. $modified .&quot;' WHERE id = &quot;. $feed-&gt;id);
++
++      }
++      break;
++    default:
++      echo 'Failed to parse RSS feed ' . $feed-&gt;category_name . ' : ' . $result-&gt;code .' '. $result-&gt;error . &quot;\n&quot;;
++  }
++}
++
++/**
++ * Perform an HTTP request.
++ *
++ * This is a flexible and powerful HTTP client implementation. Correctly
++ * handles
++ * GET, POST, PUT or any other HTTP requests. Handles redirects.
++ *
++ * @param $url
++ *   A string containing a fully qualified URI.
++ * @param $headers
++ *   An array containing an HTTP header =&gt; value pair.
++ * @param $method
++ *   A string defining the HTTP request to use.
++ * @param $data
++ *   A string containing data to include in the request.
++ * @param $retry
++ *   An integer representing how many times to retry the request in case of a
++ *   redirect.
++ * @return
++ *   An object containing the HTTP request headers, response code, headers,
++ *   data, and redirect status.
++ */
++function http_request($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 3) {
++  $result = new StdClass();
++
++  // Parse the URL, and make sure we can handle the schema.
++  $uri = parse_url($url);
++
++  switch ($uri['scheme']) {
++    case 'http':
++      $fp = @fsockopen($uri['host'], ($uri['port'] ? $uri['port'] : 80), $errno, $errstr, 15);
++      break;
++    case 'https':
++      // Note: Only works for PHP 4.3 compiled with OpenSSL.
++      $fp = @fsockopen('<A HREF="ssl://">ssl://</A>'. $uri['host'], ($uri['port'] ? $uri['port'] : 443), $errno, $errstr, 20);
++      break;
++    default:
++      $result-&gt;error = 'invalid schema '. $uri['scheme'];
++      return $result;
++  }
++
++  // Make sure the socket opened properly.
++  if (!$fp) {
++    $result-&gt;error = trim($errno .' '. $errstr);
++    return $result;
++  }
++
++  // Construct the path to act on.
++  $path = $uri['path'] ? $uri['path'] : '/';
++  if ($uri['query']) {
++    $path .= '?'. $uri['query'];
++  }
++
++  // Create HTTP request.
++  $defaults = array(
++    'Host' =&gt; 'Host: '. $uri['host'],
++    'User-Agent' =&gt; 'User-Agent: Drupal (+<A HREF="http://www.drupal.org/">http://www.drupal.org/</A>)',
++    'Content-Length' =&gt; 'Content-Length: '. strlen($data)
++  );
++
++  foreach ($headers as $header =&gt; $value) {
++    $defaults[$header] = $header .': '. $value;
++  }
++
++  $request = $method .' '. $path .&quot; HTTP/1.0\r\n&quot;;
++  $request .= implode(&quot;\r\n&quot;, $defaults);
++  $request .= &quot;\r\n\r\n&quot;;
++  if ($data) {
++    $request .= $data .&quot;\r\n&quot;;
++  }
++  $result-&gt;request = $request;
++
++  fwrite($fp, $request);
++
++  // Fetch response.
++  $response = '';
++  while (!feof($fp) &amp;&amp; $data = fread($fp, 1024)) {
++    $response .= $data;
++  }
++  fclose($fp);
++
++  // Parse response.
++  list($headers, $result-&gt;data) = explode(&quot;\r\n\r\n&quot;, $response, 2);
++  $headers = preg_split(&quot;/\r\n|\n|\r/&quot;, $headers);
++
++  list($protocol, $code, $text) = explode(' ', trim(array_shift($headers)), 3);
++  $result-&gt;headers = array();
++
++  // Parse headers.
++  while ($line = trim(array_shift($headers))) {
++    list($header, $value) = explode(':', $line, 2);
++    $result-&gt;headers[$header] = trim($value);
++  }
++
++  $responses = array(
++    100 =&gt; 'Continue', 101 =&gt; 'Switching Protocols',
++    200 =&gt; 'OK', 201 =&gt; 'Created', 202 =&gt; 'Accepted', 203 =&gt; 'Non-Authoritative Information', 204 =&gt; 'No Content', 205 =&gt; 'Reset Content', 206 =&gt; 'Partial Content',
++    300 =&gt; 'Multiple Choices', 301 =&gt; 'Moved Permanently', 302 =&gt; 'Found', 303 =&gt; 'See Other', 304 =&gt; 'Not Modified', 305 =&gt; 'Use Proxy', 307 =&gt; 'Temporary Redirect',
++    400 =&gt; 'Bad Request', 401 =&gt; 'Unauthorized', 402 =&gt; 'Payment Required', 403 =&gt; 'Forbidden', 404 =&gt; 'Not Found', 405 =&gt; 'Method Not Allowed', 406 =&gt; 'Not Acceptable', 407 =&gt; 'Proxy Authentication Required', 408 =&gt; 'Request Time-out', 409 =&gt; 'Conflict', 410 =&gt; 'Gone', 411 =&gt; 'Length Required', 412 =&gt; 'Precondition Failed', 413 =&gt; 'Request Entity Too Large', 414 =&gt; 'Request-URI Too Large', 415 =&gt; 'Unsupported Media Type', 416 =&gt; 'Requested range not satisfiable', 417 =&gt; 'Expectation Failed',
++    500 =&gt; 'Internal Server Error', 501 =&gt; 'Not Implemented', 502 =&gt; 'Bad Gateway', 503 =&gt; 'Service Unavailable', 504 =&gt; 'Gateway Time-out', 505 =&gt; 'HTTP Version not supported'
++  );
++  // RFC 2616 states that all unknown HTTP codes must be treated the same as
++  // the base code in their class.
++  if (!isset($responses[$code])) {
++    $code = floor($code / 100) * 100;
++  }
++
++  switch ($code) {
++    case 200: // OK
++    case 304: // Not modified
++      break;
++    case 301: // Moved permanently
++    case 302: // Moved temporarily
++    case 307: // Moved temporarily
++      $location = $result-&gt;headers['Location'];
++
++      if ($retry) {
++        $result = http_request($result-&gt;headers['Location'], $headers, $method, $data, --$retry);
++        $result-&gt;redirect_code = $result-&gt;code;
++      }
++      $result-&gt;redirect_url = $location;
++
++      break;
++    default:
++      $result-&gt;error = $text;
++  }
++
++  $result-&gt;code = $code;
++  return $result;
++}
++
++/**
++ * Decode all HTML entities (including numerical ones) to regular UTF-8 bytes.
++ * Double-escaped entities will only be decoded once (&quot;&amp;lt;&quot; becomes
++ * &quot;&lt;&quot;, not &quot;&lt;&quot;).
++ *
++ * @param $text
++ *   The text to decode entities in.
++ * @param $exclude
++ *   An array of characters which should not be decoded. For example,
++ *   array('&lt;', '&amp;', '&quot;'). This affects both named and numerical entities.
++ */
++function decode_entities($text, $exclude = array()) {
++  static $table;
++  // We store named entities in a table for quick processing.
++  if (!isset($table)) {
++    // Get all named HTML entities.
++    $table = array_flip(get_html_translation_table(HTML_ENTITIES));
++    // PHP gives us ISO-8859-1 data, we need UTF-8.
++    $table = array_map('utf8_encode', $table);
++    // Add apostrophe (XML)
++    $table['&apos;'] = &quot;'&quot;;
++  }
++  $newtable = array_diff($table, $exclude);
++
++  // Use a regexp to select all entities in one pass, to avoid decoding
++  // double-escaped entities twice.
++  return preg_replace('/&amp;(#x?)?([A-Za-z0-9]+);/e', '_decode_entities(&quot;$1&quot;, &quot;$2&quot;, &quot;$0&quot;, $newtable, $exclude)', $text);
++}
++
++/**
++ * Helper function for decode_entities
++ */
++function _decode_entities($prefix, $codepoint, $original, &amp;$table, &amp;$exclude)
++{
++  // Named entity
++  if (!$prefix) {
++    if (isset($table[$original])) {
++      return $table[$original];
++    }
++    else {
++      return $original;
++    }
++  }
++  // Hexadecimal numerical entity
++  if ($prefix == '#x') {
++    $codepoint = base_convert($codepoint, 16, 10);
++  }
++  else {
++    // Decimal numerical entity (strip leading zeros to avoid PHP octal
++    // notation)
++    $codepoint = preg_replace('/^0+/', '', $codepoint);
++  }
++  // Encode codepoint as UTF-8 bytes
++  if ($codepoint &lt; 0x80) {
++    $str = chr($codepoint);
++  }
++  else if ($codepoint &lt; 0x800) {
++    $str = chr(0xC0 | ($codepoint &gt;&gt; 6))
++         . chr(0x80 | ($codepoint &amp; 0x3F));
++  }
++  else if ($codepoint &lt; 0x10000) {
++    $str = chr(0xE0 | ( $codepoint &gt;&gt; 12))
++         . chr(0x80 | (($codepoint &gt;&gt; 6) &amp; 0x3F))
++         . chr(0x80 | ( $codepoint       &amp; 0x3F));
++  }
++  else if ($codepoint &lt; 0x200000) {
++    $str = chr(0xF0 | ( $codepoint &gt;&gt; 18))
++         . chr(0x80 | (($codepoint &gt;&gt; 12) &amp; 0x3F))
++         . chr(0x80 | (($codepoint &gt;&gt; 6)  &amp; 0x3F))
++         . chr(0x80 | ( $codepoint        &amp; 0x3F));
++  }
++  // Check for excluded characters
++  if (in_array($str, $exclude)) {
++    return $original;
++  }
++  else {
++    return $str;
++  }
++}
++
++function aggregator_parse_feed(&amp;$data, $feed) {
++  global $items, $image, $channel, $db;
++
++  // Unset the global variables before we use them:
++  unset($GLOBALS['element'], $GLOBALS['item'], $GLOBALS['tag']);
++  $items = array();
++  $image = array();
++  $channel = array();
++
++  // parse the data:
++  $xml_parser = meneame_xml_parser_create($data);
++  xml_set_element_handler($xml_parser, 'aggregator_element_start', 'aggregator_element_end');
++  xml_set_character_data_handler($xml_parser, 'aggregator_element_data');
++
++  if (!xml_parse($xml_parser, $data, 1)) {
++    echo 'Failed to parse RSS feed ' . $feed-&gt;category_name . ' : ' . xml_error_string(xml_get_error_code($xml_parser)) .' at line ' . xml_get_current_line_number($xml_parser) . &quot;\n&quot;;
++    return 0;
++  }
++  xml_parser_free($xml_parser);
++
++  /*
++  ** We reverse the array such that we store the first item last,
++  ** and the last item first.  In the database, the newest item
++  ** should be at the top.
++  */
++
++  $items = array_reverse($items);
++
++  foreach ($items as $item) {
++    unset($title, $link, $author, $description);
++
++    // Prepare the item:
++    foreach ($item as $key =&gt; $value) {
++      // TODO: Make handling of aggregated HTML more flexible/configurable.
++      $value = decode_entities(trim($value));
++      if ($key != 'LINK' &amp;&amp; $key != 'GUID') {
++        //$value = filter_xss($value);
++        ereg_replace(&quot;'&quot;,&quot;\'&quot;, $value);
++      }
++      $item[$key] = $value;
++    }
++
++    /*
++    ** Resolve the item's title.  If no title is found, we use
++    ** up to 40 characters of the description ending at a word
++    ** boundary but not splitting potential entities.
++    */
++
++    if ($item['TITLE']) {
++      $title = $item['TITLE'];
++    }
++    else {
++      $title = preg_replace('/^(.*)[^\w;&amp;].*?$/', &quot;\\1&quot;, truncate_utf8($item['DESCRIPTION'], 40));
++    }
++
++    /*
++    ** Resolve the items link.
++    */
++
++    if ($item['LINK']) {
++      $link = $item['LINK'];
++    }
++    elseif ($item['GUID'] &amp;&amp; (strncmp($item['GUID'], '<A HREF="http://">http://</A>', 7) == 0)) {
++      $link = $item['GUID'];
++    }
++    else {
++      $link = $feed-&gt;link;
++    }
++
++    /*
++    ** Try to resolve and parse the item's publication date.  If no
++    ** date is found, we use the current date instead.
++    */
++
++    if ($item['PUBDATE']) $date = $item['PUBDATE'];                        // RSS 2.0
++    else if ($item['DC:DATE']) $date = $item['DC:DATE'];                   // Dublin core
++    else if ($item['DCTERMS:ISSUED']) $date = $item['DCTERMS:ISSUED'];     // Dublin core
++    else if ($item['DCTERMS:CREATED']) $date = $item['DCTERMS:CREATED'];   // Dublin core
++    else if ($item['DCTERMS:MODIFIED']) $date = $item['DCTERMS:MODIFIED']; // Dublin core
++    else $date = 'now';
++
++    $timestamp = strtotime($date); // strtotime() returns -1 on failure
++    if ($timestamp &lt; 0) {
++      $timestamp = aggregator_parse_w3cdtf($date); // also returns -1 on failure
++      if ($timestamp &lt; 0) {
++        $timestamp = time(); // better than nothing
++      }
++    }
++
++    /*
++    ** Save this item.  Try to avoid duplicate entries as much as
++    ** possible.  If we find a duplicate entry, we resolve it and
++    ** pass along it's ID such that we can update it if needed.
++    */
++
++    if ($link &amp;&amp; $link != $feed-&gt;link &amp;&amp; $link != $feed-&gt;category_feed) {
++      $entry = $db-&gt;get_results(&quot;SELECT link_id FROM links WHERE link_category = &quot;. $feed-&gt;category_id .&quot; AND link_url = '&quot;. $link .&quot;'&quot;);
++    }
++    else {
++      $entry = $db-&gt;get_results(&quot;SELECT link_id FROM links WHERE link_category = &quot;. $feed-&gt;category_id .&quot; AND link_title = '&quot;. $title .&quot;'&quot;);
++    }
++
++    aggregator_save_item(array('link_id' =&gt; $entry[0]-&gt;link_id, 'link_category' =&gt; $feed-&gt;category_id, 'link_modified' =&gt; $timestamp, 'link_title' =&gt; $title, 'link_url' =&gt; $link, 'link_author' =&gt; 1, 'link_content' =&gt; $item['DESCRIPTION'], 'category_name' =&gt; $feed-&gt;category_name, 'tags' =&gt; $feed-&gt;tags));
++  }
++
++  return 1;
++}
++
++function aggregator_save_item($edit) {
++  global $db;
++  if ($edit['link_id'] &amp;&amp; $edit['link_title']) {
++    $db-&gt;query(&quot;UPDATE links SET link_title = '&quot;. $edit['link_title'] .&quot;', link_url = '&quot;. $edit['link_url'] .&quot;', link_author = '&quot;. $edit['link_author'] .&quot;', link_content = '&quot;. $edit['link_content'] .&quot;' WHERE link_id = &quot; . $edit['link_id']);
++  }
++  else if ($edit['id']) {
++    $db-&gt;query('DELETE FROM links WHERE link_id = ' . $edit['link_id']);
++  }
++  else if ($edit['link_title'] &amp;&amp; $edit['link_url']) { 
++    $db-&gt;query(&quot;INSERT INTO links (link_category, link_title, link_url_title, link_url, link_status, link_author, link_blog, link_content, link_date, link_tags) VALUES (&quot;. $edit['link_category'] .&quot;, '&quot;. $edit['link_title'] .&quot;', '&quot;. $edit['link_title'] .&quot;', '&quot;. $edit['link_url'] .&quot;', 'queued', '&quot;. $edit['link_author'] .&quot;', '1', '&quot;. $edit['link_content'] . &quot; ', from_unixtime('&quot;. $edit['link_modified'] .&quot;'), '&quot;. $edit['tags'].&quot;')&quot;);
++  }
++}
++
++/**
++ * Parse the W3C date/time format, a subset of ISO 8601. PHP date parsing
++ * functions do not handle this format.
++ * See <A HREF="http://www.w3.org/TR/NOTE-datetime">http://www.w3.org/TR/NOTE-datetime</A> for more information.
++ * Originally from MagpieRSS (<A HREF="http://magpierss.sourceforge.net/">http://magpierss.sourceforge.net/</A>).
++ *
++ * @param $date_str A string with a potentially W3C DTF date.
++ * @return A timestamp if parsed successfully or -1 if not.
++ */
++function aggregator_parse_w3cdtf($date_str) {
++  if (preg_match('/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(:(\d{2}))?(?:([-+])(\d{2}):?(\d{2})|(Z))?/', $date_str, $match)) {
++    list($year, $month, $day, $hours, $minutes, $seconds) = array($match[1], $match[2], $match[3], $match[4], $match[5], $match[6]);
++    // calc epoch for current date assuming GMT
++    $epoch = gmmktime($hours, $minutes, $seconds, $month, $day, $year);
++    if ($match[10] != 'Z') { // Z is zulu time, aka GMT
++      list($tz_mod, $tz_hour, $tz_min) = array($match[8], $match[9], $match[10]);
++      // zero out the variables
++      if (!$tz_hour) {
++        $tz_hour = 0;
++      }
++      if (!$tz_min) {
++        $tz_min = 0;
++      }
++      $offset_secs = (($tz_hour * 60) + $tz_min) * 60;
++      // is timezone ahead of GMT?  then subtract offset
++      if ($tz_mod == '+') {
++        $offset_secs *= -1;
++      }
++      $epoch += $offset_secs;
++    }
++    return $epoch;
++  }
++  else {
++    return -1;
++  }
++}
++
++/**
++ * Call-back function used by the XML parser.
++ */
++function aggregator_element_start($parser, $name, $attributes) {
++  global $item, $element, $tag;
++
++  switch ($name) {
++    case 'IMAGE':
++    case 'TEXTINPUT':
++      $element = $name;
++      break;
++    case 'ITEM':
++      $element = $name;
++      $item += 1;
++  }
++
++  $tag = $name;
++}
++
++/**
++ * Call-back function used by the XML parser.
++ */
++function aggregator_element_end($parser, $name) {
++  global $element;
++
++  switch ($name) {
++    case 'IMAGE':
++    case 'TEXTINPUT':
++    case 'ITEM':
++      $element = '';
++  }
++}
++
++/**
++ * Call-back function used by the XML parser.
++ */
++function aggregator_element_data($parser, $data) {
++  global $channel, $element, $items, $item, $image, $tag;
++
++  switch ($element) {
++    case 'ITEM':
++      $items[$item][$tag] .= $data;
++      break;
++    case 'IMAGE':
++      $image[$tag] .= $data;
++      break;
++    case 'TEXTINPUT':
++      // The sub-element is not supported. However, we must recognize
++      // it or its contents will end up in the item array.
++      break;
++    default:
++      $channel[$tag] .= $data;
++  }
++}
++
++/**
++ * Prepare a new XML parser.
++ *
++ * This is a wrapper around xml_parser_create() which extracts the encoding
++ * from
++ * the XML data first and sets the output encoding to UTF-8. This function
++ * should
++ * be used instead of xml_parser_create(), because PHP's XML parser doesn't
++ * check
++ * the input encoding itself.
++ *
++ * This is also where unsupported encodings will be converted.
++ * Callers should take this into account: $data might have been changed after
++ * the call.
++ *
++ * @param &amp;$data
++ *   The XML data which will be parsed later.
++ * @return
++ *   An XML parser object.
++ */
++function meneame_xml_parser_create(&amp;$data) {
++  // Default XML encoding is UTF-8
++  $encoding = 'utf-8';
++  $bom = false;
++
++  // Check for UTF-8 byte order mark (PHP5's XML parser doesn't handle it).
++  if (!strncmp($data, &quot;\xEF\xBB\xBF&quot;, 3)) {
++    $bom = true;
++    $data = substr($data, 3);
++  }
++
++  // Check for an encoding declaration in the XML prolog if no BOM was found.
++  if (!$bom &amp;&amp; ereg('^&lt;\?xml[^&gt;]+encoding=&quot;([^&quot;]+)&quot;', $data, $match)) {
++    $encoding = $match[1];
++  }
++
++  // Unsupported encodings are converted here into UTF-8.
++  $php_supported = array('utf-8', 'iso-8859-1', 'us-ascii');
++  if (!in_array(strtolower($encoding), $php_supported)) {
++    $out = convert_to_utf8($data, $encoding);
++    if ($out !== false) {
++      $data = $out;
++      $encoding = 'utf-8';
++    }
++    else {
++       /* watchdog('php', t(&quot;Could not convert XML encoding '%s' to
++UTF-8.&quot;, array('%s' =&gt; $encoding)), WATCHDOG_WARNING); */
++      return 0;
++    }
++  }
++
++  $xml_parser = xml_parser_create($encoding);
++  xml_parser_set_option($xml_parser, XML_OPTION_TARGET_ENCODING, 'utf-8');
++  return $xml_parser;
++}
++
++/**
++ * Convert data to UTF-8
++ *
++ * Requires the iconv, GNU recode or mbstring PHP extension.
++ *
++ * @param $data
++ *   The data to be converted.
++ * @param $encoding
++ *   The encoding that the data is in
++ * @return
++ *   Converted data or FALSE.
++ */
++function convert_to_utf8($data, $encoding) {
++  if (function_exists('iconv')) {
++    $out = @iconv($encoding, 'utf-8', $data);
++  }
++  else if (function_exists('mb_convert_encoding')) {
++    $out = @mb_convert_encoding($data, 'utf-8', $encoding);
++  }
++  else if (function_exists('recode_string')) {
++    $out = @recode_string($encoding .'..utf-8', $data);
++  }
++  else {
++    /* watchdog('php', t(&quot;Unsupported encoding '%s'. Please install iconv, GNU
++recode or mbstring for PHP.&quot;, array('%s' =&gt; $encoding)), WATCHDOG_ERROR); */
++    return FALSE;
++  }
++  return $out;
++}
++
++?&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000022.html">[Meneamenet-svn] r26 - branches/trunks/www
+</A></li>
+	<LI>Next message: <A HREF="000024.html">[Meneamenet-svn] r28 - branches/trunks/www/archives
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23">[ date ]</a>
+              <a href="thread.html#23">[ thread ]</a>
+              <a href="subject.html#23">[ subject ]</a>
+              <a href="author.html#23">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

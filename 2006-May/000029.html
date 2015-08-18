@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r33 - in branches/trunks/www: . libs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r33%20-%20in%20branches/trunks/www%3A%20.%20libs&In-Reply-To=%3C200605300750.k4U7oEFN010941%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000028.html">
+   <LINK REL="Next"  HREF="000030.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r33 - in branches/trunks/www: . libs</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r33%20-%20in%20branches/trunks/www%3A%20.%20libs&In-Reply-To=%3C200605300750.k4U7oEFN010941%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r33 - in branches/trunks/www: . libs">trunks at berlios.de
+       </A><BR>
+    <I>Tue May 30 09:50:14 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000028.html">[Meneamenet-svn] r32 - branches/trunks/www/libs
+</A></li>
+        <LI>Next message: <A HREF="000030.html">[Meneamenet-svn] r34 - branches/trunks/scripts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-30 09:50:00 +0200 (Tue, 30 May 2006)
+New Revision: 33
+
+Modified:
+   branches/trunks/www/libs/html1.php
+   branches/trunks/www/rss2.php
+Log:
+adding more comments_hide support
+
+Modified: branches/trunks/www/libs/html1.php
+===================================================================
+--- branches/trunks/www/libs/html1.php	2006-05-29 11:46:14 UTC (rev 32)
++++ branches/trunks/www/libs/html1.php	2006-05-30 07:50:00 UTC (rev 33)
+@@ -33,7 +33,9 @@
+ 	echo '&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;'._('publicadas').'&quot; href=&quot;<A HREF="http://">http://</A>'.get_server_name().'/rss2.php&quot; /&gt;'.&quot;\n&quot;;
+ 	echo '&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;'._('pendientes').'&quot; href=&quot;<A HREF="http://">http://</A>'.get_server_name().'/rss2.php?status=queued&quot; /&gt;'.&quot;\n&quot;;
+ 	echo '&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;'._('todas').'&quot; href=&quot;<A HREF="http://">http://</A>'.get_server_name().'/rss2.php?status=all&quot; /&gt;'.&quot;\n&quot;;
+-	echo '&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;'._('comentarios').'&quot; href=&quot;<A HREF="http://">http://</A>'.get_server_name().'/comments_rss2.php&quot; /&gt;'.&quot;\n&quot;;
++	if ( $globals['comments'] ) {
++		echo '&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;'._('comentarios').'&quot; href=&quot;<A HREF="http://">http://</A>'.get_server_name().'/comments_rss2.php&quot; /&gt;'.&quot;\n&quot;;
++	}
+ 
+ 	echo '&lt;link rel=&quot;icon&quot; href=&quot;/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;' . &quot;\n&quot;;
+ 	echo '&lt;script src=&quot;./js/xmlhttp03.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;' . &quot;\n&quot;;
+@@ -194,16 +196,18 @@
+ 	echo '&lt;a href=&quot;/rss2.php?status=all&quot; rel=&quot;rss&quot;&gt;'._('todas').'&lt;/a&gt;';
+ 	echo '&lt;/li&gt;' . &quot;\n&quot;;
+ 
+-	if(!empty($globals['link_id'])) {
++	if ( $globals['comments'] ) {
++		if(!empty($globals['link_id'])) {
++			echo '&lt;li&gt;';
++			echo '&lt;a href=&quot;/comments_rss2.php?id='.$globals['link_id'].'&quot; rel=&quot;rss&quot;&gt;'._('comentarios noticia').'&lt;/a&gt;';
++			echo '&lt;/li&gt;' . &quot;\n&quot;;
++		}
++
+ 		echo '&lt;li&gt;';
+-		echo '&lt;a href=&quot;/comments_rss2.php?id='.$globals['link_id'].'&quot; rel=&quot;rss&quot;&gt;'._('comentarios noticia').'&lt;/a&gt;';
++		echo '&lt;a href=&quot;/comments_rss2.php&quot; rel=&quot;rss&quot;&gt;'._('comentarios (todos)').'&lt;/a&gt;';
+ 		echo '&lt;/li&gt;' . &quot;\n&quot;;
+ 	}
+ 
+-	echo '&lt;li&gt;';
+-	echo '&lt;a href=&quot;/comments_rss2.php&quot; rel=&quot;rss&quot;&gt;'._('comentarios (todos)').'&lt;/a&gt;';
+-	echo '&lt;/li&gt;' . &quot;\n&quot;;
+-
+ 	echo '&lt;/ul&gt;' . &quot;\n&quot;;
+ 	echo '&lt;br style=&quot;clear: both;&quot; /&gt;' . &quot;\n&quot;;
+ 	echo '&lt;/li&gt; &lt;!--html1:do_rss_box()--&gt;' . &quot;\n&quot;;
+
+Modified: branches/trunks/www/rss2.php
+===================================================================
+--- branches/trunks/www/rss2.php	2006-05-29 11:46:14 UTC (rev 32)
++++ branches/trunks/www/rss2.php	2006-05-30 07:50:00 UTC (rev 33)
+@@ -121,7 +121,9 @@
+ 		// Title must not carry htmlentities
+ 		echo &quot;		&lt;title&gt;&lt;![CDATA[&quot;.html_entity_decode($link-&gt;title).&quot;]]&gt;&lt;/title&gt;\n&quot;;
+ 		echo &quot;		&lt;link&gt;&quot;.get_permalink($link-&gt;id).&quot;&lt;/link&gt;\n&quot;;
+-		echo &quot;		&lt;comments&gt;&quot;.get_permalink($link-&gt;id).&quot;&lt;/comments&gt;\n&quot;;
++		if ( $globals['comments'] ) {
++			echo &quot;		&lt;comments&gt;&quot;.get_permalink($link-&gt;id).&quot;&lt;/comments&gt;\n&quot;;
++		}
+ 		if (!empty($link_date))
+ 			echo &quot;		&lt;pubDate&gt;&quot;.date(&quot;r&quot;, $link-&gt;$link_date).&quot;&lt;/pubDate&gt;\n&quot;;
+ 		else echo &quot;      &lt;pubDate&gt;&quot;.date(&quot;r&quot;, time()).&quot;&lt;/pubDate&gt;\n&quot;;
+@@ -143,7 +145,9 @@
+ 		//echo '&lt;wfw:comments&gt;'.$link-&gt;comments().'&lt;/wfw:comments&gt;';
+ 		// echo &quot;		&lt;trackback:ping&gt;&quot;.get_trackback($link-&gt;id).&quot;&lt;/trackback:ping&gt;\n&quot;;  // no standard
+ 		//echo &quot;&lt;content:encoded&gt;&lt;![CDATA[ ]]&gt;&lt;/content:encoded&gt;\n&quot;;
+-		echo '&lt;wfw:commentRss&gt;<A HREF="http://">http://</A>'.get_server_name().'/comments_rss2.php?id='.$link-&gt;id.'&lt;/wfw:commentRss&gt;';
++		if ( $globals['comments'] ) {
++			echo '&lt;wfw:commentRss&gt;<A HREF="http://">http://</A>'.get_server_name().'/comments_rss2.php?id='.$link-&gt;id.'&lt;/wfw:commentRss&gt;';
++		}
+ 		echo &quot;	&lt;/item&gt;\n\n&quot;;
+ 	}
+ }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000028.html">[Meneamenet-svn] r32 - branches/trunks/www/libs
+</A></li>
+	<LI>Next message: <A HREF="000030.html">[Meneamenet-svn] r34 - branches/trunks/scripts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

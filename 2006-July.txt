@@ -1,0 +1,381 @@
+From jdeveloper at berlios.de  Sun Jul  9 13:55:55 2006
+From: jdeveloper at berlios.de (jdeveloper at berlios.de)
+Date: Sun, 9 Jul 2006 13:55:55 +0200
+Subject: [Meneamenet-svn] r52 - branches/jdeveloper
+Message-ID: <200607091155.k69BttK7029100@sheep.berlios.de>
+
+Author: jdeveloper
+Date: 2006-07-09 13:55:46 +0200 (Sun, 09 Jul 2006)
+New Revision: 52
+
+Removed:
+   branches/jdeveloper/scripts/
+   branches/jdeveloper/www/
+Log:
+eliminando www/ y scripts de mi rama
+
+
+
+From jdeveloper at berlios.de  Sun Jul  9 00:34:35 2006
+From: jdeveloper at berlios.de (jdeveloper at berlios.de)
+Date: Sun, 9 Jul 2006 00:34:35 +0200
+Subject: [Meneamenet-svn] r51 - in branches/jdeveloper/www: . js libs
+Message-ID: <200607082234.k68MYZA1008543@sheep.berlios.de>
+
+Author: jdeveloper
+Date: 2006-07-09 00:33:48 +0200 (Sun, 09 Jul 2006)
+New Revision: 51
+
+Modified:
+   branches/jdeveloper/www/config.php
+   branches/jdeveloper/www/js/sneak01.js.php
+   branches/jdeveloper/www/libs/sneak.php
+   branches/jdeveloper/www/sneak.php
+Log:
+sneack now creates new rows when new data recived, until a maximum 
+specified by max_items.
+
+
+Modified: branches/jdeveloper/www/config.php
+===================================================================
+--- branches/jdeveloper/www/config.php	2006-06-03 17:46:49 UTC (rev 50)
++++ branches/jdeveloper/www/config.php	2006-07-08 22:33:48 UTC (rev 51)
+@@ -6,8 +6,8 @@
+ // 		http://www.affero.org/oagpl.html
+ // AFFERO GENERAL PUBLIC LICENSE is also included in the file called "COPYING".
+ 
+-define("mnmpath", dirname(__FILE__));
+-define("mnminclude", dirname(__FILE__).'/libs/');
++define("mnmpath", '/var/www/meneame/branches/jdeveloper/www');
++define("mnminclude", '/var/www/meneame/branches/jdeveloper/www/libs/');
+ 
+ // Better to do local modification in hostname-local.php
+ $server_name	= $_SERVER['SERVER_NAME'];
+
+Modified: branches/jdeveloper/www/js/sneak01.js.php
+===================================================================
+--- branches/jdeveloper/www/js/sneak01.js.php	2006-06-03 17:46:49 UTC (rev 50)
++++ branches/jdeveloper/www/js/sneak01.js.php	2006-07-08 22:33:48 UTC (rev 51)
+@@ -7,6 +7,9 @@
+ var items = Array();
+ var new_items = 0;
+ var max_items = <? echo $max_items; ?>;
++var initial_items_load=<? echo $initial_items_load; ?>;
++var num_items_showen=0;
++var num_rows_created=<? echo $initial_items_load; ?>;
+ var request_timer;
+ var min_update = 20000;
+ var next_update = 5000;
+@@ -26,7 +29,7 @@
+ var show_chat = true;
+ 
+ function start() {
+-	for (i=0; i<max_items; i++) {
++	for (i=0; i<initial_items_load; i++) {
+ 		items[i] = document.getElementById('sneaker-'+i);
+ 	}
+ 	get_data();
+@@ -103,13 +106,33 @@
+ 		if(target) target.innerHTML = ccnt;
+ 		new_items= new_data.length;
+ 		if(new_items > 0) {
++			
++			//if we need more rows than we have created, than whe create them
++			if(new_items+num_items_showen>num_rows_created && (new_items+num_items_showen)<=max_items){
++				
++				num_new_rows=new_items+num_items_showen-num_rows_created;
++				str='';
++				for(i=num_rows_created;i<(num_rows_created+num_new_rows);i++)
++					str=str+'<div id="sneaker-' +i+ '" class="sneaker-item">&nbsp;';
++				
++				rows=document.getElementById('rows');
++				
++				rows.innerHTML=rows.innerHTML+str;
++				
++				for(i=0;i<=num_rows_created;i++)
++					items[i] = document.getElementById('sneaker-'+i);
++				
++				num_rows_created=num_rows_created+num_new_rows;
++			}
++
+ 			if (do_animation) clearInterval(animation_timer);
+ 			next_update = Math.round(0.5*next_update + 0.5*min_update/(new_items*2));
+ 			shift_items(new_items);
+-			for (i=0; i<new_items && i<max_items; i++) {
++			for (i=0; i<new_items && i<num_rows_created; i++) {
+ 				items[i].innerHTML = to_html(new_data[i]);
+ 				if (do_animation) set_initial_color(i);
+ 			}
++			num_items_showen=num_items_showen+new_items;
+ 			if (do_animation) {
+ 				animation_timer = setInterval('animate_background()', 100);
+ 				animating = true;
+@@ -131,14 +154,14 @@
+ 
+ function shift_items(n) {
+ 	//for (i=n;i<max_items;i++) {
+-	for (i=max_items-1;i>=n;i--) {
++	for (i=num_rows_created-1;i>=n;i--) {
+ 		items[i].innerHTML = items[i-n].innerHTML;
+ 		//items.shift();
+ 	}
+ }
+ 
+ function clear_items() {
+-	for (i=0;i<max_items;i++) {
++	for (i=0;i<num_rows_created;i++) {
+ 		items[i].innerHTML = '&nbsp;';
+ 	}
+ }
+
+Modified: branches/jdeveloper/www/libs/sneak.php
+===================================================================
+--- branches/jdeveloper/www/libs/sneak.php	2006-06-03 17:46:49 UTC (rev 50)
++++ branches/jdeveloper/www/libs/sneak.php	2006-07-08 22:33:48 UTC (rev 51)
+@@ -1,4 +1,5 @@
+ <?
+ $sneak_version = 3.2;
+-$max_items = 25;
++$max_items = 300;
++$initial_items_load=25;
+ ?>
+
+Modified: branches/jdeveloper/www/sneak.php
+===================================================================
+--- branches/jdeveloper/www/sneak.php	2006-06-03 17:46:49 UTC (rev 50)
++++ branches/jdeveloper/www/sneak.php	2006-07-08 22:33:48 UTC (rev 51)
+@@ -202,15 +202,15 @@
+ echo '<div class="sneaker-status"><strong>'._('estado').'</strong></div>';
+ echo "</div>\n";
+ 
+-
+-for ($i=0; $i<$max_items;$i++) {
++echo '<div id="rows">';
++for ($i=0; $i<$initial_items_load;$i++) {
+ 	echo '<div id="sneaker-'.$i.'" class="sneaker-item">&nbsp;';
+ 	echo "</div>\n";
+ 
+ 
+ }
+-
+ echo '</div>';
++echo '</div>';
+ //echo "</div>\n"; // air-with-footer
+ ?>
+ <script type="text/javascript">
+
+
+
+From jdeveloper at berlios.de  Tue Jul 11 12:02:56 2006
+From: jdeveloper at berlios.de (jdeveloper at berlios.de)
+Date: Tue, 11 Jul 2006 12:02:56 +0200
+Subject: [Meneamenet-svn] r54 - in branches/jdeveloper/www: . js libs
+Message-ID: <200607111002.k6BA2uD0007705@sheep.berlios.de>
+
+Author: jdeveloper
+Date: 2006-07-11 12:02:53 +0200 (Tue, 11 Jul 2006)
+New Revision: 54
+
+Modified:
+   branches/jdeveloper/www/js/sneak03.js.php
+   branches/jdeveloper/www/libs/sneak.php
+   branches/jdeveloper/www/sneak.php
+Log:
+incorporando mis cambios de la fisgona al codigo oficial
+
+Modified: branches/jdeveloper/www/js/sneak03.js.php
+===================================================================
+--- branches/jdeveloper/www/js/sneak03.js.php	2006-07-09 13:08:06 UTC (rev 53)
++++ branches/jdeveloper/www/js/sneak03.js.php	2006-07-11 10:02:53 UTC (rev 54)
+@@ -7,6 +7,9 @@
+ var items = Array();
+ var new_items = 0;
+ var max_items = <? echo $max_items; ?>;
++var initial_items_load=<? echo $initial_items_load; ?>;
++var num_items_showen=0;
++var num_rows_created=<? echo $initial_items_load; ?>;
+ var request_timer;
+ var min_update = 20000;
+ var next_update = 5000;
+@@ -36,7 +39,7 @@
+ 		check_control('published');
+ 		check_control('chat');
+ 	}
+-	for (i=0; i<max_items; i++) {
++	for (i=0; i<initial_items_load; i++) {
+ 		items[i] = document.getElementById('sneaker-'+i);
+ 	}
+ 	do_play();
+@@ -109,13 +112,36 @@
+ 		if(target) target.innerHTML = ccnt;
+ 		new_items= new_data.length;
+ 		if(new_items > 0) {
++			//if we need more rows than we have created, than whe create them
++			//if num_items_showen is 0 then we just display as maximum inital_items_load items
++			if(new_items+num_items_showen>num_rows_created && (new_items+num_items_showen)<=max_items && num_items_showen>0){
++				
++				num_new_rows=new_items+num_items_showen-num_rows_created;
++				str='';
++				for(i=num_rows_created;i<(num_rows_created+num_new_rows);i++)
++					str=str+'<div id="sneaker-' +i+ '" class="sneaker-item">&nbsp;';
++				
++				rows=document.getElementById('rows');
++				
++				rows.innerHTML=rows.innerHTML+str;
++				
++				for(i=0;i<=num_rows_created;i++)
++					items[i] = document.getElementById('sneaker-'+i);
++				
++				num_rows_created=num_rows_created+num_new_rows;
++			}
++			
+ 			if (do_animation) clearInterval(animation_timer);
+ 			next_update = Math.round(0.5*next_update + 0.5*min_update/(new_items*2));
+ 			shift_items(new_items);
+-			for (i=0; i<new_items && i<max_items; i++) {
++			for (i=0; i<new_items && i<num_rows_created; i++) {
+ 				items[i].innerHTML = to_html(new_data[i]);
+ 				if (do_animation) set_initial_color(i);
+ 			}
++			
++			//update the num_items_showen counter
++			num_items_showen=num_items_showen+new_items;
++
+ 			if (do_animation) {
+ 				animation_timer = setInterval('animate_background()', 100);
+ 				animating = true;
+@@ -137,14 +163,14 @@
+ 
+ function shift_items(n) {
+ 	//for (i=n;i<max_items;i++) {
+-	for (i=max_items-1;i>=n;i--) {
++	for (i=num_rows_created-1;i>=n;i--) {
+ 		items[i].innerHTML = items[i-n].innerHTML;
+ 		//items.shift();
+ 	}
+ }
+ 
+ function clear_items() {
+-	for (i=0;i<max_items;i++) {
++	for (i=0;i<num_rows_created;i++) {
+ 		items[i].innerHTML = '&nbsp;';
+ 	}
+ }
+
+Modified: branches/jdeveloper/www/libs/sneak.php
+===================================================================
+--- branches/jdeveloper/www/libs/sneak.php	2006-07-09 13:08:06 UTC (rev 53)
++++ branches/jdeveloper/www/libs/sneak.php	2006-07-11 10:02:53 UTC (rev 54)
+@@ -1,5 +1,6 @@
+ <?
+ $sneak_version = 4.8;
+-$max_items = 25;
+-header('Connection: close');
++$max_items = 100;
++$initial_items_load=25;
++//header('Connection: close');
+ ?>
+
+Modified: branches/jdeveloper/www/sneak.php
+===================================================================
+--- branches/jdeveloper/www/sneak.php	2006-07-09 13:08:06 UTC (rev 53)
++++ branches/jdeveloper/www/sneak.php	2006-07-11 10:02:53 UTC (rev 54)
+@@ -229,12 +229,14 @@
+ echo "</div>\n";
+ 
+ 
+-for ($i=0; $i<$max_items;$i++) {
++echo '<div id="rows">';
++for ($i=0; $i<$initial_items_load;$i++) {
+ 	echo '<div id="sneaker-'.$i.'" class="sneaker-item">&nbsp;';
+ 	echo "</div>\n";
+ 
+ 
+ }
++echo '</div>';
+ 
+ echo '</div>';
+ //echo "</div>\n"; // air-with-footer
+
+
+
+From jdeveloper at berlios.de  Tue Jul 11 12:06:11 2006
+From: jdeveloper at berlios.de (jdeveloper at berlios.de)
+Date: Tue, 11 Jul 2006 12:06:11 +0200
+Subject: [Meneamenet-svn] r55 - branches/jdeveloper/www/libs
+Message-ID: <200607111006.k6BA6B82008004@sheep.berlios.de>
+
+Author: jdeveloper
+Date: 2006-07-11 12:06:09 +0200 (Tue, 11 Jul 2006)
+New Revision: 55
+
+Modified:
+   branches/jdeveloper/www/libs/sneak.php
+Log:
+descomentando el header en lib/sneack.ph, despiste mio
+
+Modified: branches/jdeveloper/www/libs/sneak.php
+===================================================================
+--- branches/jdeveloper/www/libs/sneak.php	2006-07-11 10:02:53 UTC (rev 54)
++++ branches/jdeveloper/www/libs/sneak.php	2006-07-11 10:06:09 UTC (rev 55)
+@@ -2,5 +2,5 @@
+ $sneak_version = 4.8;
+ $max_items = 100;
+ $initial_items_load=25;
+-//header('Connection: close');
++header('Connection: close');
+ ?>
+
+
+
+From jdeveloper at berlios.de  Tue Jul 11 12:13:57 2006
+From: jdeveloper at berlios.de (jdeveloper at berlios.de)
+Date: Tue, 11 Jul 2006 12:13:57 +0200
+Subject: [Meneamenet-svn] r56 - branches/jdeveloper/www/libs
+Message-ID: <200607111013.k6BADvr5008601@sheep.berlios.de>
+
+Author: jdeveloper
+Date: 2006-07-11 12:13:55 +0200 (Tue, 11 Jul 2006)
+New Revision: 56
+
+Modified:
+   branches/jdeveloper/www/libs/html1.php
+Log:
+si no hai categorias en la base de datos no muestra error en la pagina
+
+Modified: branches/jdeveloper/www/libs/html1.php
+===================================================================
+--- branches/jdeveloper/www/libs/html1.php	2006-07-11 10:06:09 UTC (rev 55)
++++ branches/jdeveloper/www/libs/html1.php	2006-07-11 10:13:55 UTC (rev 56)
+@@ -35,7 +35,7 @@
+ 	echo '<head>' . "\n";
+ 	echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . "\n";
+ 	echo "<title>"._($title)." // men&eacute;ame</title>\n";
+-	echo '<meta name="generator" content="meneame" />' . "\n";
++	echo '<meta name="generator" content="Bluefish 1.0.4"/>' . "\n";
+ 	echo '<meta name="keywords" content="'.$globals['tags'].'" />' . "\n";
+ 	echo '<link rel="microsummary" type="application/x.microsummary+xml" href="'.$globals['base_url'].'microsummary.xml" />' . "\n";
+ 	echo '<style type="text/css" media="screen">@import "'.$globals['base_url'].'css/es/mnm15.css";</style>' . "\n";
+@@ -329,6 +329,7 @@
+ 	echo '</a></li>' . "\n";
+ 
+ 	// draw categories
++	if($categories){
+ 	foreach ($categories as $category) {
+ 
+ 		if($category->category_id == $what_cat_id) {
+@@ -347,10 +348,9 @@
+ 		echo "</a></li>\n";
+ 
+ 		}
+-
++	}
+ 	echo '</ul>';
+ 	echo '<br style="clear: both;" />' . "\n";
+ 	echo '</div></li><!--html1:do_categories-->' . "\n";
+-
+ }
+ ?>
+
+
+

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r21 - branches/trunks/www
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r21%20-%20branches/trunks/www&In-Reply-To=%3C200605270110.k4R1AsBH006080%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000016.html">
+   <LINK REL="Next"  HREF="000018.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r21 - branches/trunks/www</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r21%20-%20branches/trunks/www&In-Reply-To=%3C200605270110.k4R1AsBH006080%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r21 - branches/trunks/www">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 03:10:54 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000016.html">[Meneamenet-svn] r20 - branches/trunks/www/libs
+</A></li>
+        <LI>Next message: <A HREF="000018.html">[Meneamenet-svn] r22 - branches/trunks/www/css/es
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 03:10:50 +0200 (Sat, 27 May 2006)
+New Revision: 21
+
+Modified:
+   branches/trunks/www/problem.php
+Log:
+fixed to make meneame compatible with previous mysql versions
+
+Modified: branches/trunks/www/problem.php
+===================================================================
+--- branches/trunks/www/problem.php	2006-05-27 01:09:36 UTC (rev 20)
++++ branches/trunks/www/problem.php	2006-05-27 01:10:50 UTC (rev 21)
+@@ -55,7 +55,7 @@
+ 	error(_('Ya ha votado antes'));
+ }
+ 
+-$votes_freq = $db-&gt;get_var(&quot;select count(*) from votes where vote_type='links' and vote_user_id=$current_user-&gt;user_id and vote_date &gt; subtime(now(), '0:0:30') and vote_ip = '&quot;.$globals['user_ip'].&quot;'&quot;); 
++$votes_freq = $db-&gt;get_var(&quot;select count(*) from votes where vote_type='links' and vote_user_id=$current_user-&gt;user_id and vote_date &gt; from_unixtime(unix_timestamp(now())-30) and vote_ip = '&quot;.$globals['user_ip'].&quot;'&quot;); 
+ if ($current_user-&gt;user_id &gt; 0) $freq = 2;
+ else $freq = 2;
+ 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000016.html">[Meneamenet-svn] r20 - branches/trunks/www/libs
+</A></li>
+	<LI>Next message: <A HREF="000018.html">[Meneamenet-svn] r22 - branches/trunks/www/css/es
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

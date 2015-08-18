@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r15 - branches/trunks/www
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r15%20-%20branches/trunks/www&In-Reply-To=%3C200605270049.k4R0n0wh001819%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000010.html">
+   <LINK REL="Next"  HREF="000012.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r15 - branches/trunks/www</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r15%20-%20branches/trunks/www&In-Reply-To=%3C200605270049.k4R0n0wh001819%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r15 - branches/trunks/www">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 02:49:00 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000010.html">[Meneamenet-svn] r14 - branches
+</A></li>
+        <LI>Next message: <A HREF="000012.html">[Meneamenet-svn] r16 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 02:48:30 +0200 (Sat, 27 May 2006)
+New Revision: 15
+
+Added:
+   branches/trunks/www/categories.php
+Log:
+adding categories support
+
+Added: branches/trunks/www/categories.php
+===================================================================
+--- branches/trunks/www/categories.php	2006-05-11 09:51:03 UTC (rev 14)
++++ branches/trunks/www/categories.php	2006-05-27 00:48:30 UTC (rev 15)
+@@ -0,0 +1,208 @@
++&lt;?
++// The source code packaged with this file is Free Software, Copyright (C) 2005 by
++// Javier Carranza &lt;javier at al dot quimia dot net&gt;
++//     based on profile.php memeame source
++// It's licensed under the AFFERO GENERAL PUBLIC LICENSE unless stated otherwise.
++// You can get copies of the licenses here:
++//              <A HREF="http://www.affero.org/oagpl.html">http://www.affero.org/oagpl.html</A>
++// AFFERO GENERAL PUBLIC LICENSE is also included in the file called &quot;COPYING&quot;.
++
++include('config.php');
++include(mnminclude.'html1.php');
++include(mnminclude.'link.php');
++include(mnminclude.'user.php');
++
++
++// User recovering her password
++if (!empty($_GET['login']) &amp;&amp; !empty($_GET['t']) &amp;&amp; !empty($_GET['k'])) {
++	$time = intval($_GET['t']);
++	$key = $_GET['k'];
++
++	$user=new User();
++	$user-&gt;username=preg_replace('/ /', '_', $_GET['login']);
++	if($user-&gt;read()) {
++		$now = time();
++		$key2 = md5($user-&gt;id.$user-&gt;pass.$time.$site_key.get_server_name());
++		//echo &quot;$now, $time; $key == $key2\n&quot;;
++		if ($time &gt; $now - 7200 &amp;&amp; $time &lt; $now &amp;&amp; $key == $key2) {
++			$db-&gt;query(&quot;update users set user_validated_date = now() where user_id = $user-&gt;id and user_validated_date is null&quot;);
++			$current_user-&gt;Authenticate($user-&gt;username, $user-&gt;pass);
++		}
++	}
++}
++//// End recovery
++
++if ($current_user-&gt;user_id &gt; 0 &amp;&amp; $current_user-&gt;authenticated &amp;&amp; in_array($current_user-&gt;user_level, array('admin', 'god'))) {
++		$login=$current_user-&gt;user_login;
++} else {
++	header(&quot;Location: ./login.php&quot;);
++	die;
++}
++
++$user=new User();
++$user-&gt;username = $login;
++if(!$user-&gt;read()) {
++	echo &quot;error 2&quot;;
++	die;
++}
++
++do_header(_('administraci&#243;n de categor&#237;as'));
++do_navbar(_('administraci&#243;n de categor&#237;as'));
++
++show_category_form();
++
++do_footer();
++
++
++function show_category_form() {
++	global $user;
++
++	change_categories();
++
++	echo '&lt;div id=&quot;genericform-contents&quot;&gt;&lt;div id=&quot;genericform&quot;&gt;&lt;fieldset&gt;&lt;legend&gt;';
++	echo '&lt;span class=&quot;sign&quot;&gt;'._('administraci&#243;n de categor&#237;as').'&lt;/span&gt;&lt;/legend&gt;';
++
++	echo '&lt;div class=&quot;column-list&quot;&gt;'.&quot;\n&quot;;
++	echo '&lt;div class=&quot;categorylist&quot;&gt;'.&quot;\n&quot;;
++	echo '&lt;form action=&quot;categories.php&quot; method=&quot;post&quot; id=&quot;thisform&quot;&gt;' . &quot;\n&quot;;
++	echo '&lt;input type=&quot;hidden&quot; name=&quot;process&quot; value=&quot;1&quot; /&gt;' . &quot;\n&quot;;
++	echo '&lt;input type=&quot;hidden&quot; name=&quot;user_id&quot; value=&quot;'.$user-&gt;id.'&quot; /&gt;' . &quot;\n&quot;;
++
++	show_categories();
++
++	echo '&lt;br style=&quot;clear: both;&quot; /&gt;' . &quot;\n&quot;;
++	echo '&lt;/div&gt;&lt;/div&gt;'.&quot;\n&quot;;
++
++	echo '&lt;br /&gt;' . &quot;\n&quot;;
++	echo '&lt;p&gt;'._('Introduce una nueva categor&#237;a o edita las existentes:').'&lt;/p&gt;';
++
++	echo '&lt;p class=&quot;l-mid&quot; id=&quot;insert-p&quot;&gt;&lt;label for=&quot;new_cat&quot;&gt;' . _(&quot;nueva categor&#237;a&quot;) . ':&lt;/label&gt; ' . &quot;\n&quot;;
++	echo '&lt;input type=&quot;text&quot; id=&quot;new_cat&quot; name=&quot;new_cat&quot; tabindex=&quot;1&quot; size=&quot;25&quot; /&gt; ' . &quot;\n&quot;;
++	echo '&lt;label for=&quot;new_parent&quot;&gt;' . _(&quot;hija de&quot;) . ':&lt;/label&gt; ' . &quot;\n&quot;;
++	echo '&lt;input type=&quot;text&quot; id=&quot;new_parent&quot; name=&quot;new_parent&quot; tabindex=&quot;1&quot; size=&quot;1&quot; value=&quot;0&quot; /&gt;' . &quot;\n&quot;;
++	echo '&lt;p class=&quot;l-bottom&quot; id=&quot;submit-p&quot;&gt;&lt;input type=&quot;submit&quot; name=&quot;new&quot; value=&quot;'._('enviar').'&quot; class=&quot;genericsubmit&quot;&gt;&lt;/p&gt;';
++	echo &quot;&lt;/form&gt;&lt;/fieldset&gt;&lt;/div&gt;&lt;/div&gt;\n&quot;;
++}
++
++function show_categories() {
++	global $db, $dblang;
++
++	$categories = $db-&gt;get_results(&quot;SELECT category_id, category_parent, category_name FROM categories WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC&quot;);
++
++	foreach ($categories as $category) {
++		if (isset($tree[$category-&gt;category_parent])) {
++			$tree[$category-&gt;category_parent] .= &quot;,&quot; . $category-&gt;category_id;
++		} else {
++			$tree[$category-&gt;category_parent] = $category-&gt;category_id;
++		}
++		$category_data[$category-&gt;category_id]-&gt;category_parent = $category-&gt;category_parent;
++		$category_data[$category-&gt;category_id]-&gt;category_name = $category-&gt;category_name;
++	}
++
++	$elems = split(&quot;,&quot;, $tree[0]);
++	recursive($elems, $tree, $category_data, 0);
++
++}
++
++function recursive($elems, $tree, $data, $level) {
++	foreach ($elems as $item) {
++		if (isset($tree[$item])) {
++			$elem = split(&quot;,&quot;, $tree[$item]);
++			for ($i=$level; $i&gt;0; $i--)
++				echo '&lt;blockquote&gt;';
++
++			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name);
++
++			for ($i=$level; $i&gt;0; $i--)
++				echo '&lt;/blockquote&gt;';
++			recursive($elem, $tree, $data, $level+1) . &quot;\n&quot;;
++		} else {
++			for ($i=$level; $i&gt;0; $i--)
++				echo '&lt;blockquote&gt;';
++
++			print_category($item, $data[$item]-&gt;category_parent, $data[$item]-&gt;category_name);
++
++			for ($i=$level; $i&gt;0; $i--)
++				echo '&lt;/blockquote&gt;';
++		}
++	}
++}
++
++function print_category ($id, $parent, $name) {
++	echo '&lt;p class=&quot;l-top&quot; id=&quot;l-top-edit[' . $id . ']&quot;&gt;['. $id . 
++		'] &lt;label for=&quot;edit[' . $id . ']&quot; accesskey=&quot;' . $id . 
++		'&quot; id=&quot;label1-edit[' . $id .']&quot;&gt;' . _($name) .'&lt;/label&gt; ';
++
++	echo '&lt;input type=&quot;button&quot; name=&quot;edit[' . $id . ']&quot; id=&quot;edit[' . $id . 
++		']&quot; tabindex=&quot;1&quot; value=&quot;' . _('editar') . 
++		' &quot; onclick=&quot;javascript:edit_category(this);&quot; /&gt;' . &quot;\n&quot;;
++
++	echo '&lt;input type=&quot;hidden&quot;  name=&quot;parent-edit[' . $id . ']&quot; id=&quot;parent-edit[' 
++		. $id . ']&quot; value=&quot;' . $parent . '&quot; /&gt;';
++
++	echo '&lt;input type=&quot;submit&quot; name=&quot;delete[' . $id . ']&quot; id=&quot;delete[' . $id .
++		 ']&quot; tabindex=&quot;1&quot; value=&quot;' . _('eliminar') . ' &quot; /&gt;' . &quot;\n&quot;;
++}
++
++function change_categories() {
++	global $user, $current_user, $globals;
++	$errors = 0;
++	$ncat = 0;
++	
++	if( !(isset($_POST['new']) || isset($_POST['delete'])) || !isset($_POST['process']) || $_POST['user_id'] != $current_user-&gt;user_id ) return;
++
++	if (isset($_POST['delete'])) {
++		delete_category(array_keys($_POST['delete']));
++	} elseif (isset($_POST['new_cat'])) {
++		insert_category(trim($_POST['new_cat']), trim($_POST['new_parent']));
++	} else {
++		foreach (array_keys($_POST['new_cat-edit']) as $key) {
++			$category-&gt;id[$ncat]=trim($key);
++			$ncat++;
++		}
++		$ncat=0;
++		foreach ($_POST['new_cat-edit'] as $catitem) {
++			$category-&gt;name[$ncat]=trim($catitem);
++			$ncat++;
++		}
++		$ncat=0;
++		foreach ($_POST['new_parent-edit'] as $catparent) {
++			$category-&gt;parent[$ncat]=intval($catparent);
++			$ncat++;
++		}
++		if ( !(empty($_POST['new_cat-edit']) || empty($_POST['new-cat'])) ) {
++			$errors = 1;
++			echo '&lt;p class=&quot;form-error&quot;&gt;'._('No ha introducido ninguna categor&#237;a nueva').'&lt;/p&gt;';
++		}
++		if (!$errors) {
++			save_categories($category);
++			echo '&lt;p class=&quot;form-act&quot;&gt;'._('Datos actualizados').'&lt;/p&gt;';
++		}
++	}
++}
++
++function save_categories($category) {
++	global $db, $dblang;
++
++	$ncat=0;
++	foreach ($category-&gt;id as $key) {
++		$db-&gt;query(&quot;update categories set category_name=\&quot;&quot; . $category-&gt;name[$ncat] . &quot;\&quot;, category_parent=\&quot;&quot; . $category-&gt;parent[$ncat] . &quot;\&quot; where category_id=\&quot;$key\&quot; and category_lang=\&quot;$dblang\&quot;&quot;);
++		$ncat++;
++	}
++}
++
++function delete_category($key) {
++	global $db, $dblang;
++
++	if (is_int($key[0]))
++		$db-&gt;query(&quot;delete from categories where category_id=\&quot;&quot; . $key[0] . &quot;\&quot; and category_lang=\&quot;$dblang\&quot;&quot;);
++}
++
++function insert_category($key, $parent) {
++	global $db, $dblang;
++
++	$id=$db-&gt;get_results(&quot;select max(category_id) max from categories&quot;);
++	$db-&gt;query(&quot;insert into categories (category_id, category_parent, category_name, category_lang) values (&quot; . (intval($id[0]-&gt;max) + 1) . &quot;, $parent, \&quot;$key\&quot;, \&quot;$dblang\&quot;)&quot;);
++}
++
++?&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000010.html">[Meneamenet-svn] r14 - branches
+</A></li>
+	<LI>Next message: <A HREF="000012.html">[Meneamenet-svn] r16 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

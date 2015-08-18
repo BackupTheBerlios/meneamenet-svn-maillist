@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r40 - branches/trunks/www/libs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-June/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r40%20-%20branches/trunks/www/libs&In-Reply-To=%3C200606031232.k53CWoQk016207%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000035.html">
+   <LINK REL="Next"  HREF="000037.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r40 - branches/trunks/www/libs</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r40%20-%20branches/trunks/www/libs&In-Reply-To=%3C200606031232.k53CWoQk016207%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r40 - branches/trunks/www/libs">trunks at berlios.de
+       </A><BR>
+    <I>Sat Jun  3 14:32:50 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000035.html">[Meneamenet-svn] r39 - branches/trunks/www/js
+</A></li>
+        <LI>Next message: <A HREF="000037.html">[Meneamenet-svn] r41 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#36">[ date ]</a>
+              <a href="thread.html#36">[ thread ]</a>
+              <a href="subject.html#36">[ subject ]</a>
+              <a href="author.html#36">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-06-03 14:32:33 +0200 (Sat, 03 Jun 2006)
+New Revision: 40
+
+Modified:
+   branches/trunks/www/libs/link.php
+Log:
+adding monouser interface to link.php
+
+Modified: branches/trunks/www/libs/link.php
+===================================================================
+--- branches/trunks/www/libs/link.php	2006-06-03 12:26:27 UTC (rev 39)
++++ branches/trunks/www/libs/link.php	2006-06-03 12:32:33 UTC (rev 40)
+@@ -211,7 +211,7 @@
+ 
+ 		echo '&lt;div class=&quot;news-summary&quot; id=&quot;news-'.$this-&gt;id.'&quot;&gt;';
+ 		echo '&lt;div class=&quot;news-body&quot;&gt;';
+-		if ($type != 'preview' &amp;&amp; !empty($this-&gt;title) &amp;&amp; !empty($this-&gt;content)) {
++		if ($type != 'preview' &amp;&amp; !empty($this-&gt;title)) {
+ 			$this-&gt;print_shake_box($votes_enabled);
+ 		}
+ 		echo '&lt;h3 id=&quot;title'.$this-&gt;id.'&quot;&gt;';
+@@ -221,12 +221,18 @@
+ 		if ($type != 'short')
+ 			echo '&lt;a href=&quot;user.php?login='.$this-&gt;username.'&quot; title=&quot;'.$this-&gt;username.'&quot;&gt;&lt;img src=&quot;'.get_gravatar_url($this-&gt;email, 25).'&quot; width=&quot;25&quot; height=&quot;25&quot; alt=&quot;icon gravatar.com&quot; /&gt;&lt;/a&gt;';
+ 		echo '&lt;strong&gt;'.htmlentities(preg_replace('/^http:\/\//', '', txt_shorter($this-&gt;url))).'&lt;/strong&gt;'.&quot;&lt;br /&gt;\n&quot;;
+-		echo _('enviado por').' &lt;a href=&quot;user.php?login='.$this-&gt;username.'&amp;view=history&quot;&gt;&lt;strong&gt;'.$this-&gt;username.'&lt;/strong&gt;&lt;/a&gt; '._('hace').txt_time_diff($this-&gt;date);
++		if ( $globals['interface'] == &quot;monouser&quot; )
++			echo _('enviado hace').txt_time_diff($this-&gt;date);
++		else
++			echo _('enviado por').' &lt;a href=&quot;user.php?login='.$this-&gt;username.'&amp;view=history&quot;&gt;&lt;strong&gt;'.$this-&gt;username.'&lt;/strong&gt;&lt;/a&gt; '._('hace').txt_time_diff($this-&gt;date);
+ 		if($this-&gt;status == 'published')
+ 			echo ', '  ._('publicado hace').txt_time_diff($this-&gt;published_date);
+ 		echo &quot;&lt;/div&gt;\n&quot;;
+ 		if($type=='full' || $type=='preview') {
+-			echo '&lt;div class=&quot;news-body-text&quot;&gt;'.text_to_html($this-&gt;content).'&lt;/div&gt;';
++			if ( $globals['interface'] == &quot;monouser&quot; ) 
++				echo '&lt;div class=&quot;news-body-text&quot;&gt;'.trim($this-&gt;content).'&lt;/div&gt;';
++			else
++				echo '&lt;div class=&quot;news-body-text&quot;&gt;'.text_to_html($this-&gt;content).'&lt;/div&gt;';
+ 		}
+ 		if (!empty($this-&gt;tags)) {
+ 			echo '&lt;div class=&quot;news-tags&quot;&gt;';
+@@ -284,6 +290,8 @@
+ 		if($current_user-&gt;user_id &gt; 0 &amp;&amp; $this-&gt;status!='published' &amp;&amp; $this-&gt;votes &gt; 0 &amp;&amp; $type != 'preview' &amp;&amp;
+ 				$current_user-&gt;user_karma &gt; 5 &amp;&amp; $this-&gt;votes_enabled /*&amp;&amp; $this-&gt;author != $current_user-&gt;user_id*/) {
+ 			$this-&gt;print_problem_form();
++		} elseif ($current_user-&gt;user_level == 'god') {
++			$this-&gt;print_problem_form();
+ 		}
+ 
+ 		echo '&lt;/div&gt;'.&quot;\n&quot;;
+@@ -344,20 +352,29 @@
+ 		}
+ 		$pvalue = -1;
+ 		//echo '&lt;span class=&quot;tool-right&quot;&gt;';
+-		echo '&lt;form class=&quot;tool&quot; action=&quot;&quot; id=&quot;problem-'.$this-&gt;id.'&quot;&gt;';
+-		echo '&lt;select '.$status.' name=&quot;ratings&quot;  onchange=&quot;';
+-		echo 'report_problem(this.form,'.&quot;$current_user-&gt;user_id, $this-&gt;id, &quot;.&quot;'&quot;.md5($site_key.$current_user-&gt;user_id.$this-&gt;randkey.$globals['user_ip']).&quot;'&quot;.')';
+-		echo '&quot;&gt;';
+-		echo '&lt;option value=&quot;0&quot; selected=&quot;selected&quot;&gt;&#191;problema?&lt;/option&gt;';
+-		echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('irrelevante').'&lt;/option&gt;'; $pvalue--;
+-		echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('antigua').'&lt;/option&gt;'; $pvalue--;
+-		echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('spam').'&lt;/option&gt;'; $pvalue--;
+-		echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('duplicada').'&lt;/option&gt;'; $pvalue--;
+-		echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('provocaci&#243;n').'&lt;/option&gt;'; $pvalue--;
+-		echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('err&#243;nea').'&lt;/option&gt;'; $pvalue--;
+-		echo '&lt;/select&gt;';
+-//		echo '&lt;input type=&quot;hidden&quot; name=&quot;return&quot; value=&quot;&quot; disabled /&gt;';
+-		echo '&lt;/form&gt;';
++		if ( $current_user-&gt;user_level == 'god' &amp;&amp; $globals['interface'] == &quot;monouser&quot; ) {
++			echo '&lt;form class=&quot;tool&quot; action=&quot;&quot; id=&quot;problem-'.$this-&gt;id.'&quot;&gt;';
++			echo '&lt;a href=&quot;javascript:';
++			echo 'report_problem(document.getElementById(\'problem-'.$this-&gt;id.'\'),'.&quot;$current_user-&gt;user_id, $this-&gt;id, &quot;.&quot;'&quot;.md5($site_key.$current_user-&gt;user_id.$this-&gt;randkey.$globals['user_ip']).&quot;'&quot;.')';
++			echo '&quot;&gt;' . _('Descartar noticia') . '&lt;/a&gt;';
++			echo '&lt;input type=&quot;hidden&quot; name=&quot;ratings&quot; value=&quot;-1&quot; /&gt;';
++			echo '&lt;/form&gt;';
++		} else {
++			echo '&lt;form class=&quot;tool&quot; action=&quot;&quot; id=&quot;problem-'.$this-&gt;id.'&quot;&gt;';
++			echo '&lt;select '.$status.' name=&quot;ratings&quot;  onchange=&quot;';
++			echo 'report_problem(this.form,'.&quot;$current_user-&gt;user_id, $this-&gt;id, &quot;.&quot;'&quot;.md5($site_key.$current_user-&gt;user_id.$this-&gt;randkey.$globals['user_ip']).&quot;'&quot;.')';
++			echo '&quot;&gt;';
++			echo '&lt;option value=&quot;0&quot; selected=&quot;selected&quot;&gt;&#191;problema?&lt;/option&gt;';
++			echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('irrelevante').'&lt;/option&gt;'; $pvalue--;
++			echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('antigua').'&lt;/option&gt;'; $pvalue--;
++			echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('spam').'&lt;/option&gt;'; $pvalue--;
++			echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('duplicada').'&lt;/option&gt;'; $pvalue--;
++			echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('provocaci&#243;n').'&lt;/option&gt;'; $pvalue--;
++			echo '&lt;option value=&quot;'.$pvalue.'&quot;&gt;'._('err&#243;nea').'&lt;/option&gt;'; $pvalue--;
++			echo '&lt;/select&gt;';
++//			echo '&lt;input type=&quot;hidden&quot; name=&quot;return&quot; value=&quot;&quot; disabled /&gt;';
++			echo '&lt;/form&gt;';
++		}
+ 	}
+ 
+ 	function vote_exists($user) {
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000035.html">[Meneamenet-svn] r39 - branches/trunks/www/js
+</A></li>
+	<LI>Next message: <A HREF="000037.html">[Meneamenet-svn] r41 - branches/trunks/www/libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#36">[ date ]</a>
+              <a href="thread.html#36">[ thread ]</a>
+              <a href="subject.html#36">[ subject ]</a>
+              <a href="author.html#36">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>

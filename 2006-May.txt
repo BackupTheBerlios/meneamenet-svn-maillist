@@ -1,0 +1,2171 @@
+From edulix at berlios.de  Sun May  7 15:54:16 2006
+From: edulix at berlios.de (edulix at berlios.de)
+Date: Sun, 7 May 2006 15:54:16 +0200
+Subject: [Meneamenet-svn] r4 - branches
+Message-ID: <200605071354.k47DsGUi009104@sheep.berlios.de>
+
+Author: edulix
+Date: 2006-05-07 15:53:48 +0200 (Sun, 07 May 2006)
+New Revision: 4
+
+Added:
+   branches/ashacz/
+Log:
+Creating a private branch of /trunk for ashacz.
+
+Copied: branches/ashacz (from rev 3, trunk)
+
+
+
+From edulix at berlios.de  Sun May  7 15:54:47 2006
+From: edulix at berlios.de (edulix at berlios.de)
+Date: Sun, 7 May 2006 15:54:47 +0200
+Subject: [Meneamenet-svn] r5 - branches/ashacz
+Message-ID: <200605071354.k47DslX3010118@sheep.berlios.de>
+
+Author: edulix
+Date: 2006-05-07 15:54:25 +0200 (Sun, 07 May 2006)
+New Revision: 5
+
+Added:
+   branches/ashacz/trunk/
+Log:
+Creating a private branch of /trunk for ashacz.
+
+Copied: branches/ashacz/trunk (from rev 4, trunk)
+
+
+
+From ashacz at berlios.de  Sun May  7 16:07:04 2006
+From: ashacz at berlios.de (ashacz at BerliOS)
+Date: Sun, 7 May 2006 16:07:04 +0200
+Subject: [Meneamenet-svn] r6 - branches/ashacz/www
+Message-ID: <200605071407.k47E74pc012910@sheep.berlios.de>
+
+Author: ashacz
+Date: 2006-05-07 16:07:01 +0200 (Sun, 07 May 2006)
+New Revision: 6
+
+Modified:
+   branches/ashacz/www/cabal.php
+Log:
+Probando los permisos de escritura de svn, no tomar en cuenta
+
+Modified: branches/ashacz/www/cabal.php
+===================================================================
+--- branches/ashacz/www/cabal.php	2006-05-07 13:54:25 UTC (rev 5)
++++ branches/ashacz/www/cabal.php	2006-05-07 14:07:01 UTC (rev 6)
+@@ -1,4 +1,5 @@
+ <?
++//Prueba 
+ // The source code packaged with this file is Free Software, Copyright (C) 2005 by
+ // Ricardo Galli <gallir at uib dot es>.
+ // It's licensed under the AFFERO GENERAL PUBLIC LICENSE unless stated otherwise.
+
+
+
+From ashacz at berlios.de  Sun May  7 16:33:18 2006
+From: ashacz at berlios.de (ashacz at BerliOS)
+Date: Sun, 7 May 2006 16:33:18 +0200
+Subject: [Meneamenet-svn] r7 - branches/ashacz/www
+Message-ID: <200605071433.k47EXI45027403@sheep.berlios.de>
+
+Author: ashacz
+Date: 2006-05-07 16:33:18 +0200 (Sun, 07 May 2006)
+New Revision: 7
+
+Added:
+   branches/ashacz/www/robots.txt
+Log:
+A?\195?\177adido el archivo robots.txt a la raiz del sitio, carpeta www. Este archivo es leido por los principales buscadores de internet, como Google. Quitamos el acceso a los spiders a la carpeta img para que no indexen las imagenes del sitio. De momento este cambio aun no lo paso a la rama trunk
+
+Added: branches/ashacz/www/robots.txt
+===================================================================
+--- branches/ashacz/www/robots.txt	2006-05-07 14:07:01 UTC (rev 6)
++++ branches/ashacz/www/robots.txt	2006-05-07 14:33:18 UTC (rev 7)
+@@ -0,0 +1,4 @@
++User-Agent: *
++Disallow: /img/
++
++
+
+
+
+From edulix at berlios.de  Mon May  8 09:44:19 2006
+From: edulix at berlios.de (edulix at berlios.de)
+Date: Mon, 8 May 2006 09:44:19 +0200
+Subject: [Meneamenet-svn] r8 - branches
+Message-ID: <200605080744.k487iJoI021013@sheep.berlios.de>
+
+Author: edulix
+Date: 2006-05-08 09:44:11 +0200 (Mon, 08 May 2006)
+New Revision: 8
+
+Added:
+   branches/gallir/
+Log:
+Creating a local branch for gallir.
+
+Copied: branches/gallir (from rev 7, trunk)
+
+
+
+From edulix at berlios.de  Mon May  8 14:06:11 2006
+From: edulix at berlios.de (edulix at berlios.de)
+Date: Mon, 8 May 2006 14:06:11 +0200
+Subject: [Meneamenet-svn] r9 - branches
+Message-ID: <200605081206.k48C6BEV003790@sheep.berlios.de>
+
+Author: edulix
+Date: 2006-05-08 14:06:05 +0200 (Mon, 08 May 2006)
+New Revision: 9
+
+Added:
+   branches/marcosbl/
+Log:
+Creating a local branch for marcosbl.
+
+Copied: branches/marcosbl (from rev 8, trunk)
+
+
+
+From ashacz at berlios.de  Mon May  8 19:37:01 2006
+From: ashacz at berlios.de (ashacz at berlios.de)
+Date: Mon, 8 May 2006 19:37:01 +0200
+Subject: [Meneamenet-svn] r10 - branches/ashacz
+Message-ID: <200605081737.k48Hb1Ea005742@sheep.berlios.de>
+
+Author: ashacz
+Date: 2006-05-08 19:36:46 +0200 (Mon, 08 May 2006)
+New Revision: 10
+
+Removed:
+   branches/ashacz/trunk/
+Log:
+Elimino la carpeta trunk que ten?\195?\173a una copia de las carpetas www y scripts
+
+
+
+From ashacz at berlios.de  Mon May  8 20:47:37 2006
+From: ashacz at berlios.de (ashacz at berlios.de)
+Date: Mon, 8 May 2006 20:47:37 +0200
+Subject: [Meneamenet-svn] r11 - branches/ashacz
+Message-ID: <200605081847.k48Ilbqr006894@sheep.berlios.de>
+
+Author: ashacz
+Date: 2006-05-08 20:47:24 +0200 (Mon, 08 May 2006)
+New Revision: 11
+
+Added:
+   branches/ashacz/cambios.txt
+Log:
+Fichero donde anotare los cambios realizados en el codigo de meneame
+
+Added: branches/ashacz/cambios.txt
+===================================================================
+--- branches/ashacz/cambios.txt	2006-05-08 17:36:46 UTC (rev 10)
++++ branches/ashacz/cambios.txt	2006-05-08 18:47:24 UTC (rev 11)
+@@ -0,0 +1,3 @@
++Cambios realizados en el codigo de meneame y su estado.
++
++1? A?adido el archivo robots.txt Fecha: 7/5/2006
+\ No newline at end of file
+
+
+
+From edulix at berlios.de  Tue May  9 16:20:13 2006
+From: edulix at berlios.de (edulix at berlios.de)
+Date: Tue, 9 May 2006 16:20:13 +0200
+Subject: [Meneamenet-svn] r12 - branches
+Message-ID: <200605091420.k49EKDaZ032565@sheep.berlios.de>
+
+Author: edulix
+Date: 2006-05-09 16:20:09 +0200 (Tue, 09 May 2006)
+New Revision: 12
+
+Added:
+   branches/jdeveloper/
+Log:
+Creating a local branch for jdeveloper.
+
+Copied: branches/jdeveloper (from rev 11, trunk)
+
+
+
+From ashacz at berlios.de  Tue May  9 17:13:18 2006
+From: ashacz at berlios.de (ashacz at berlios.de)
+Date: Tue, 9 May 2006 17:13:18 +0200
+Subject: [Meneamenet-svn] r13 - in branches/ashacz: . www/libs
+Message-ID: <200605091513.k49FDIIi006604@sheep.berlios.de>
+
+Author: ashacz
+Date: 2006-05-09 17:13:09 +0200 (Tue, 09 May 2006)
+New Revision: 13
+
+Modified:
+   branches/ashacz/cambios.txt
+   branches/ashacz/www/libs/html1.php
+Log:
+A?\195?\177adida la etiqueta  <meta http-equiv="Cache-Control" content ="no-cache" />
+			para evitar que los navegadores almacenen en cache versiones antiguas de 
+			p?\195?\161ginas de meneame
+			
+			Cambiada la etiqueta <style type="text/css" media="screen">@import "css/es/mnm10.css";</style>'
+			por <link href="/css/es/mnm10.css" rel="stylesheet" media="screen" type="text/css" />
+			Vincular una hoja de estilos es un metodo mas estandar que importarla.
+			Solo los navegadores modernos entienden @import, los antiguos la ignoran.
+			
+			Modificado el fichero www/libs/html1.php
+
+Modified: branches/ashacz/cambios.txt
+===================================================================
+--- branches/ashacz/cambios.txt	2006-05-09 14:20:09 UTC (rev 12)
++++ branches/ashacz/cambios.txt	2006-05-09 15:13:09 UTC (rev 13)
+@@ -1,3 +1,14 @@
+ Cambios realizados en el codigo de meneame y su estado.
+ 
+-1? A?adido el archivo robots.txt Fecha: 7/5/2006
+\ No newline at end of file
++1? 7/5/2006 A?adido el archivo robots.txt 
++
++2? 8/5/2006 A?adida la etiqueta  <meta http-equiv="Cache-Control" content ="no-cache" />
++			para evitar que los navegadores almacenen en cache versiones antiguas de 
++			p?ginas de meneame
++			
++			Cambiada la etiqueta <style type="text/css" media="screen">@import "css/es/mnm10.css";</style>'
++			por <link href="/css/es/mnm10.css" rel="stylesheet" media="screen" type="text/css" />
++			Vincular una hoja de estilos es un metodo mas estandar que importarla.
++			Solo los navegadores modernos entienden @import, los antiguos la ignoran.
++			
++			Modificado el fichero www/libs/html1.php
+\ No newline at end of file
+
+Modified: branches/ashacz/www/libs/html1.php
+===================================================================
+--- branches/ashacz/www/libs/html1.php	2006-05-09 14:20:09 UTC (rev 12)
++++ branches/ashacz/www/libs/html1.php	2006-05-09 15:13:09 UTC (rev 13)
+@@ -27,7 +27,9 @@
+ 	echo "<title>"._($title)." // men&eacute;ame</title>\n";
+ 	echo '<meta name="generator" content="meneame" />' . "\n";
+ 	echo '<meta name="keywords" content="'.$globals['tags'].'" />' . "\n";
+-	echo '<style type="text/css" media="screen">@import "/css/es/mnm10.css";</style>' . "\n";
++	echo '<meta http-equiv="Cache-Control" content ="no-cache" />'. "\n";
++	echo '<link href="/css/es/mnm10.css" rel="stylesheet" media="screen" type="text/css" />' ."\n";;
++	//echo '<style type="text/css" media="screen">@import "css/es/mnm10.css";</style>' . "\n";
+ 	//echo '<style type="text/css" media="all">@import "./css/es/meneame.css";</style>' . "\n";
+ 	//echo '<style type="text/css" media="all">@import "./css/es/toolbar.css";</style>' . "\n";
+ 	echo '<link rel="alternate" type="application/rss+xml" title="'._('publicadas').'" href="http://'.get_server_name().'/rss2.php" />'."\n";
+
+
+
+From edulix at berlios.de  Thu May 11 11:51:08 2006
+From: edulix at berlios.de (edulix at berlios.de)
+Date: Thu, 11 May 2006 11:51:08 +0200
+Subject: [Meneamenet-svn] r14 - branches
+Message-ID: <200605110951.k4B9p81P006983@sheep.berlios.de>
+
+Author: edulix
+Date: 2006-05-11 11:51:03 +0200 (Thu, 11 May 2006)
+New Revision: 14
+
+Added:
+   branches/trunks/
+Log:
+Creating a local branch for trunks.
+
+Copied: branches/trunks (from rev 13, trunk)
+
+
+
+From trunks at berlios.de  Sat May 27 02:49:00 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 02:49:00 +0200
+Subject: [Meneamenet-svn] r15 - branches/trunks/www
+Message-ID: <200605270049.k4R0n0wh001819@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 02:48:30 +0200 (Sat, 27 May 2006)
+New Revision: 15
+
+Added:
+   branches/trunks/www/categories.php
+Log:
+adding categories support
+
+Added: branches/trunks/www/categories.php
+===================================================================
+--- branches/trunks/www/categories.php	2006-05-11 09:51:03 UTC (rev 14)
++++ branches/trunks/www/categories.php	2006-05-27 00:48:30 UTC (rev 15)
+@@ -0,0 +1,208 @@
++<?
++// The source code packaged with this file is Free Software, Copyright (C) 2005 by
++// Javier Carranza <javier at al dot quimia dot net>
++//     based on profile.php memeame source
++// It's licensed under the AFFERO GENERAL PUBLIC LICENSE unless stated otherwise.
++// You can get copies of the licenses here:
++//              http://www.affero.org/oagpl.html
++// AFFERO GENERAL PUBLIC LICENSE is also included in the file called "COPYING".
++
++include('config.php');
++include(mnminclude.'html1.php');
++include(mnminclude.'link.php');
++include(mnminclude.'user.php');
++
++
++// User recovering her password
++if (!empty($_GET['login']) && !empty($_GET['t']) && !empty($_GET['k'])) {
++	$time = intval($_GET['t']);
++	$key = $_GET['k'];
++
++	$user=new User();
++	$user->username=preg_replace('/ /', '_', $_GET['login']);
++	if($user->read()) {
++		$now = time();
++		$key2 = md5($user->id.$user->pass.$time.$site_key.get_server_name());
++		//echo "$now, $time; $key == $key2\n";
++		if ($time > $now - 7200 && $time < $now && $key == $key2) {
++			$db->query("update users set user_validated_date = now() where user_id = $user->id and user_validated_date is null");
++			$current_user->Authenticate($user->username, $user->pass);
++		}
++	}
++}
++//// End recovery
++
++if ($current_user->user_id > 0 && $current_user->authenticated && in_array($current_user->user_level, array('admin', 'god'))) {
++		$login=$current_user->user_login;
++} else {
++	header("Location: ./login.php");
++	die;
++}
++
++$user=new User();
++$user->username = $login;
++if(!$user->read()) {
++	echo "error 2";
++	die;
++}
++
++do_header(_('administraci?n de categor?as'));
++do_navbar(_('administraci?n de categor?as'));
++
++show_category_form();
++
++do_footer();
++
++
++function show_category_form() {
++	global $user;
++
++	change_categories();
++
++	echo '<div id="genericform-contents"><div id="genericform"><fieldset><legend>';
++	echo '<span class="sign">'._('administraci?n de categor?as').'</span></legend>';
++
++	echo '<div class="column-list">'."\n";
++	echo '<div class="categorylist">'."\n";
++	echo '<form action="categories.php" method="post" id="thisform">' . "\n";
++	echo '<input type="hidden" name="process" value="1" />' . "\n";
++	echo '<input type="hidden" name="user_id" value="'.$user->id.'" />' . "\n";
++
++	show_categories();
++
++	echo '<br style="clear: both;" />' . "\n";
++	echo '</div></div>'."\n";
++
++	echo '<br />' . "\n";
++	echo '<p>'._('Introduce una nueva categor?a o edita las existentes:').'</p>';
++
++	echo '<p class="l-mid" id="insert-p"><label for="new_cat">' . _("nueva categor?a") . ':</label> ' . "\n";
++	echo '<input type="text" id="new_cat" name="new_cat" tabindex="1" size="25" /> ' . "\n";
++	echo '<label for="new_parent">' . _("hija de") . ':</label> ' . "\n";
++	echo '<input type="text" id="new_parent" name="new_parent" tabindex="1" size="1" value="0" />' . "\n";
++	echo '<p class="l-bottom" id="submit-p"><input type="submit" name="new" value="'._('enviar').'" class="genericsubmit"></p>';
++	echo "</form></fieldset></div></div>\n";
++}
++
++function show_categories() {
++	global $db, $dblang;
++
++	$categories = $db->get_results("SELECT category_id, category_parent, category_name FROM categories WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC");
++
++	foreach ($categories as $category) {
++		if (isset($tree[$category->category_parent])) {
++			$tree[$category->category_parent] .= "," . $category->category_id;
++		} else {
++			$tree[$category->category_parent] = $category->category_id;
++		}
++		$category_data[$category->category_id]->category_parent = $category->category_parent;
++		$category_data[$category->category_id]->category_name = $category->category_name;
++	}
++
++	$elems = split(",", $tree[0]);
++	recursive($elems, $tree, $category_data, 0);
++
++}
++
++function recursive($elems, $tree, $data, $level) {
++	foreach ($elems as $item) {
++		if (isset($tree[$item])) {
++			$elem = split(",", $tree[$item]);
++			for ($i=$level; $i>0; $i--)
++				echo '<blockquote>';
++
++			print_category($item, $data[$item]->category_parent, $data[$item]->category_name);
++
++			for ($i=$level; $i>0; $i--)
++				echo '</blockquote>';
++			recursive($elem, $tree, $data, $level+1) . "\n";
++		} else {
++			for ($i=$level; $i>0; $i--)
++				echo '<blockquote>';
++
++			print_category($item, $data[$item]->category_parent, $data[$item]->category_name);
++
++			for ($i=$level; $i>0; $i--)
++				echo '</blockquote>';
++		}
++	}
++}
++
++function print_category ($id, $parent, $name) {
++	echo '<p class="l-top" id="l-top-edit[' . $id . ']">['. $id . 
++		'] <label for="edit[' . $id . ']" accesskey="' . $id . 
++		'" id="label1-edit[' . $id .']">' . _($name) .'</label> ';
++
++	echo '<input type="button" name="edit[' . $id . ']" id="edit[' . $id . 
++		']" tabindex="1" value="' . _('editar') . 
++		' " onclick="javascript:edit_category(this);" />' . "\n";
++
++	echo '<input type="hidden"  name="parent-edit[' . $id . ']" id="parent-edit[' 
++		. $id . ']" value="' . $parent . '" />';
++
++	echo '<input type="submit" name="delete[' . $id . ']" id="delete[' . $id .
++		 ']" tabindex="1" value="' . _('eliminar') . ' " />' . "\n";
++}
++
++function change_categories() {
++	global $user, $current_user, $globals;
++	$errors = 0;
++	$ncat = 0;
++	
++	if( !(isset($_POST['new']) || isset($_POST['delete'])) || !isset($_POST['process']) || $_POST['user_id'] != $current_user->user_id ) return;
++
++	if (isset($_POST['delete'])) {
++		delete_category(array_keys($_POST['delete']));
++	} elseif (isset($_POST['new_cat'])) {
++		insert_category(trim($_POST['new_cat']), trim($_POST['new_parent']));
++	} else {
++		foreach (array_keys($_POST['new_cat-edit']) as $key) {
++			$category->id[$ncat]=trim($key);
++			$ncat++;
++		}
++		$ncat=0;
++		foreach ($_POST['new_cat-edit'] as $catitem) {
++			$category->name[$ncat]=trim($catitem);
++			$ncat++;
++		}
++		$ncat=0;
++		foreach ($_POST['new_parent-edit'] as $catparent) {
++			$category->parent[$ncat]=intval($catparent);
++			$ncat++;
++		}
++		if ( !(empty($_POST['new_cat-edit']) || empty($_POST['new-cat'])) ) {
++			$errors = 1;
++			echo '<p class="form-error">'._('No ha introducido ninguna categor?a nueva').'</p>';
++		}
++		if (!$errors) {
++			save_categories($category);
++			echo '<p class="form-act">'._('Datos actualizados').'</p>';
++		}
++	}
++}
++
++function save_categories($category) {
++	global $db, $dblang;
++
++	$ncat=0;
++	foreach ($category->id as $key) {
++		$db->query("update categories set category_name=\"" . $category->name[$ncat] . "\", category_parent=\"" . $category->parent[$ncat] . "\" where category_id=\"$key\" and category_lang=\"$dblang\"");
++		$ncat++;
++	}
++}
++
++function delete_category($key) {
++	global $db, $dblang;
++
++	if (is_int($key[0]))
++		$db->query("delete from categories where category_id=\"" . $key[0] . "\" and category_lang=\"$dblang\"");
++}
++
++function insert_category($key, $parent) {
++	global $db, $dblang;
++
++	$id=$db->get_results("select max(category_id) max from categories");
++	$db->query("insert into categories (category_id, category_parent, category_name, category_lang) values (" . (intval($id[0]->max) + 1) . ", $parent, \"$key\", \"$dblang\")");
++}
++
++?>
+
+
+
+From trunks at berlios.de  Sat May 27 02:52:03 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 02:52:03 +0200
+Subject: [Meneamenet-svn] r16 - branches/trunks/www
+Message-ID: <200605270052.k4R0q39x002205@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 02:51:45 +0200 (Sat, 27 May 2006)
+New Revision: 16
+
+Added:
+   branches/trunks/www/crontab.in.example
+Log:
+crontab example file
+
+Added: branches/trunks/www/crontab.in.example
+===================================================================
+--- branches/trunks/www/crontab.in.example	2006-05-27 00:48:30 UTC (rev 15)
++++ branches/trunks/www/crontab.in.example	2006-05-27 00:51:45 UTC (rev 16)
+@@ -0,0 +1,9 @@
++# m h  dom mon dow   command
++*/5 * * * * wget -q -O - 'http://meneame.example.org/scripts/promote2.php?period=100' > /var/log/meneame/promote.log
++
++*/37 * * * * wget -q -O - http://meneame.example.org/scripts/discard.php > /var/log/meneame/discard.log
++
++3 0,8,13 * * * wget -q -O - http://meneame.example.org/scripts/karma3.php > /var/log/meneame/karmal.log
++
++17 5 * * * /var/www/meneame/www/scripts/affiliation.pl > /var/log/meneame/affiliation.log
++
+
+
+
+From trunks at berlios.de  Sat May 27 03:07:43 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:07:43 +0200
+Subject: [Meneamenet-svn] r17 - branches/trunks/www/js
+Message-ID: <200605270107.k4R17hXZ005230@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:07:36 +0200 (Sat, 27 May 2006)
+New Revision: 17
+
+Added:
+   branches/trunks/www/js/categories.js
+Log:
+adding categories support
+
+Added: branches/trunks/www/js/categories.js
+===================================================================
+--- branches/trunks/www/js/categories.js	2006-05-27 00:51:45 UTC (rev 16)
++++ branches/trunks/www/js/categories.js	2006-05-27 01:07:36 UTC (rev 17)
+@@ -0,0 +1,19 @@
++function edit_category(obj) {
++	document.getElementById('l-top-' + obj.id).innerHTML = 
++	'<input type="text" id="new_cat-' + obj.id + '" name="new_cat-' + obj.id + 
++	'" tabindex="1" size="25" value="' + document.getElementById('label1-' + 
++	obj.id).innerHTML + '"/><label for="new_parent-' + obj.id + '">Hija de:</label>' + 
++	'<input type="text" id="new_parent-' + obj.id + '" name="new_parent-' + 
++	obj.id + '" tabindex="1" size="1" value="' + document.getElementById('parent-' + 
++	obj.id).value +'"/>';
++
++	// Para ocultar submit principal y sacar uno ?nico por cada campo.
++	// Habilitar esta opci?n anularia la posibilidad de actualizaci?n
++	// m?ltiple de categor?as (s?lo ser?a actualizable la categor?a
++	// asociada al bot?n de env?o).
++	// <input type="submit" name="new_category" value="' + document.getElementsByName('new_category')[0].value + '" class="genericsubmit">';
++	// document.getElementById('submit-p').innerHTML = "";
++
++	document.getElementById('insert-p').innerHTML = "";
++	return;
++}
+
+
+
+From trunks at berlios.de  Sat May 27 03:08:17 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:08:17 +0200
+Subject: [Meneamenet-svn] r18 - branches/trunks/www
+Message-ID: <200605270108.k4R18HlS005384@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:08:12 +0200 (Sat, 27 May 2006)
+New Revision: 18
+
+Modified:
+   branches/trunks/www/config.php
+Log:
+adding some fixes and features to configuration file
+
+Modified: branches/trunks/www/config.php
+===================================================================
+--- branches/trunks/www/config.php	2006-05-27 01:07:36 UTC (rev 17)
++++ branches/trunks/www/config.php	2006-05-27 01:08:12 UTC (rev 18)
+@@ -15,6 +15,8 @@
+ $page_size		= 30;
+ $anonnymous_vote = true;
+ $external_ads = true;
++$globals['comments'] = true;
++$globals['site'] = "Mymeneame";
+ //$globals['external_ads'] = false;
+ $globals['tags'] = 'tecnolog?a, internet, cultura, software libre, linux, open source, bit?coras, blogs, ciencia';
+ $globals['time_enabled_votes'] = 864000; // 10 days
+
+
+
+From trunks at berlios.de  Sat May 27 03:09:17 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:09:17 +0200
+Subject: [Meneamenet-svn] r19 - branches/trunks/www
+Message-ID: <200605270109.k4R19Hmj005648@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:08:49 +0200 (Sat, 27 May 2006)
+New Revision: 19
+
+Modified:
+   branches/trunks/www/story.php
+Log:
+adding hide commments feature
+
+Modified: branches/trunks/www/story.php
+===================================================================
+--- branches/trunks/www/story.php	2006-05-27 01:08:12 UTC (rev 18)
++++ branches/trunks/www/story.php	2006-05-27 01:08:49 UTC (rev 19)
+@@ -39,46 +39,47 @@
+ 	// AdSense
+ 	do_banner_story();
+ 
+-	echo '<div id="comments">';
+-   	echo '<h2>'._('comentarios').'</h2>';
+-
+-	$comments = $db->get_col("SELECT comment_id FROM comments WHERE comment_link_id=$link->id ORDER BY comment_date");
+-	if ($comments) {
+-		echo '<ol id="comments-list">';
+-		require_once(mnminclude.'comment.php');
+-		$comment = new Comment;
+-		foreach($comments as $comment_id) {
+-			$comment->id=$comment_id;
+-			$comment->read();
+-			$comment->print_summary($link);
++	if ( $globals['comments'] ) {
++		echo '<div id="comments">';
++		echo '<h2>'._('comentarios').'</h2>';
++	
++		$comments = $db->get_col("SELECT comment_id FROM comments WHERE comment_link_id=$link->id ORDER BY comment_date");
++		if ($comments) {
++			echo '<ol id="comments-list">';
++			require_once(mnminclude.'comment.php');
++			$comment = new Comment;
++			foreach($comments as $comment_id) {
++				$comment->id=$comment_id;
++				$comment->read();
++				$comment->print_summary($link);
++			}
++			echo "</ol>\n";
+ 		}
+-		echo "</ol>\n";
+-	}
+-
+-
+ 	
+-	if($link->date < time()-604800) { // older than 7 days
+-		//echo '<br />'."\n";
+-		echo '<div class="commentform" align="center" >'."\n";
+-		echo _('comentarios cerrados')."\n";
+-		echo '</div>'."\n";
+-	} elseif ($current_user->authenticated && ($current_user->user_karma > $globals['min_karma_for_comments'] || $current_user->user_id == $link->author)) {
+-		print_comment_form();
+-	} else {
+-		echo '<br/>'."\n";
+-		echo '<div class="commentform" align="center" >'."\n";
+-		if ($current_user->authenticated && $current_user->user_karma <= $globals['min_karma_for_comments']) 
+-			echo _('No tienes el m?nimo karma requerido')." (" . $globals['min_karma_for_comments'] . ") ". _('para comentar'). ": ".$current_user->user_karma ."\n";
+-
+-		else
+-			echo '<a href="/login.php?return='.$_SERVER['REQUEST_URI'].'">'._('Autentif?cate si deseas escribir').'</a> '._('comentarios').'. '._('O reg?strate'). ' <a href="/register.php">aqu?</a>.'."\n";
+-		echo '</div>'."\n";
++	
++		
++		if($link->date < time()-604800) { // older than 7 days
++			//echo '<br />'."\n";
++			echo '<div class="commentform" align="center" >'."\n";
++			echo _('comentarios cerrados')."\n";
++			echo '</div>'."\n";
++		} elseif ($current_user->authenticated && ($current_user->user_karma > $globals['min_karma_for_comments'] || $current_user->user_id == $link->author)) {
++			print_comment_form();
++		} else {
++			echo '<br/>'."\n";
++			echo '<div class="commentform" align="center" >'."\n";
++			if ($current_user->authenticated && $current_user->user_karma <= $globals['min_karma_for_comments']) 
++				echo _('No tienes el m?nimo karma requerido')." (" . $globals['min_karma_for_comments'] . ") ". _('para comentar'). ": ".$current_user->user_karma ."\n";
++	
++			else
++				echo '<a href="/login.php?return='.$_SERVER['REQUEST_URI'].'">'._('Autentif?cate si deseas escribir').'</a> '._('comentarios').'. '._('O reg?strate'). ' <a href="/register.php">aqu?</a>.'."\n";
++			echo '</div>'."\n";
++		}
++	
++		echo '</div>' . "\n";
+ 	}
+-
+-	echo '</div>' . "\n";
++	echo '<div class="air-with-footer">'."\n";
+ 	
+-	echo '<div class="air-with-footer">'."\n";
+-
+ 	// Show voters
+ 	echo '<div id="voters">';
+ 	echo '<h2>'._('?Qui?n ha meneado esto?').'</h2>';
+@@ -87,7 +88,7 @@
+ 	echo '</div><br />';
+ 	echo '</div>';
+ 	echo '<script type="text/javascript">var update_voters=true;</script>';
+-
++	
+ 	echo '</div>'."\n"; // <div class="air-with-footer">
+ 		
+ 	echo '</div>';
+
+
+
+From trunks at berlios.de  Sat May 27 03:09:48 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:09:48 +0200
+Subject: [Meneamenet-svn] r20 - branches/trunks/www/libs
+Message-ID: <200605270109.k4R19mEn005835@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:09:36 +0200 (Sat, 27 May 2006)
+New Revision: 20
+
+Modified:
+   branches/trunks/www/libs/link.php
+Log:
+adding hide commments feature
+
+Modified: branches/trunks/www/libs/link.php
+===================================================================
+--- branches/trunks/www/libs/link.php	2006-05-27 01:08:49 UTC (rev 19)
++++ branches/trunks/www/libs/link.php	2006-05-27 01:09:36 UTC (rev 20)
+@@ -243,19 +243,21 @@
+ 			echo '</div>';
+ 		}
+ 
+-		echo '<div class="news-details">';
+-		$ncomments = $this->comments();
+-		if($ncomments > 0) {
+-			$comments_mess = $ncomments . ' ' . _('comentarios');
+-			$comment_class = "comments";
+-		} else  {
+-			$comments_mess = _('sin comentarios');
+-			$comment_class = "comments_no";
++		if ($globals['comments']) {
++			echo '<div class="news-details">';
++			$ncomments = $this->comments();
++			if($ncomments > 0) {
++				$comments_mess = $ncomments . ' ' . _('comentarios');
++				$comment_class = "comments";
++			} else  {
++				$comments_mess = _('sin comentarios');
++				$comment_class = "comments_no";
++			}
++			if(empty($globals['link_id']))
++				echo '<a href="story.php?id='.$this->id.'" class="tool '.$comment_class.'">'.$comments_mess. '</a>';
++			else
++				echo '<span class="tool comments">'.$comments_mess. '</span>';
+ 		}
+-		if(empty($globals['link_id']))
+-			echo '<a href="story.php?id='.$this->id.'" class="tool '.$comment_class.'">'.$comments_mess. '</a>';
+-		else 
+-			echo '<span class="tool comments">'.$comments_mess. '</span>';
+ 
+ 		/*
+ 		if (!empty($this->tags)) {
+
+
+
+From trunks at berlios.de  Sat May 27 03:10:54 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:10:54 +0200
+Subject: [Meneamenet-svn] r21 - branches/trunks/www
+Message-ID: <200605270110.k4R1AsBH006080@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:10:50 +0200 (Sat, 27 May 2006)
+New Revision: 21
+
+Modified:
+   branches/trunks/www/problem.php
+Log:
+fixed to make meneame compatible with previous mysql versions
+
+Modified: branches/trunks/www/problem.php
+===================================================================
+--- branches/trunks/www/problem.php	2006-05-27 01:09:36 UTC (rev 20)
++++ branches/trunks/www/problem.php	2006-05-27 01:10:50 UTC (rev 21)
+@@ -55,7 +55,7 @@
+ 	error(_('Ya ha votado antes'));
+ }
+ 
+-$votes_freq = $db->get_var("select count(*) from votes where vote_type='links' and vote_user_id=$current_user->user_id and vote_date > subtime(now(), '0:0:30') and vote_ip = '".$globals['user_ip']."'"); 
++$votes_freq = $db->get_var("select count(*) from votes where vote_type='links' and vote_user_id=$current_user->user_id and vote_date > from_unixtime(unix_timestamp(now())-30) and vote_ip = '".$globals['user_ip']."'"); 
+ if ($current_user->user_id > 0) $freq = 2;
+ else $freq = 2;
+ 
+
+
+
+From trunks at berlios.de  Sat May 27 03:11:20 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:11:20 +0200
+Subject: [Meneamenet-svn] r22 - branches/trunks/www/css/es
+Message-ID: <200605270111.k4R1BK4G006311@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:11:18 +0200 (Sat, 27 May 2006)
+New Revision: 22
+
+Modified:
+   branches/trunks/www/css/es/mnm10.css
+Log:
+adding categories support
+
+Modified: branches/trunks/www/css/es/mnm10.css
+===================================================================
+--- branches/trunks/www/css/es/mnm10.css	2006-05-27 01:10:50 UTC (rev 21)
++++ branches/trunks/www/css/es/mnm10.css	2006-05-27 01:11:18 UTC (rev 22)
+@@ -1712,3 +1712,6 @@
+ 	padding: 10px 0 20px 0;
+ }
+ 
++.categorylist label, .categorylist input, .categorylist p {
++       margin-left: 10px;
++}
+
+
+
+From trunks at berlios.de  Sat May 27 03:12:07 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:12:07 +0200
+Subject: [Meneamenet-svn] r23 - branches/trunks/www/libs
+Message-ID: <200605270112.k4R1C7Jl006562@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:12:04 +0200 (Sat, 27 May 2006)
+New Revision: 23
+
+Modified:
+   branches/trunks/www/libs/html1.php
+Log:
+adding categories support
+
+Modified: branches/trunks/www/libs/html1.php
+===================================================================
+--- branches/trunks/www/libs/html1.php	2006-05-27 01:11:18 UTC (rev 22)
++++ branches/trunks/www/libs/html1.php	2006-05-27 01:12:04 UTC (rev 23)
+@@ -24,8 +24,8 @@
+ 	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$dblang.'" lang="'.$dblang.'">' . "\n";
+ 	echo '<head>' . "\n";
+ 	echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . "\n";
+-	echo "<title>"._($title)." // men&eacute;ame</title>\n";
+-	echo '<meta name="generator" content="meneame" />' . "\n";
++	echo "<title>"._($title)." // " . $globals['site'] . "</title>\n";
++	echo '<meta name="generator" content="'. $globals['site'] .'" />' . "\n";
+ 	echo '<meta name="keywords" content="'.$globals['tags'].'" />' . "\n";
+ 	echo '<style type="text/css" media="screen">@import "/css/es/mnm10.css";</style>' . "\n";
+ 	//echo '<style type="text/css" media="all">@import "./css/es/meneame.css";</style>' . "\n";
+@@ -37,6 +37,8 @@
+ 
+ 	echo '<link rel="icon" href="/favicon.ico" type="image/x-icon" />' . "\n";
+ 	echo '<script src="./js/xmlhttp03.js" type="text/javascript"></script>' . "\n";
++	if ( $title == _('administraci?n de categor?as') )
++	  echo '<script src="./js/categories.js" type="text/javascript"></script>' . "\n";
+ 	echo '</head>' . "\n";
+ 	echo "<body id=\"$id\" ". $globals['body-args']. ">\n";
+ 	echo '<div id="container">' . "\n";
+@@ -59,6 +61,7 @@
+ 		if($current_user->authenticated) {
+ 	  		echo '<li><a href="./login.php?op=logout&amp;return='.urlencode($_SERVER['REQUEST_URI']).'">' . _('cerrar sesi?n') . '</a></li>' . "\n";
+   			echo '<li><a href="./user.php">' . _('perfil de') . ' ' . $current_user->user_login . '</a></li>' . "\n";
++			echo (in_array($current_user->user_level, array('admin', 'god'))) ? '<li><a href="./categories.php">' . _('categor?as') . '</a></li>' . "\n" : "";
+ 		} else {
+   			echo '<li><a href="./register.php">' . _('registrarse') . '</a></li>' . "\n";
+   			echo '<li><a href="./login.php?return='.urlencode($_SERVER['REQUEST_URI']).'">' . _('login') . '</a></li>' . "\n";
+
+
+
+From trunks at berlios.de  Sat May 27 03:12:42 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:12:42 +0200
+Subject: [Meneamenet-svn] r24 - branches/trunks/www
+Message-ID: <200605270112.k4R1Cgxl006699@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:12:30 +0200 (Sat, 27 May 2006)
+New Revision: 24
+
+Modified:
+   branches/trunks/www/menealo.php
+Log:
+fixed to make meneame compatible with previous mysql versions
+
+Modified: branches/trunks/www/menealo.php
+===================================================================
+--- branches/trunks/www/menealo.php	2006-05-27 01:12:04 UTC (rev 23)
++++ branches/trunks/www/menealo.php	2006-05-27 01:12:30 UTC (rev 24)
+@@ -60,7 +60,7 @@
+ 	error(_('clave de control incorrecta'));
+ }
+ 
+-$votes_freq = $db->get_var("select count(*) from votes where vote_type='links' and vote_user_id=$current_user->user_id and vote_date > subtime(now(), '0:0:30') and vote_ip = '".$globals['user_ip']."'");
++$votes_freq = $db->get_var("select count(*) from votes where vote_type='links' and vote_user_id=$current_user->user_id and vote_date > from_unixtime(unix_timestamp(now())-30) and vote_ip = '".$globals['user_ip']."'");
+ 
+ if ($current_user->user_id > 0) $freq = 3;
+ else $freq = 2;
+
+
+
+From trunks at berlios.de  Sat May 27 03:14:24 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:14:24 +0200
+Subject: [Meneamenet-svn] r25 - branches/trunks/www/libs
+Message-ID: <200605270114.k4R1EOuU007088@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:14:14 +0200 (Sat, 27 May 2006)
+New Revision: 25
+
+Modified:
+   branches/trunks/www/libs/db.php
+Log:
+configuring utf-8 for mysql only if supports it
+
+Modified: branches/trunks/www/libs/db.php
+===================================================================
+--- branches/trunks/www/libs/db.php	2006-05-27 01:12:30 UTC (rev 24)
++++ branches/trunks/www/libs/db.php	2006-05-27 01:14:14 UTC (rev 25)
+@@ -518,6 +518,9 @@
+ 	}
+ 
+ $db = new db(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST);
+-$db->query("SET NAMES 'utf8'");
+ 
++$characters = $db->get_col("show variables like 'character_sets'", 1);
++if ( in_array("utf8", split(" ", $characters[0])) )
++	$db->query("SET NAMES 'utf8'");
++
+ ?>
+
+
+
+From trunks at berlios.de  Sat May 27 03:15:12 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:15:12 +0200
+Subject: [Meneamenet-svn] r26 - branches/trunks/www
+Message-ID: <200605270115.k4R1FCX5007216@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:15:06 +0200 (Sat, 27 May 2006)
+New Revision: 26
+
+Modified:
+   branches/trunks/www/cloud.php
+Log:
+adding rss link on cloud view
+
+Modified: branches/trunks/www/cloud.php
+===================================================================
+--- branches/trunks/www/cloud.php	2006-05-27 01:14:14 UTC (rev 25)
++++ branches/trunks/www/cloud.php	2006-05-27 01:15:06 UTC (rev 26)
+@@ -52,7 +52,8 @@
+ 	ksort($words);
+ 	foreach ($words as $word => $count) {
+ 		$size = intval($min_pts + ($count-1)*$coef);
+-		echo '<span style="font-size: '.$size.'pt"><a href="index.php?search=tag:'.urlencode($word).$time_query.'">'.$word.'</a></span>&nbsp;&nbsp; ';
++		echo '<a href="/rss2.php?search='.urlencode($word).'&amp;tag=true" rel="rss"><img src="/img/common/feed-icon-16x16.png" alt="rss '.urlencode($word).'" /> </a><span style="font-size: '.$size.'pt"><a href="index.php?search='.urlencode($word).$time_query.'&amp;tag=true">'.$word.'</a></span>&nbsp;&nbsp;
++';
+ 	}
+ 
+ }
+
+
+
+From trunks at berlios.de  Sat May 27 03:24:01 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:24:01 +0200
+Subject: [Meneamenet-svn] r27 - branches/trunks/scripts
+Message-ID: <200605270124.k4R1O1m8008873@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:23:38 +0200 (Sat, 27 May 2006)
+New Revision: 27
+
+Added:
+   branches/trunks/scripts/aggregator.php
+Log:
+adding aggregator script to get items automatically from rss sources
+
+Added: branches/trunks/scripts/aggregator.php
+===================================================================
+--- branches/trunks/scripts/aggregator.php	2006-05-27 01:15:06 UTC (rev 26)
++++ branches/trunks/scripts/aggregator.php	2006-05-27 01:23:38 UTC (rev 27)
+@@ -0,0 +1,610 @@
++<?php
++/* $Id: aggregator.php,v 1.0 2006/03/28 01:22:31 trunks
++        Based on aggregator.module from drupal (http://drupal.org/) */
++
++/**
++ * @file
++ * Used to aggregate syndicated content (RSS and RDF).
++ */
++
++include('/var/www/meneame/www/config.php');
++
++aggregator_main();
++
++function aggregator_main() {
++  global $db, $dblang;
++
++  $result = $db->get_results('SELECT * FROM categories c JOIN feed_data f ON f.id = c.category_id WHERE c.category_lang="' . $dblang . '"');
++
++  foreach ($result as $category) {
++    aggregator_refresh($category);
++  }
++}
++
++/**
++ * Checks a news feed for new items.
++ */
++function aggregator_refresh($feed) {
++  global $channel, $image, $db;
++
++  // Generate conditional GET headers.
++  $headers = array();
++  if ($feed->etag) {
++    $headers['If-None-Match'] = $feed->etag;
++  }
++  if ($feed->modified) {
++    $headers['If-Modified-Since'] = gmdate('D, d M Y H:i:s', $feed->modified) .' GMT';
++  }
++
++  // Request feed.
++  $result = http_request($feed->category_feed, $headers);
++
++  // Process HTTP response code.
++  switch ($result->code) {
++    case 304:
++      // No new syndicated content from site
++      $db->query('UPDATE feed_data SET checked = ' . time() . ' WHERE id = '. $feed->id);
++      break;
++    case 301:
++      // Updated URL for feed
++      $feed->category_feed = $result->redirect_url;
++      $db->query("UPDATE feed_data SET category_feed='" . $feed->category_feed . "' WHERE category_id=" . $feed->id);
++      break;
++
++    case 200:
++    case 302:
++    case 307:
++      // Filter the input data:
++     if (aggregator_parse_feed($result->data, $feed)) {
++
++        if ($result->headers['Last-Modified']) {
++          $modified = strtotime($result->headers['Last-Modified']);
++        }
++
++        /*
++        ** Prepare the channel data:
++        */
++
++        foreach ($channel as $key => $value) {
++          $channel[$key] = trim(strip_tags($value));
++        }
++
++        /*
++        ** Prepare the image data (if any):
++        */
++
++        foreach ($image as $key => $value) {
++          $image[$key] = trim($value);
++        }
++
++        if ($image['LINK'] && $image['URL'] && $image['TITLE']) {
++          $image = '<a href="'. $image['LINK'] .'"><img src="'. $image['URL'] .'" alt="'. $image['TITLE'] .'" /></a>';
++        }
++        else {
++          $image = NULL;
++        }
++
++        /*
++        ** Update the feed data:
++        */
++
++        $db->query("UPDATE feed_data SET checked = ". time() .", link = '". $channel['LINK'] ."', description = '". $channel['DESCRIPTION'] ."', image = '". $image ."', etag = '". $result->headers['ETag'] ."', modified = '". $modified ."' WHERE id = ". $feed->id);
++
++      }
++      break;
++    default:
++      echo 'Failed to parse RSS feed ' . $feed->category_name . ' : ' . $result->code .' '. $result->error . "\n";
++  }
++}
++
++/**
++ * Perform an HTTP request.
++ *
++ * This is a flexible and powerful HTTP client implementation. Correctly
++ * handles
++ * GET, POST, PUT or any other HTTP requests. Handles redirects.
++ *
++ * @param $url
++ *   A string containing a fully qualified URI.
++ * @param $headers
++ *   An array containing an HTTP header => value pair.
++ * @param $method
++ *   A string defining the HTTP request to use.
++ * @param $data
++ *   A string containing data to include in the request.
++ * @param $retry
++ *   An integer representing how many times to retry the request in case of a
++ *   redirect.
++ * @return
++ *   An object containing the HTTP request headers, response code, headers,
++ *   data, and redirect status.
++ */
++function http_request($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 3) {
++  $result = new StdClass();
++
++  // Parse the URL, and make sure we can handle the schema.
++  $uri = parse_url($url);
++
++  switch ($uri['scheme']) {
++    case 'http':
++      $fp = @fsockopen($uri['host'], ($uri['port'] ? $uri['port'] : 80), $errno, $errstr, 15);
++      break;
++    case 'https':
++      // Note: Only works for PHP 4.3 compiled with OpenSSL.
++      $fp = @fsockopen('ssl://'. $uri['host'], ($uri['port'] ? $uri['port'] : 443), $errno, $errstr, 20);
++      break;
++    default:
++      $result->error = 'invalid schema '. $uri['scheme'];
++      return $result;
++  }
++
++  // Make sure the socket opened properly.
++  if (!$fp) {
++    $result->error = trim($errno .' '. $errstr);
++    return $result;
++  }
++
++  // Construct the path to act on.
++  $path = $uri['path'] ? $uri['path'] : '/';
++  if ($uri['query']) {
++    $path .= '?'. $uri['query'];
++  }
++
++  // Create HTTP request.
++  $defaults = array(
++    'Host' => 'Host: '. $uri['host'],
++    'User-Agent' => 'User-Agent: Drupal (+http://www.drupal.org/)',
++    'Content-Length' => 'Content-Length: '. strlen($data)
++  );
++
++  foreach ($headers as $header => $value) {
++    $defaults[$header] = $header .': '. $value;
++  }
++
++  $request = $method .' '. $path ." HTTP/1.0\r\n";
++  $request .= implode("\r\n", $defaults);
++  $request .= "\r\n\r\n";
++  if ($data) {
++    $request .= $data ."\r\n";
++  }
++  $result->request = $request;
++
++  fwrite($fp, $request);
++
++  // Fetch response.
++  $response = '';
++  while (!feof($fp) && $data = fread($fp, 1024)) {
++    $response .= $data;
++  }
++  fclose($fp);
++
++  // Parse response.
++  list($headers, $result->data) = explode("\r\n\r\n", $response, 2);
++  $headers = preg_split("/\r\n|\n|\r/", $headers);
++
++  list($protocol, $code, $text) = explode(' ', trim(array_shift($headers)), 3);
++  $result->headers = array();
++
++  // Parse headers.
++  while ($line = trim(array_shift($headers))) {
++    list($header, $value) = explode(':', $line, 2);
++    $result->headers[$header] = trim($value);
++  }
++
++  $responses = array(
++    100 => 'Continue', 101 => 'Switching Protocols',
++    200 => 'OK', 201 => 'Created', 202 => 'Accepted', 203 => 'Non-Authoritative Information', 204 => 'No Content', 205 => 'Reset Content', 206 => 'Partial Content',
++    300 => 'Multiple Choices', 301 => 'Moved Permanently', 302 => 'Found', 303 => 'See Other', 304 => 'Not Modified', 305 => 'Use Proxy', 307 => 'Temporary Redirect',
++    400 => 'Bad Request', 401 => 'Unauthorized', 402 => 'Payment Required', 403 => 'Forbidden', 404 => 'Not Found', 405 => 'Method Not Allowed', 406 => 'Not Acceptable', 407 => 'Proxy Authentication Required', 408 => 'Request Time-out', 409 => 'Conflict', 410 => 'Gone', 411 => 'Length Required', 412 => 'Precondition Failed', 413 => 'Request Entity Too Large', 414 => 'Request-URI Too Large', 415 => 'Unsupported Media Type', 416 => 'Requested range not satisfiable', 417 => 'Expectation Failed',
++    500 => 'Internal Server Error', 501 => 'Not Implemented', 502 => 'Bad Gateway', 503 => 'Service Unavailable', 504 => 'Gateway Time-out', 505 => 'HTTP Version not supported'
++  );
++  // RFC 2616 states that all unknown HTTP codes must be treated the same as
++  // the base code in their class.
++  if (!isset($responses[$code])) {
++    $code = floor($code / 100) * 100;
++  }
++
++  switch ($code) {
++    case 200: // OK
++    case 304: // Not modified
++      break;
++    case 301: // Moved permanently
++    case 302: // Moved temporarily
++    case 307: // Moved temporarily
++      $location = $result->headers['Location'];
++
++      if ($retry) {
++        $result = http_request($result->headers['Location'], $headers, $method, $data, --$retry);
++        $result->redirect_code = $result->code;
++      }
++      $result->redirect_url = $location;
++
++      break;
++    default:
++      $result->error = $text;
++  }
++
++  $result->code = $code;
++  return $result;
++}
++
++/**
++ * Decode all HTML entities (including numerical ones) to regular UTF-8 bytes.
++ * Double-escaped entities will only be decoded once ("&amp;lt;" becomes
++ * "&lt;", not "<").
++ *
++ * @param $text
++ *   The text to decode entities in.
++ * @param $exclude
++ *   An array of characters which should not be decoded. For example,
++ *   array('<', '&', '"'). This affects both named and numerical entities.
++ */
++function decode_entities($text, $exclude = array()) {
++  static $table;
++  // We store named entities in a table for quick processing.
++  if (!isset($table)) {
++    // Get all named HTML entities.
++    $table = array_flip(get_html_translation_table(HTML_ENTITIES));
++    // PHP gives us ISO-8859-1 data, we need UTF-8.
++    $table = array_map('utf8_encode', $table);
++    // Add apostrophe (XML)
++    $table['&apos;'] = "'";
++  }
++  $newtable = array_diff($table, $exclude);
++
++  // Use a regexp to select all entities in one pass, to avoid decoding
++  // double-escaped entities twice.
++  return preg_replace('/&(#x?)?([A-Za-z0-9]+);/e', '_decode_entities("$1", "$2", "$0", $newtable, $exclude)', $text);
++}
++
++/**
++ * Helper function for decode_entities
++ */
++function _decode_entities($prefix, $codepoint, $original, &$table, &$exclude)
++{
++  // Named entity
++  if (!$prefix) {
++    if (isset($table[$original])) {
++      return $table[$original];
++    }
++    else {
++      return $original;
++    }
++  }
++  // Hexadecimal numerical entity
++  if ($prefix == '#x') {
++    $codepoint = base_convert($codepoint, 16, 10);
++  }
++  else {
++    // Decimal numerical entity (strip leading zeros to avoid PHP octal
++    // notation)
++    $codepoint = preg_replace('/^0+/', '', $codepoint);
++  }
++  // Encode codepoint as UTF-8 bytes
++  if ($codepoint < 0x80) {
++    $str = chr($codepoint);
++  }
++  else if ($codepoint < 0x800) {
++    $str = chr(0xC0 | ($codepoint >> 6))
++         . chr(0x80 | ($codepoint & 0x3F));
++  }
++  else if ($codepoint < 0x10000) {
++    $str = chr(0xE0 | ( $codepoint >> 12))
++         . chr(0x80 | (($codepoint >> 6) & 0x3F))
++         . chr(0x80 | ( $codepoint       & 0x3F));
++  }
++  else if ($codepoint < 0x200000) {
++    $str = chr(0xF0 | ( $codepoint >> 18))
++         . chr(0x80 | (($codepoint >> 12) & 0x3F))
++         . chr(0x80 | (($codepoint >> 6)  & 0x3F))
++         . chr(0x80 | ( $codepoint        & 0x3F));
++  }
++  // Check for excluded characters
++  if (in_array($str, $exclude)) {
++    return $original;
++  }
++  else {
++    return $str;
++  }
++}
++
++function aggregator_parse_feed(&$data, $feed) {
++  global $items, $image, $channel, $db;
++
++  // Unset the global variables before we use them:
++  unset($GLOBALS['element'], $GLOBALS['item'], $GLOBALS['tag']);
++  $items = array();
++  $image = array();
++  $channel = array();
++
++  // parse the data:
++  $xml_parser = meneame_xml_parser_create($data);
++  xml_set_element_handler($xml_parser, 'aggregator_element_start', 'aggregator_element_end');
++  xml_set_character_data_handler($xml_parser, 'aggregator_element_data');
++
++  if (!xml_parse($xml_parser, $data, 1)) {
++    echo 'Failed to parse RSS feed ' . $feed->category_name . ' : ' . xml_error_string(xml_get_error_code($xml_parser)) .' at line ' . xml_get_current_line_number($xml_parser) . "\n";
++    return 0;
++  }
++  xml_parser_free($xml_parser);
++
++  /*
++  ** We reverse the array such that we store the first item last,
++  ** and the last item first.  In the database, the newest item
++  ** should be at the top.
++  */
++
++  $items = array_reverse($items);
++
++  foreach ($items as $item) {
++    unset($title, $link, $author, $description);
++
++    // Prepare the item:
++    foreach ($item as $key => $value) {
++      // TODO: Make handling of aggregated HTML more flexible/configurable.
++      $value = decode_entities(trim($value));
++      if ($key != 'LINK' && $key != 'GUID') {
++        //$value = filter_xss($value);
++        ereg_replace("'","\'", $value);
++      }
++      $item[$key] = $value;
++    }
++
++    /*
++    ** Resolve the item's title.  If no title is found, we use
++    ** up to 40 characters of the description ending at a word
++    ** boundary but not splitting potential entities.
++    */
++
++    if ($item['TITLE']) {
++      $title = $item['TITLE'];
++    }
++    else {
++      $title = preg_replace('/^(.*)[^\w;&].*?$/', "\\1", truncate_utf8($item['DESCRIPTION'], 40));
++    }
++
++    /*
++    ** Resolve the items link.
++    */
++
++    if ($item['LINK']) {
++      $link = $item['LINK'];
++    }
++    elseif ($item['GUID'] && (strncmp($item['GUID'], 'http://', 7) == 0)) {
++      $link = $item['GUID'];
++    }
++    else {
++      $link = $feed->link;
++    }
++
++    /*
++    ** Try to resolve and parse the item's publication date.  If no
++    ** date is found, we use the current date instead.
++    */
++
++    if ($item['PUBDATE']) $date = $item['PUBDATE'];                        // RSS 2.0
++    else if ($item['DC:DATE']) $date = $item['DC:DATE'];                   // Dublin core
++    else if ($item['DCTERMS:ISSUED']) $date = $item['DCTERMS:ISSUED'];     // Dublin core
++    else if ($item['DCTERMS:CREATED']) $date = $item['DCTERMS:CREATED'];   // Dublin core
++    else if ($item['DCTERMS:MODIFIED']) $date = $item['DCTERMS:MODIFIED']; // Dublin core
++    else $date = 'now';
++
++    $timestamp = strtotime($date); // strtotime() returns -1 on failure
++    if ($timestamp < 0) {
++      $timestamp = aggregator_parse_w3cdtf($date); // also returns -1 on failure
++      if ($timestamp < 0) {
++        $timestamp = time(); // better than nothing
++      }
++    }
++
++    /*
++    ** Save this item.  Try to avoid duplicate entries as much as
++    ** possible.  If we find a duplicate entry, we resolve it and
++    ** pass along it's ID such that we can update it if needed.
++    */
++
++    if ($link && $link != $feed->link && $link != $feed->category_feed) {
++      $entry = $db->get_results("SELECT link_id FROM links WHERE link_category = ". $feed->category_id ." AND link_url = '". $link ."'");
++    }
++    else {
++      $entry = $db->get_results("SELECT link_id FROM links WHERE link_category = ". $feed->category_id ." AND link_title = '". $title ."'");
++    }
++
++    aggregator_save_item(array('link_id' => $entry[0]->link_id, 'link_category' => $feed->category_id, 'link_modified' => $timestamp, 'link_title' => $title, 'link_url' => $link, 'link_author' => 1, 'link_content' => $item['DESCRIPTION'], 'category_name' => $feed->category_name, 'tags' => $feed->tags));
++  }
++
++  return 1;
++}
++
++function aggregator_save_item($edit) {
++  global $db;
++  if ($edit['link_id'] && $edit['link_title']) {
++    $db->query("UPDATE links SET link_title = '". $edit['link_title'] ."', link_url = '". $edit['link_url'] ."', link_author = '". $edit['link_author'] ."', link_content = '". $edit['link_content'] ."' WHERE link_id = " . $edit['link_id']);
++  }
++  else if ($edit['id']) {
++    $db->query('DELETE FROM links WHERE link_id = ' . $edit['link_id']);
++  }
++  else if ($edit['link_title'] && $edit['link_url']) { 
++    $db->query("INSERT INTO links (link_category, link_title, link_url_title, link_url, link_status, link_author, link_blog, link_content, link_date, link_tags) VALUES (". $edit['link_category'] .", '". $edit['link_title'] ."', '". $edit['link_title'] ."', '". $edit['link_url'] ."', 'queued', '". $edit['link_author'] ."', '1', '". $edit['link_content'] . " ', from_unixtime('". $edit['link_modified'] ."'), '". $edit['tags']."')");
++  }
++}
++
++/**
++ * Parse the W3C date/time format, a subset of ISO 8601. PHP date parsing
++ * functions do not handle this format.
++ * See http://www.w3.org/TR/NOTE-datetime for more information.
++ * Originally from MagpieRSS (http://magpierss.sourceforge.net/).
++ *
++ * @param $date_str A string with a potentially W3C DTF date.
++ * @return A timestamp if parsed successfully or -1 if not.
++ */
++function aggregator_parse_w3cdtf($date_str) {
++  if (preg_match('/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(:(\d{2}))?(?:([-+])(\d{2}):?(\d{2})|(Z))?/', $date_str, $match)) {
++    list($year, $month, $day, $hours, $minutes, $seconds) = array($match[1], $match[2], $match[3], $match[4], $match[5], $match[6]);
++    // calc epoch for current date assuming GMT
++    $epoch = gmmktime($hours, $minutes, $seconds, $month, $day, $year);
++    if ($match[10] != 'Z') { // Z is zulu time, aka GMT
++      list($tz_mod, $tz_hour, $tz_min) = array($match[8], $match[9], $match[10]);
++      // zero out the variables
++      if (!$tz_hour) {
++        $tz_hour = 0;
++      }
++      if (!$tz_min) {
++        $tz_min = 0;
++      }
++      $offset_secs = (($tz_hour * 60) + $tz_min) * 60;
++      // is timezone ahead of GMT?  then subtract offset
++      if ($tz_mod == '+') {
++        $offset_secs *= -1;
++      }
++      $epoch += $offset_secs;
++    }
++    return $epoch;
++  }
++  else {
++    return -1;
++  }
++}
++
++/**
++ * Call-back function used by the XML parser.
++ */
++function aggregator_element_start($parser, $name, $attributes) {
++  global $item, $element, $tag;
++
++  switch ($name) {
++    case 'IMAGE':
++    case 'TEXTINPUT':
++      $element = $name;
++      break;
++    case 'ITEM':
++      $element = $name;
++      $item += 1;
++  }
++
++  $tag = $name;
++}
++
++/**
++ * Call-back function used by the XML parser.
++ */
++function aggregator_element_end($parser, $name) {
++  global $element;
++
++  switch ($name) {
++    case 'IMAGE':
++    case 'TEXTINPUT':
++    case 'ITEM':
++      $element = '';
++  }
++}
++
++/**
++ * Call-back function used by the XML parser.
++ */
++function aggregator_element_data($parser, $data) {
++  global $channel, $element, $items, $item, $image, $tag;
++
++  switch ($element) {
++    case 'ITEM':
++      $items[$item][$tag] .= $data;
++      break;
++    case 'IMAGE':
++      $image[$tag] .= $data;
++      break;
++    case 'TEXTINPUT':
++      // The sub-element is not supported. However, we must recognize
++      // it or its contents will end up in the item array.
++      break;
++    default:
++      $channel[$tag] .= $data;
++  }
++}
++
++/**
++ * Prepare a new XML parser.
++ *
++ * This is a wrapper around xml_parser_create() which extracts the encoding
++ * from
++ * the XML data first and sets the output encoding to UTF-8. This function
++ * should
++ * be used instead of xml_parser_create(), because PHP's XML parser doesn't
++ * check
++ * the input encoding itself.
++ *
++ * This is also where unsupported encodings will be converted.
++ * Callers should take this into account: $data might have been changed after
++ * the call.
++ *
++ * @param &$data
++ *   The XML data which will be parsed later.
++ * @return
++ *   An XML parser object.
++ */
++function meneame_xml_parser_create(&$data) {
++  // Default XML encoding is UTF-8
++  $encoding = 'utf-8';
++  $bom = false;
++
++  // Check for UTF-8 byte order mark (PHP5's XML parser doesn't handle it).
++  if (!strncmp($data, "\xEF\xBB\xBF", 3)) {
++    $bom = true;
++    $data = substr($data, 3);
++  }
++
++  // Check for an encoding declaration in the XML prolog if no BOM was found.
++  if (!$bom && ereg('^<\?xml[^>]+encoding="([^"]+)"', $data, $match)) {
++    $encoding = $match[1];
++  }
++
++  // Unsupported encodings are converted here into UTF-8.
++  $php_supported = array('utf-8', 'iso-8859-1', 'us-ascii');
++  if (!in_array(strtolower($encoding), $php_supported)) {
++    $out = convert_to_utf8($data, $encoding);
++    if ($out !== false) {
++      $data = $out;
++      $encoding = 'utf-8';
++    }
++    else {
++       /* watchdog('php', t("Could not convert XML encoding '%s' to
++UTF-8.", array('%s' => $encoding)), WATCHDOG_WARNING); */
++      return 0;
++    }
++  }
++
++  $xml_parser = xml_parser_create($encoding);
++  xml_parser_set_option($xml_parser, XML_OPTION_TARGET_ENCODING, 'utf-8');
++  return $xml_parser;
++}
++
++/**
++ * Convert data to UTF-8
++ *
++ * Requires the iconv, GNU recode or mbstring PHP extension.
++ *
++ * @param $data
++ *   The data to be converted.
++ * @param $encoding
++ *   The encoding that the data is in
++ * @return
++ *   Converted data or FALSE.
++ */
++function convert_to_utf8($data, $encoding) {
++  if (function_exists('iconv')) {
++    $out = @iconv($encoding, 'utf-8', $data);
++  }
++  else if (function_exists('mb_convert_encoding')) {
++    $out = @mb_convert_encoding($data, 'utf-8', $encoding);
++  }
++  else if (function_exists('recode_string')) {
++    $out = @recode_string($encoding .'..utf-8', $data);
++  }
++  else {
++    /* watchdog('php', t("Unsupported encoding '%s'. Please install iconv, GNU
++recode or mbstring for PHP.", array('%s' => $encoding)), WATCHDOG_ERROR); */
++    return FALSE;
++  }
++  return $out;
++}
++
++?>
+
+
+
+From trunks at berlios.de  Sat May 27 03:27:13 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:27:13 +0200
+Subject: [Meneamenet-svn] r28 - branches/trunks/www/archives
+Message-ID: <200605270127.k4R1RDkt009259@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:27:07 +0200 (Sat, 27 May 2006)
+New Revision: 28
+
+Modified:
+   branches/trunks/www/archives/meneame.sql
+Log:
+adding aggregator support
+
+Modified: branches/trunks/www/archives/meneame.sql
+===================================================================
+--- branches/trunks/www/archives/meneame.sql	2006-05-27 01:23:38 UTC (rev 27)
++++ branches/trunks/www/archives/meneame.sql	2006-05-27 01:27:07 UTC (rev 28)
+@@ -41,6 +41,7 @@
+   `category_id` int(11) NOT NULL default '0',
+   `category_parent` int(11) NOT NULL default '0',
+   `category_name` varchar(64) collate utf8_spanish_ci NOT NULL default '',
++  `category_feed` varchar(200) collate utf8_spanish_ci default '',
+   PRIMARY KEY  (`category__auto_id`),
+   UNIQUE KEY `category_lang` (`category_lang`,`category_id`)
+ ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+@@ -67,6 +68,23 @@
+ ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+ 
+ --
++-- Table structure for table `feed_data`
++--
++
++DROP TABLE IF EXISTS `feed_data`;
++CREATE TABLE `feed_data` (
++  id int(11) NOT NULL default '0',
++  checked int(10) NOT NULL default '0',
++  link varchar(255) NOT NULL default '',
++  description longtext NOT NULL,
++  image longtext NOT NULL,
++  etag varchar(255) NOT NULL default '',
++  tags varchar(255) NOT NULL default ''
++  modified int(10) NOT NULL default '0',
++  PRIMARY KEY (id)
++) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
++
++--
+ -- Table structure for table `friends`
+ --
+ 
+
+
+
+From trunks at berlios.de  Sat May 27 03:27:36 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:27:36 +0200
+Subject: [Meneamenet-svn] r29 - branches/trunks/www/js
+Message-ID: <200605270127.k4R1Ra3g009292@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:27:28 +0200 (Sat, 27 May 2006)
+New Revision: 29
+
+Modified:
+   branches/trunks/www/js/categories.js
+Log:
+adding aggregator support
+
+Modified: branches/trunks/www/js/categories.js
+===================================================================
+--- branches/trunks/www/js/categories.js	2006-05-27 01:27:07 UTC (rev 28)
++++ branches/trunks/www/js/categories.js	2006-05-27 01:27:28 UTC (rev 29)
+@@ -5,7 +5,15 @@
+ 	obj.id).innerHTML + '"/><label for="new_parent-' + obj.id + '">Hija de:</label>' + 
+ 	'<input type="text" id="new_parent-' + obj.id + '" name="new_parent-' + 
+ 	obj.id + '" tabindex="1" size="1" value="' + document.getElementById('parent-' + 
+-	obj.id).value +'"/>';
++	obj.id).value +'"/><label for="new_feed-' + obj.id + '">url feed:</label>' + 
++	'<input type="text" id="new_feed-' + obj.id + '" name="new_feed-' + 
++	obj.id + '" tabindex="1" size="25" value="' + document.getElementById('feed-' + 
++	obj.id).value +'"/><br /><!--<span class="genericformnote"><strong>pocas ' + 
++	'palabras, gen?ricas, cortas y separadas por "," (coma)</strong> ' + 
++	'Ejemplo: <em>web, programaci?n, softwarelibre</em></span>--><br />' + 
++	'<label for="new_tags-' + obj.id + '">etiquetas por defecto:</label><input ' + 
++	'type="text" id="new_tags-' + obj.id + '" name="new_tags-' + obj.id +
++	'" tabindex="1" size="25" /></p>';
+ 
+ 	// Para ocultar submit principal y sacar uno ?nico por cada campo.
+ 	// Habilitar esta opci?n anularia la posibilidad de actualizaci?n
+
+
+
+From trunks at berlios.de  Sat May 27 03:28:04 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:28:04 +0200
+Subject: [Meneamenet-svn] r30 - branches/trunks/www
+Message-ID: <200605270128.k4R1S48n009373@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:27:58 +0200 (Sat, 27 May 2006)
+New Revision: 30
+
+Modified:
+   branches/trunks/www/crontab.in.example
+Log:
+adding aggregator support
+
+Modified: branches/trunks/www/crontab.in.example
+===================================================================
+--- branches/trunks/www/crontab.in.example	2006-05-27 01:27:28 UTC (rev 29)
++++ branches/trunks/www/crontab.in.example	2006-05-27 01:27:58 UTC (rev 30)
+@@ -5,5 +5,6 @@
+ 
+ 3 0,8,13 * * * wget -q -O - http://meneame.example.org/scripts/karma3.php > /var/log/meneame/karmal.log
+ 
++*/30 * * * * wget -q -O - http://meneame.example.org/scripts/aggregator.php > /var/log/meneame/aggregator.log
++
+ 17 5 * * * /var/www/meneame/www/scripts/affiliation.pl > /var/log/meneame/affiliation.log
+-
+
+
+
+From trunks at berlios.de  Sat May 27 03:28:52 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Sat, 27 May 2006 03:28:52 +0200
+Subject: [Meneamenet-svn] r31 - branches/trunks/www
+Message-ID: <200605270128.k4R1SqoI009840@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-27 03:28:47 +0200 (Sat, 27 May 2006)
+New Revision: 31
+
+Modified:
+   branches/trunks/www/categories.php
+Log:
+adding aggregator support
+
+Modified: branches/trunks/www/categories.php
+===================================================================
+--- branches/trunks/www/categories.php	2006-05-27 01:27:58 UTC (rev 30)
++++ branches/trunks/www/categories.php	2006-05-27 01:28:47 UTC (rev 31)
+@@ -80,6 +80,13 @@
+ 	echo '<input type="text" id="new_cat" name="new_cat" tabindex="1" size="25" /> ' . "\n";
+ 	echo '<label for="new_parent">' . _("hija de") . ':</label> ' . "\n";
+ 	echo '<input type="text" id="new_parent" name="new_parent" tabindex="1" size="1" value="0" />' . "\n";
++	echo '<label for="new_feed">' . _("url feed") . ':</label> ' . "\n";
++	echo '<input type="text" id="new_feed" name="new_feed" tabindex="1" size="25" /><br />' . "\n";
++
++	echo '<span class="genericformnote"><strong>pocas palabras, gen?ricas, cortas y separadas por "," (coma)</strong> Ejemplo: <em>web, programaci?n, software libre</em></span><br />';
++	echo '<label for="new_tags">' . _("etiquetas por defecto") . ':</label> ' . "\n";
++	echo '<input type="text" id="new_tags" name="new_tags" tabindex="1" size="25" /></p>' . "\n";
++
+ 	echo '<p class="l-bottom" id="submit-p"><input type="submit" name="new" value="'._('enviar').'" class="genericsubmit"></p>';
+ 	echo "</form></fieldset></div></div>\n";
+ }
+@@ -87,7 +94,7 @@
+ function show_categories() {
+ 	global $db, $dblang;
+ 
+-	$categories = $db->get_results("SELECT category_id, category_parent, category_name FROM categories WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC");
++	$categories = $db->get_results("SELECT category_id, category_parent, category_name, category_feed FROM categories WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC");
+ 
+ 	foreach ($categories as $category) {
+ 		if (isset($tree[$category->category_parent])) {
+@@ -97,6 +104,7 @@
+ 		}
+ 		$category_data[$category->category_id]->category_parent = $category->category_parent;
+ 		$category_data[$category->category_id]->category_name = $category->category_name;
++		$category_data[$category->category_id]->category_feed = $category->category_feed;
+ 	}
+ 
+ 	$elems = split(",", $tree[0]);
+@@ -111,7 +119,7 @@
+ 			for ($i=$level; $i>0; $i--)
+ 				echo '<blockquote>';
+ 
+-			print_category($item, $data[$item]->category_parent, $data[$item]->category_name);
++			print_category($item, $data[$item]->category_parent, $data[$item]->category_name, $data[$item]->category_feed);
+ 
+ 			for ($i=$level; $i>0; $i--)
+ 				echo '</blockquote>';
+@@ -120,7 +128,7 @@
+ 			for ($i=$level; $i>0; $i--)
+ 				echo '<blockquote>';
+ 
+-			print_category($item, $data[$item]->category_parent, $data[$item]->category_name);
++			print_category($item, $data[$item]->category_parent, $data[$item]->category_name, $data[$item]->category_feed);
+ 
+ 			for ($i=$level; $i>0; $i--)
+ 				echo '</blockquote>';
+@@ -128,7 +136,7 @@
+ 	}
+ }
+ 
+-function print_category ($id, $parent, $name) {
++function print_category ($id, $parent, $name, $feed) {
+ 	echo '<p class="l-top" id="l-top-edit[' . $id . ']">['. $id . 
+ 		'] <label for="edit[' . $id . ']" accesskey="' . $id . 
+ 		'" id="label1-edit[' . $id .']">' . _($name) .'</label> ';
+@@ -140,6 +148,9 @@
+ 	echo '<input type="hidden"  name="parent-edit[' . $id . ']" id="parent-edit[' 
+ 		. $id . ']" value="' . $parent . '" />';
+ 
++	echo '<input type="hidden"  name="feed-edit[' . $id . ']" id="feed-edit[' 
++		. $id . ']" value="' . $feed . '" />';
++
+ 	echo '<input type="submit" name="delete[' . $id . ']" id="delete[' . $id .
+ 		 ']" tabindex="1" value="' . _('eliminar') . ' " />' . "\n";
+ }
+@@ -154,7 +165,7 @@
+ 	if (isset($_POST['delete'])) {
+ 		delete_category(array_keys($_POST['delete']));
+ 	} elseif (isset($_POST['new_cat'])) {
+-		insert_category(trim($_POST['new_cat']), trim($_POST['new_parent']));
++		insert_category(trim($_POST['new_cat']), trim($_POST['new_parent']), trim($_POST['new_feed']), trim($_POST['new_tags']));
+ 	} else {
+ 		foreach (array_keys($_POST['new_cat-edit']) as $key) {
+ 			$category->id[$ncat]=trim($key);
+@@ -170,10 +181,24 @@
+ 			$category->parent[$ncat]=intval($catparent);
+ 			$ncat++;
+ 		}
++		$ncat=0;
++		foreach ($_POST['new_feed-edit'] as $catfeed) {
++			$category->feed[$ncat]=htmlspecialchars(trim($catfeed));
++			$ncat++;
++		}
++		$ncat=0;
++		foreach ($_POST['new_tags-edit'] as $cattags) {
++			$category->tags[$ncat]=trim($cattags);
++			$ncat++;
++		}
+ 		if ( !(empty($_POST['new_cat-edit']) || empty($_POST['new-cat'])) ) {
+ 			$errors = 1;
+ 			echo '<p class="form-error">'._('No ha introducido ninguna categor?a nueva').'</p>';
+ 		}
++		if ( empty($_POST['new_tags-edit']) ) {
++			$errors = 1;
++			echo '<p class="form-error">'._('No ha introducido ninguna etiqueta').'</p>';
++		}
+ 		if (!$errors) {
+ 			save_categories($category);
+ 			echo '<p class="form-act">'._('Datos actualizados').'</p>';
+@@ -186,7 +211,8 @@
+ 
+ 	$ncat=0;
+ 	foreach ($category->id as $key) {
+-		$db->query("update categories set category_name=\"" . $category->name[$ncat] . "\", category_parent=\"" . $category->parent[$ncat] . "\" where category_id=\"$key\" and category_lang=\"$dblang\"");
++		$db->query("update categories set category_name=\"" . $category->name[$ncat] . "\", category_parent=\"" . $category->parent[$ncat] . "\", category_feed=\"" . $category->feed[$ncat] . "\" where category_id=\"$key\" and category_lang=\"$dblang\"");
++		$db->query("update feed_data set tags='" . $category->tags[$ncat] . "\" where id=\"$key\"");
+ 		$ncat++;
+ 	}
+ }
+@@ -196,13 +222,21 @@
+ 
+ 	if (is_int($key[0]))
+ 		$db->query("delete from categories where category_id=\"" . $key[0] . "\" and category_lang=\"$dblang\"");
++		$db->query("delete from feed_data where id=\"" . $key[0] . "\"");
+ }
+ 
+-function insert_category($key, $parent) {
++function insert_category($key, $parent, $feed, $tags) {
+ 	global $db, $dblang;
+ 
+ 	$id=$db->get_results("select max(category_id) max from categories");
+-	$db->query("insert into categories (category_id, category_parent, category_name, category_lang) values (" . (intval($id[0]->max) + 1) . ", $parent, \"$key\", \"$dblang\")");
++	if ($feed != "") {
++		$uri = parse_url($feed);
++		$link = $uri['scheme'] . "://" . $uri['host'];
++		$db->query("insert into feed_data (id, link, tags) values(" . (intval($id[0]->max) + 1) .", '". $link  ."', '" . $tags . "')");
++		$db->query("insert into categories (category_id, category_parent, category_name, category_feed, category_lang) values (" . (intval($id[0]->max) + 1) . ", $parent, \"$key\", \"$feed\", \"$dblang\")");
++	} else {
++		$db->query("insert into categories (category_id, category_parent, category_name, category_lang) values (" . (intval($id[0]->max) + 1) . ", $parent, \"$key\", \"$dblang\")");
++	}
+ }
+ 
+ ?>
+
+
+
+From trunks at berlios.de  Mon May 29 13:46:44 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Mon, 29 May 2006 13:46:44 +0200
+Subject: [Meneamenet-svn] r32 - branches/trunks/www/libs
+Message-ID: <200605291146.k4TBkif9027743@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-29 13:46:14 +0200 (Mon, 29 May 2006)
+New Revision: 32
+
+Modified:
+   branches/trunks/www/libs/link.php
+Log:
+fixing display bug related to unopened divs
+
+Modified: branches/trunks/www/libs/link.php
+===================================================================
+--- branches/trunks/www/libs/link.php	2006-05-27 01:28:47 UTC (rev 31)
++++ branches/trunks/www/libs/link.php	2006-05-29 11:46:14 UTC (rev 32)
+@@ -243,8 +243,8 @@
+ 			echo '</div>';
+ 		}
+ 
++		echo '<div class="news-details">';
+ 		if ($globals['comments']) {
+-			echo '<div class="news-details">';
+ 			$ncomments = $this->comments();
+ 			if($ncomments > 0) {
+ 				$comments_mess = $ncomments . ' ' . _('comentarios');
+
+
+
+From trunks at berlios.de  Tue May 30 09:50:14 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Tue, 30 May 2006 09:50:14 +0200
+Subject: [Meneamenet-svn] r33 - in branches/trunks/www: . libs
+Message-ID: <200605300750.k4U7oEFN010941@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-30 09:50:00 +0200 (Tue, 30 May 2006)
+New Revision: 33
+
+Modified:
+   branches/trunks/www/libs/html1.php
+   branches/trunks/www/rss2.php
+Log:
+adding more comments_hide support
+
+Modified: branches/trunks/www/libs/html1.php
+===================================================================
+--- branches/trunks/www/libs/html1.php	2006-05-29 11:46:14 UTC (rev 32)
++++ branches/trunks/www/libs/html1.php	2006-05-30 07:50:00 UTC (rev 33)
+@@ -33,7 +33,9 @@
+ 	echo '<link rel="alternate" type="application/rss+xml" title="'._('publicadas').'" href="http://'.get_server_name().'/rss2.php" />'."\n";
+ 	echo '<link rel="alternate" type="application/rss+xml" title="'._('pendientes').'" href="http://'.get_server_name().'/rss2.php?status=queued" />'."\n";
+ 	echo '<link rel="alternate" type="application/rss+xml" title="'._('todas').'" href="http://'.get_server_name().'/rss2.php?status=all" />'."\n";
+-	echo '<link rel="alternate" type="application/rss+xml" title="'._('comentarios').'" href="http://'.get_server_name().'/comments_rss2.php" />'."\n";
++	if ( $globals['comments'] ) {
++		echo '<link rel="alternate" type="application/rss+xml" title="'._('comentarios').'" href="http://'.get_server_name().'/comments_rss2.php" />'."\n";
++	}
+ 
+ 	echo '<link rel="icon" href="/favicon.ico" type="image/x-icon" />' . "\n";
+ 	echo '<script src="./js/xmlhttp03.js" type="text/javascript"></script>' . "\n";
+@@ -194,16 +196,18 @@
+ 	echo '<a href="/rss2.php?status=all" rel="rss">'._('todas').'</a>';
+ 	echo '</li>' . "\n";
+ 
+-	if(!empty($globals['link_id'])) {
++	if ( $globals['comments'] ) {
++		if(!empty($globals['link_id'])) {
++			echo '<li>';
++			echo '<a href="/comments_rss2.php?id='.$globals['link_id'].'" rel="rss">'._('comentarios noticia').'</a>';
++			echo '</li>' . "\n";
++		}
++
+ 		echo '<li>';
+-		echo '<a href="/comments_rss2.php?id='.$globals['link_id'].'" rel="rss">'._('comentarios noticia').'</a>';
++		echo '<a href="/comments_rss2.php" rel="rss">'._('comentarios (todos)').'</a>';
+ 		echo '</li>' . "\n";
+ 	}
+ 
+-	echo '<li>';
+-	echo '<a href="/comments_rss2.php" rel="rss">'._('comentarios (todos)').'</a>';
+-	echo '</li>' . "\n";
+-
+ 	echo '</ul>' . "\n";
+ 	echo '<br style="clear: both;" />' . "\n";
+ 	echo '</li> <!--html1:do_rss_box()-->' . "\n";
+
+Modified: branches/trunks/www/rss2.php
+===================================================================
+--- branches/trunks/www/rss2.php	2006-05-29 11:46:14 UTC (rev 32)
++++ branches/trunks/www/rss2.php	2006-05-30 07:50:00 UTC (rev 33)
+@@ -121,7 +121,9 @@
+ 		// Title must not carry htmlentities
+ 		echo "		<title><![CDATA[".html_entity_decode($link->title)."]]></title>\n";
+ 		echo "		<link>".get_permalink($link->id)."</link>\n";
+-		echo "		<comments>".get_permalink($link->id)."</comments>\n";
++		if ( $globals['comments'] ) {
++			echo "		<comments>".get_permalink($link->id)."</comments>\n";
++		}
+ 		if (!empty($link_date))
+ 			echo "		<pubDate>".date("r", $link->$link_date)."</pubDate>\n";
+ 		else echo "      <pubDate>".date("r", time())."</pubDate>\n";
+@@ -143,7 +145,9 @@
+ 		//echo '<wfw:comments>'.$link->comments().'</wfw:comments>';
+ 		// echo "		<trackback:ping>".get_trackback($link->id)."</trackback:ping>\n";  // no standard
+ 		//echo "<content:encoded><![CDATA[ ]]></content:encoded>\n";
+-		echo '<wfw:commentRss>http://'.get_server_name().'/comments_rss2.php?id='.$link->id.'</wfw:commentRss>';
++		if ( $globals['comments'] ) {
++			echo '<wfw:commentRss>http://'.get_server_name().'/comments_rss2.php?id='.$link->id.'</wfw:commentRss>';
++		}
+ 		echo "	</item>\n\n";
+ 	}
+ }
+
+
+
+From trunks at berlios.de  Tue May 30 10:44:08 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Tue, 30 May 2006 10:44:08 +0200
+Subject: [Meneamenet-svn] r34 - branches/trunks/scripts
+Message-ID: <200605300844.k4U8i8iR008682@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-30 10:44:04 +0200 (Tue, 30 May 2006)
+New Revision: 34
+
+Modified:
+   branches/trunks/scripts/aggregator.php
+Log:
+little fix
+
+Modified: branches/trunks/scripts/aggregator.php
+===================================================================
+--- branches/trunks/scripts/aggregator.php	2006-05-30 07:50:00 UTC (rev 33)
++++ branches/trunks/scripts/aggregator.php	2006-05-30 08:44:04 UTC (rev 34)
+@@ -7,7 +7,7 @@
+  * Used to aggregate syndicated content (RSS and RDF).
+  */
+ 
+-include('/var/www/meneame/www/config.php');
++include('../config.php');
+ 
+ aggregator_main();
+ 
+
+
+
+From trunks at berlios.de  Tue May 30 13:47:32 2006
+From: trunks at berlios.de (trunks at berlios.de)
+Date: Tue, 30 May 2006 13:47:32 +0200
+Subject: [Meneamenet-svn] r35 - in branches/trunks/www: . archives js
+Message-ID: <200605301147.k4UBlWaI009089@sheep.berlios.de>
+
+Author: trunks
+Date: 2006-05-30 13:47:27 +0200 (Tue, 30 May 2006)
+New Revision: 35
+
+Modified:
+   branches/trunks/www/archives/meneame.sql
+   branches/trunks/www/categories.php
+   branches/trunks/www/js/categories.js
+Log:
+fixing categories and adding autotagging support
+
+Modified: branches/trunks/www/archives/meneame.sql
+===================================================================
+--- branches/trunks/www/archives/meneame.sql	2006-05-30 08:44:04 UTC (rev 34)
++++ branches/trunks/www/archives/meneame.sql	2006-05-30 11:47:27 UTC (rev 35)
+@@ -79,7 +79,7 @@
+   description longtext NOT NULL,
+   image longtext NOT NULL,
+   etag varchar(255) NOT NULL default '',
+-  tags varchar(255) NOT NULL default ''
++  tags varchar(255) NOT NULL default '',
+   modified int(10) NOT NULL default '0',
+   PRIMARY KEY (id)
+ ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+Modified: branches/trunks/www/categories.php
+===================================================================
+--- branches/trunks/www/categories.php	2006-05-30 08:44:04 UTC (rev 34)
++++ branches/trunks/www/categories.php	2006-05-30 11:47:27 UTC (rev 35)
+@@ -94,7 +94,7 @@
+ function show_categories() {
+ 	global $db, $dblang;
+ 
+-	$categories = $db->get_results("SELECT category_id, category_parent, category_name, category_feed FROM categories WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC");
++	$categories = $db->get_results("SELECT category_id, category_parent, category_name, category_feed, tags FROM categories LEFT JOIN feed_data ON category_id = id WHERE category_lang='$dblang' ORDER BY category_parent ASC, category_id ASC");
+ 
+ 	foreach ($categories as $category) {
+ 		if (isset($tree[$category->category_parent])) {
+@@ -105,6 +105,7 @@
+ 		$category_data[$category->category_id]->category_parent = $category->category_parent;
+ 		$category_data[$category->category_id]->category_name = $category->category_name;
+ 		$category_data[$category->category_id]->category_feed = $category->category_feed;
++		$category_data[$category->category_id]->tags = $category->tags;
+ 	}
+ 
+ 	$elems = split(",", $tree[0]);
+@@ -119,7 +120,7 @@
+ 			for ($i=$level; $i>0; $i--)
+ 				echo '<blockquote>';
+ 
+-			print_category($item, $data[$item]->category_parent, $data[$item]->category_name, $data[$item]->category_feed);
++			print_category($item, $data[$item]->category_parent, $data[$item]->category_name, $data[$item]->category_feed, $data[$item]->tags);
+ 
+ 			for ($i=$level; $i>0; $i--)
+ 				echo '</blockquote>';
+@@ -128,7 +129,7 @@
+ 			for ($i=$level; $i>0; $i--)
+ 				echo '<blockquote>';
+ 
+-			print_category($item, $data[$item]->category_parent, $data[$item]->category_name, $data[$item]->category_feed);
++			print_category($item, $data[$item]->category_parent, $data[$item]->category_name, $data[$item]->category_feed, $data[$item]->tags);
+ 
+ 			for ($i=$level; $i>0; $i--)
+ 				echo '</blockquote>';
+@@ -136,7 +137,7 @@
+ 	}
+ }
+ 
+-function print_category ($id, $parent, $name, $feed) {
++function print_category ($id, $parent, $name, $feed, $tags) {
+ 	echo '<p class="l-top" id="l-top-edit[' . $id . ']">['. $id . 
+ 		'] <label for="edit[' . $id . ']" accesskey="' . $id . 
+ 		'" id="label1-edit[' . $id .']">' . _($name) .'</label> ';
+@@ -151,6 +152,9 @@
+ 	echo '<input type="hidden"  name="feed-edit[' . $id . ']" id="feed-edit[' 
+ 		. $id . ']" value="' . $feed . '" />';
+ 
++	echo '<input type="hidden"  name="tags-edit[' . $id . ']" id="tags-edit[' 
++		. $id . ']" value="' . $tags . '" />';
++		
+ 	echo '<input type="submit" name="delete[' . $id . ']" id="delete[' . $id .
+ 		 ']" tabindex="1" value="' . _('eliminar') . ' " />' . "\n";
+ }
+@@ -212,7 +216,7 @@
+ 	$ncat=0;
+ 	foreach ($category->id as $key) {
+ 		$db->query("update categories set category_name=\"" . $category->name[$ncat] . "\", category_parent=\"" . $category->parent[$ncat] . "\", category_feed=\"" . $category->feed[$ncat] . "\" where category_id=\"$key\" and category_lang=\"$dblang\"");
+-		$db->query("update feed_data set tags='" . $category->tags[$ncat] . "\" where id=\"$key\"");
++		$db->query("update feed_data set tags=\"" . $category->tags[$ncat] . "\" where id=\"$key\"");
+ 		$ncat++;
+ 	}
+ }
+
+Modified: branches/trunks/www/js/categories.js
+===================================================================
+--- branches/trunks/www/js/categories.js	2006-05-30 08:44:04 UTC (rev 34)
++++ branches/trunks/www/js/categories.js	2006-05-30 11:47:27 UTC (rev 35)
+@@ -13,7 +13,8 @@
+ 	'Ejemplo: <em>web, programaci?n, softwarelibre</em></span>--><br />' + 
+ 	'<label for="new_tags-' + obj.id + '">etiquetas por defecto:</label><input ' + 
+ 	'type="text" id="new_tags-' + obj.id + '" name="new_tags-' + obj.id +
+-	'" tabindex="1" size="25" /></p>';
++	'" tabindex="1" size="25" value="' + document.getElementById('tags-' + 
++	obj.id).value +'" /></p>';
+ 
+ 	// Para ocultar submit principal y sacar uno ?nico por cada campo.
+ 	// Habilitar esta opci?n anularia la posibilidad de actualizaci?n
+
+
+

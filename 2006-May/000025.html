@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Meneamenet-svn] r29 - branches/trunks/www/js
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/meneamenet-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r29%20-%20branches/trunks/www/js&In-Reply-To=%3C200605270127.k4R1Ra3g009292%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000024.html">
+   <LINK REL="Next"  HREF="000026.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Meneamenet-svn] r29 - branches/trunks/www/js</H1>
+    <B>trunks at berlios.de</B> 
+    <A HREF="mailto:meneamenet-svn%40lists.berlios.de?Subject=Re%3A%20%5BMeneamenet-svn%5D%20r29%20-%20branches/trunks/www/js&In-Reply-To=%3C200605270127.k4R1Ra3g009292%40sheep.berlios.de%3E"
+       TITLE="[Meneamenet-svn] r29 - branches/trunks/www/js">trunks at berlios.de
+       </A><BR>
+    <I>Sat May 27 03:27:36 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000024.html">[Meneamenet-svn] r28 - branches/trunks/www/archives
+</A></li>
+        <LI>Next message: <A HREF="000026.html">[Meneamenet-svn] r30 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#25">[ date ]</a>
+              <a href="thread.html#25">[ thread ]</a>
+              <a href="subject.html#25">[ subject ]</a>
+              <a href="author.html#25">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: trunks
+Date: 2006-05-27 03:27:28 +0200 (Sat, 27 May 2006)
+New Revision: 29
+
+Modified:
+   branches/trunks/www/js/categories.js
+Log:
+adding aggregator support
+
+Modified: branches/trunks/www/js/categories.js
+===================================================================
+--- branches/trunks/www/js/categories.js	2006-05-27 01:27:07 UTC (rev 28)
++++ branches/trunks/www/js/categories.js	2006-05-27 01:27:28 UTC (rev 29)
+@@ -5,7 +5,15 @@
+ 	obj.id).innerHTML + '&quot;/&gt;&lt;label for=&quot;new_parent-' + obj.id + '&quot;&gt;Hija de:&lt;/label&gt;' + 
+ 	'&lt;input type=&quot;text&quot; id=&quot;new_parent-' + obj.id + '&quot; name=&quot;new_parent-' + 
+ 	obj.id + '&quot; tabindex=&quot;1&quot; size=&quot;1&quot; value=&quot;' + document.getElementById('parent-' + 
+-	obj.id).value +'&quot;/&gt;';
++	obj.id).value +'&quot;/&gt;&lt;label for=&quot;new_feed-' + obj.id + '&quot;&gt;url feed:&lt;/label&gt;' + 
++	'&lt;input type=&quot;text&quot; id=&quot;new_feed-' + obj.id + '&quot; name=&quot;new_feed-' + 
++	obj.id + '&quot; tabindex=&quot;1&quot; size=&quot;25&quot; value=&quot;' + document.getElementById('feed-' + 
++	obj.id).value +'&quot;/&gt;&lt;br /&gt;&lt;!--&lt;span class=&quot;genericformnote&quot;&gt;&lt;strong&gt;pocas ' + 
++	'palabras, gen&#233;ricas, cortas y separadas por &quot;,&quot; (coma)&lt;/strong&gt; ' + 
++	'Ejemplo: &lt;em&gt;web, programaci&#243;n, softwarelibre&lt;/em&gt;&lt;/span&gt;--&gt;&lt;br /&gt;' + 
++	'&lt;label for=&quot;new_tags-' + obj.id + '&quot;&gt;etiquetas por defecto:&lt;/label&gt;&lt;input ' + 
++	'type=&quot;text&quot; id=&quot;new_tags-' + obj.id + '&quot; name=&quot;new_tags-' + obj.id +
++	'&quot; tabindex=&quot;1&quot; size=&quot;25&quot; /&gt;&lt;/p&gt;';
+ 
+ 	// Para ocultar submit principal y sacar uno &#250;nico por cada campo.
+ 	// Habilitar esta opci&#243;n anularia la posibilidad de actualizaci&#243;n
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000024.html">[Meneamenet-svn] r28 - branches/trunks/www/archives
+</A></li>
+	<LI>Next message: <A HREF="000026.html">[Meneamenet-svn] r30 - branches/trunks/www
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#25">[ date ]</a>
+              <a href="thread.html#25">[ thread ]</a>
+              <a href="subject.html#25">[ subject ]</a>
+              <a href="author.html#25">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/meneamenet-svn">More information about the Meneamenet-svn
+mailing list</a><br>
+</body></html>
